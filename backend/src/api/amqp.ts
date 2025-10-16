@@ -80,7 +80,7 @@ function flushWaitingMessages () {
     // idling in the queue (another 5 are being currently sent by the default number of 5 connections)
     transporter.sendMail(data.message, function (err, info) {
       if (err) {
-        console.log('Message failed (%s): %s', data.deliveryTag, err.message)
+    //    console.log('Message failed (%s): %s', data.deliveryTag, err.message)
         // reject and requeue on error (wait 1 sec. before requeueing)
         // NB! If the failure is permanent then this approach results in an
         // infinite loop since failing message is never removed from the queue

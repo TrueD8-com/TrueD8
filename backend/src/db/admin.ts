@@ -9,6 +9,14 @@ const adminSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
+  username: {
+    type: String,
+    trim: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { username: { $type: 'string' } }
+    }
+  },
   email: {
     type: String,
     required: true,
@@ -19,6 +27,9 @@ const adminSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true
+  },
+  lastActiveAt: {
+    type: Date
   },
   password: {
     type: String,
@@ -31,6 +42,11 @@ const adminSchema = new mongoose.Schema({
     required: true,
     enum: ['Admin', 'Manager', 'Supporter']
   },
+  permissions: [
+    {
+      type: String
+    }
+  ],
   wallet: [
     {
       currency: {
@@ -61,7 +77,11 @@ const adminSchema = new mongoose.Schema({
         type: String
       }
     }
-  ]
+  ],
+  twoFactor: {
+    enabled: { type: Boolean, default: false, required: true },
+    secret: { type: String }
+  }
 })
 
 // This functions will execute if the password field is modified.

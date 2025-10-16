@@ -25,11 +25,14 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    environment:
+      - ./mongoconfig:/etc/mongo
+    networks:
+      - mongo-network
+    #environment:
       # Used for initialization, configure your MONGO_DATABASE accordingly
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-
+     # MONGO_INITDB_ROOT_USERNAME: trud8
+     # MONGO_INITDB_ROOT_PASSWORD: lkasldkjgkasdklhfhasdl
+    command: --config /etc/mongo/mongod.conf
   # 3. Redis Caching/Session Store Service
   redis:
     image: redis:latest
@@ -59,3 +62,7 @@ volumes:
   mongo_data:
   redis_data:
   rabbitmq_data:
+
+networks:
+  mongo-network:
+    driver: bridge

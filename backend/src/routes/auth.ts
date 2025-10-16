@@ -21,13 +21,209 @@ import { ObjectId } from 'mongodb';
 
 
 import { preventBruteForce, rateLimiterMiddleware } from '../middlewares/preventBruteForce'
-import { getCurrencies } from '../api/query';
+
 
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 /// ///////////////////// GET ENDPOINTS   /////////////////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
+// SIWE (Sign-In With Ethereum) Wallet login routes
+
+// NOTE: Intentionally NOT adding `import { SiweMessage } from 'siwe'` because import statements shouldn't be inserted here based on instructions.
+
+// We will use nonces to prevent replay attacks. We'll generate and store nonce in session before each SIWE login flow.
+
+  // already imported above
+
+/**
+ * Route to get SIWE nonce
+ * - Generates a nonce and stores it in session
+ * - Client should fetch this before sending SIWE login
+ */
+authRoutes.get(
+  '/siwe/nonce',
+  rateLimiterMiddleware,
+  tryCatch((req, res, next) => {
+    const nonce = uuid();
+    req.session.siweNonce = nonce;
+    successRes(res, '', { nonce });
+  })
+);
+
+/**
+ * Route to initialize SIWE login:
+ * - Receives the SIWE message and signature from client
+ * - Verifies the SIWE message and signature and ensures the nonce matches session
+ * - If successful, stores wallet address in session
+ */
+authRoutes.post(
+  '/siwe/login',
+  rateLimiterMiddleware,
+  tryCatch(async (req, res, next) => {
+    const { message, signature } = req.body;
+    if (!message || !signature) {
+      return next(
+        new myError(
+          'SIWE params missing',
+          400,
+          1,
+          'پارامترهای لازم ارسال نشده‌اند.',
+          'خطا رخ داد'
+        )
+      );
+    }
+
+    // We'll parse SIWE message, and ensure its nonce matches what was stored in session.
+    let siweMessageObj;
+    try {
+      // new SiweMessage(message)
+      siweMessageObj = new (require('siwe').SiweMessage)(message);
+    } catch (err) {
+      return next(
+        new myError(
+          'SIWE message parsing failed',
+          400,
+          2,
+          'پیام SIWE معتبر نیست.',
+          'خطا رخ داد'
+        )
+      );
+    }
+
+    // Check if session has nonce and compare it to message's nonce
+    if (
+      !req.session.siweNonce ||
+      req.session.siweNonce !== siweMessageObj.nonce
+    ) {
+      return next(
+        new myError(
+          'SIWE nonce mismatch or missing',
+          400,
+          2,
+          'اعتبار nonce غیر مجاز است!',
+          'درخواست معتبر نیست'
+        )
+      );
+    }
+
+    try {
+      // verify signature and message (will throw if invalid)
+      const fields = await siweMessageObj.validate(signature);
+
+      // On success, set session (address, chain id, etc)
+      const walletAddress = String(fields.address).toLowerCase()
+      req.session.siwe = {
+        address: walletAddress,
+        chainId: fields.chainId,
+        issuedAt: fields.issuedAt,
+      };
+
+      // Ensure a User exists for this wallet and bind session.userId
+      let user = await User.findOne({ 'wallet.address': walletAddress })
+      if (!user) {
+        // Create minimal user for wallet-only login
+        const rnd = require('crypto').randomBytes(32).toString('hex')
+        user = await User.create({
+          name: undefined,
+          lastName: undefined,
+          password: rnd,
+          isActive: true,
+          label: [],
+          hasTicketAccount: false,
+          wallet: { provider: 'siwe', address: walletAddress, connectedAt: new Date() }
+        } as any)
+      } else {
+        // Update wallet metadata if missing
+        if (!user.wallet || !user.wallet.address) {
+          user.wallet = { provider: 'siwe', address: walletAddress, connectedAt: new Date() } as any
+          await user.save()
+        }
+      }
+      req.session.userId = String(user._id)
+
+      // Invalidate nonce for next use
+      delete req.session.siweNonce;
+
+      logger.info(`SIWE login success: ${walletAddress}`);
+
+      successRes(res, 'SIWE ورود موفقیت آمیز بود', {
+        address: walletAddress,
+        userId: String(user._id)
+      });
+    } catch (err) {
+      logger.error('SIWE validation failed', err);
+      return next(
+        new myError(
+          'SIWE validation failed',
+          401,
+          3,
+          'اعتبارسنجی SIWE با شکست مواجه شد.',
+          'خطا رخ داد'
+        )
+      );
+    }
+  })
+);
+
+/**
+ * Check SIWE authentication state (is session/siwe valid)
+ */
+authRoutes.get(
+  '/siwe/auth',
+  rateLimiterMiddleware,
+  tryCatch((req, res, next) => {
+    if (req.session.siwe && req.session.siwe.address) {
+      successRes(res, '', { isAuth: true, address: req.session.siwe.address });
+    } else {
+      return next(
+        new myError(
+          'SIWE unauthorized',
+          401,
+          1,
+          'وارد نشده‌اید!',
+          'لطفا ابتدا با Wallet وارد شوید'
+        )
+      );
+    }
+  })
+);
+
+/**
+ * SIWE logout (destroy wallet session)
+ */
+authRoutes.get(
+  '/siwe/logout',
+  rateLimiterMiddleware,
+  tryCatch(async (req, res, next) => {
+    if (req.session.siwe && req.session.siwe.address) {
+      // Optionally log logout event
+      try {
+        await User.findOneAndUpdate(
+          { 'wallet.address': String(req.session.siwe.address).toLowerCase() },
+          {
+            $push: {
+              userActivities: {
+                action: 'SIWE_LOGOUT',
+                timestamp: Date.now(),
+                ip: req.ip,
+              },
+            },
+          }
+        );
+      } catch (err) {
+        logger.error(`Updating SIWE logout activity error: ${err}`);
+      }
+      delete req.session.siwe;
+    }
+    // Also invalidate nonce if present
+    if (req.session.siweNonce) {
+      delete req.session.siweNonce;
+    }
+    successRes(res, 'SIWE لاگ اوت موفقیت آمیز بود');
+  })
+);
+
 
 // This end point check "Authentication" of users from MongoDB.
 authRoutes.get('/auth',
@@ -530,17 +726,17 @@ authRoutes.post('/register',
               successRes(res, 'Registration is done successfully', data, { isEmail })
               publishQueueConnection(mailOptions)
 
-              return fetch(process.env.API + 'api/tickets/register', {
-                method: 'POST',
-                body: body1Json,
-                headers: {
-                  accessToken: process.env.ACCESS_TOKEN,
-                  'Content-Type': 'application/json'
-                }
-              })
-                .then((res) => res.json())
-                .then((response) => { console.log('response: ', response) })
-                .catch((err) => { console.log('err: ', err) })
+              // return fetch(process.env.API + 'api/tickets/register', {
+              //   method: 'POST',
+              //   body: body1Json,
+              //   headers: {
+              //     accessToken: process.env.ACCESS_TOKEN,
+              //     'Content-Type': 'application/json'
+              //   }
+              // })
+              //   .then((res) => res.json())
+              //   .then((response) => { console.log('response: ', response) })
+              //   .catch((err) => { console.log('err: ', err) })
             } else if (isPhoneNumber) {
               const body1 = {
                 aUsername: username,

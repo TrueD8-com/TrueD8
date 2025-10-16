@@ -1,1 +1,740 @@
 { level: 'error', timestamp: '2025-10-13T08:01:30.781Z' }
+{ level: 'error', timestamp: '2025-10-16T07:14:12.507Z' }
+{ level: 'error', timestamp: '2025-10-16T07:25:17.284Z' }
+{
+  message: 'getaddrinfo EAI_AGAIN mongodb',
+  errorLabelSet: Set(0) {},
+  reason: TopologyDescription {
+    type: 'Unknown',
+    servers: Map(1) {
+      'mongodb:27017' => ServerDescription {
+        address: 'mongodb:27017',
+        type: 'Unknown',
+        hosts: [],
+        passives: [],
+        arbiters: [],
+        tags: {},
+        minWireVersion: 0,
+        maxWireVersion: 0,
+        roundTripTime: -1,
+        minRoundTripTime: 0,
+        lastUpdateTime: 1445844866,
+        lastWriteDate: 0,
+        error: MongoNetworkError: getaddrinfo EAI_AGAIN mongodb
+            at Socket.<anonymous> (/root/Projects/TrueD8/backend/node_modules/mongodb/src/cmap/connect.ts:395:16)
+            at Object.onceWrapper (node:events:634:26)
+            at Socket.emit (node:events:519:28)
+            at emitErrorNT (node:internal/streams/destroy:170:8)
+            at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+            at processTicksAndRejections (node:internal/process/task_queues:90:21) {
+          errorLabelSet: Set(1) { 'ResetPool' },
+          beforeHandshake: false,
+          [cause]: Error: getaddrinfo EAI_AGAIN mongodb
+              at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+            errno: -3001,
+            code: 'EAI_AGAIN',
+            syscall: 'getaddrinfo',
+            hostname: 'mongodb'
+          }
+        },
+        topologyVersion: null,
+        setName: null,
+        setVersion: null,
+        electionId: null,
+        logicalSessionTimeoutMinutes: null,
+        maxMessageSizeBytes: null,
+        maxWriteBatchSize: null,
+        maxBsonObjectSize: null,
+        primary: null,
+        me: null,
+        '$clusterTime': null,
+        iscryptd: false
+      }
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: null,
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  code: undefined,
+  cause: TopologyDescription {
+    type: 'Unknown',
+    servers: Map(1) {
+      'mongodb:27017' => ServerDescription {
+        address: 'mongodb:27017',
+        type: 'Unknown',
+        hosts: [],
+        passives: [],
+        arbiters: [],
+        tags: {},
+        minWireVersion: 0,
+        maxWireVersion: 0,
+        roundTripTime: -1,
+        minRoundTripTime: 0,
+        lastUpdateTime: 1445844866,
+        lastWriteDate: 0,
+        error: MongoNetworkError: getaddrinfo EAI_AGAIN mongodb
+            at Socket.<anonymous> (/root/Projects/TrueD8/backend/node_modules/mongodb/src/cmap/connect.ts:395:16)
+            at Object.onceWrapper (node:events:634:26)
+            at Socket.emit (node:events:519:28)
+            at emitErrorNT (node:internal/streams/destroy:170:8)
+            at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+            at processTicksAndRejections (node:internal/process/task_queues:90:21) {
+          errorLabelSet: Set(1) { 'ResetPool' },
+          beforeHandshake: false,
+          [cause]: Error: getaddrinfo EAI_AGAIN mongodb
+              at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+            errno: -3001,
+            code: 'EAI_AGAIN',
+            syscall: 'getaddrinfo',
+            hostname: 'mongodb'
+          }
+        },
+        topologyVersion: null,
+        setName: null,
+        setVersion: null,
+        electionId: null,
+        logicalSessionTimeoutMinutes: null,
+        maxMessageSizeBytes: null,
+        maxWriteBatchSize: null,
+        maxBsonObjectSize: null,
+        primary: null,
+        me: null,
+        '$clusterTime': null,
+        iscryptd: false
+      }
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: null,
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  level: 'error',
+  timestamp: '2025-10-16T07:26:55.322Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce?address={{WALLET_ADDRESS}} HTTP/1.1" 404 154 10.329 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T07:29:13.577Z'
+}
+{
+  errorLabelSet: Set(0) {},
+  reason: TopologyDescription {
+    type: 'Unknown',
+    servers: Map(1) {
+      'mongodb:27017' => ServerDescription {
+        address: 'mongodb:27017',
+        type: 'Unknown',
+        hosts: [],
+        passives: [],
+        arbiters: [],
+        tags: {},
+        minWireVersion: 0,
+        maxWireVersion: 0,
+        roundTripTime: -1,
+        minRoundTripTime: 0,
+        lastUpdateTime: 1445844865,
+        lastWriteDate: 0,
+        error: MongoNetworkError: getaddrinfo EAI_AGAIN mongodb
+            at Socket.<anonymous> (/root/Projects/TrueD8/backend/node_modules/mongodb/src/cmap/connect.ts:395:16)
+            at Object.onceWrapper (node:events:634:26)
+            at Socket.emit (node:events:519:28)
+            at emitErrorNT (node:internal/streams/destroy:170:8)
+            at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+            at processTicksAndRejections (node:internal/process/task_queues:90:21) {
+          errorLabelSet: Set(1) { 'ResetPool' },
+          beforeHandshake: false,
+          [cause]: Error: getaddrinfo EAI_AGAIN mongodb
+              at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+            errno: -3001,
+            code: 'EAI_AGAIN',
+            syscall: 'getaddrinfo',
+            hostname: 'mongodb'
+          }
+        },
+        topologyVersion: null,
+        setName: null,
+        setVersion: null,
+        electionId: null,
+        logicalSessionTimeoutMinutes: null,
+        maxMessageSizeBytes: null,
+        maxWriteBatchSize: null,
+        maxBsonObjectSize: null,
+        primary: null,
+        me: null,
+        '$clusterTime': null,
+        iscryptd: false
+      }
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: null,
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  code: undefined,
+  level: 'warn',
+  timestamp: '2025-10-16T07:30:14.076Z'
+}
+{
+  message: 'MongoServerSelectionError: getaddrinfo EAI_AGAIN mongodb\n' +
+    '    at Topology.selectServer (/root/Projects/TrueD8/backend/node_modules/mongodb/src/sdam/topology.ts:635:30)\n' +
+    '    at runNextTicks (node:internal/process/task_queues:65:5)\n' +
+    '    at listOnTimeout (node:internal/timers:549:9)\n' +
+    '    at processTimers (node:internal/timers:523:7)\n' +
+    '    at Topology._connect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/sdam/topology.ts:467:22)\n' +
+    '    at Topology.connect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/sdam/topology.ts:404:7)\n' +
+    '    at topologyConnect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/mongo_client.ts:695:9)\n' +
+    '    at MongoClient._connect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/mongo_client.ts:707:7)\n' +
+    '    at MongoClient.connect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/mongo_client.ts:619:7)\n' +
+    '    at Function.connect (/root/Projects/TrueD8/backend/node_modules/mongodb/src/mongo_client.ts:891:12)',
+  level: 'error',
+  timestamp: '2025-10-16T07:30:14.078Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 500 192 6.635 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T07:30:14.080Z'
+}
+{
+  errorLabelSet: Set(2) { 'HandshakeError', 'ResetPool' },
+  errorResponse: {
+    ok: 0,
+    errmsg: 'Authentication failed.',
+    code: 18,
+    codeName: 'AuthenticationFailed'
+  },
+  ok: 0,
+  code: 18,
+  codeName: 'AuthenticationFailed',
+  connectionGeneration: 0,
+  level: 'error',
+  timestamp: '2025-10-16T07:35:55.889Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 26.642 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:23:40.442Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 31206.395 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:28:41.484Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 70.608 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:34:01.786Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 5.866 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:34:18.102Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 6.612 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:34:44.817Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T11:34:59.074Z'
+}
+{
+  message: '46.143.118.87 "POST /auth/siwe/nonce HTTP/1.1" 403 36 7.766 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:34:59.080Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/siwe/nonce HTTP/1.1" 404 154 3.713 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:35:10.157Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/login HTTP/1.1" 404 149 2.424 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:35:40.360Z'
+}
+{
+  message: '46.143.118.87 "GET /auth/login HTTP/1.1" 404 149 2.571 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:35:48.591Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T11:35:59.367Z'
+}
+{
+  message: '46.143.118.87 "POST /auth/login HTTP/1.1" 403 36 3.048 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:35:59.371Z'
+}
+{
+  message: '429 - Too Many Requests',
+  level: 'warn',
+  timestamp: '2025-10-16T11:37:15.881Z'
+}
+{
+  message: '46.143.118.87 "GET /api/auth/siwe/nonce HTTP/1.1" 429 242 13.250 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:37:15.887Z'
+}
+{
+  message: '429 - Too Many Requests',
+  level: 'warn',
+  timestamp: '2025-10-16T11:43:38.313Z'
+}
+{
+  message: '104.167.27.200 "GET /api/auth/siwe/nonce HTTP/1.1" 429 242 38.761 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:43:38.353Z'
+}
+{
+  message: '429 - Too Many Requests',
+  level: 'warn',
+  timestamp: '2025-10-16T11:44:53.289Z'
+}
+{
+  message: '104.167.27.97 "GET /api/auth/siwe/nonce HTTP/1.1" 429 242 6.533 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:44:53.294Z'
+}
+{
+  message: '104.167.27.97 "GET /api/auth/siwe/nonce HTTP/1.1" 200 85 35.859 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T11:45:48.061Z'
+}
+{
+  message: '162.142.125.117 "GET / HTTP/1.1" 404 139 8.960 "-" "Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)" \n',
+  level: 'info',
+  timestamp: '2025-10-16T14:04:15.652Z'
+}
+{
+  message: '46.143.118.87 "GET /api/auth/siwe/nonce HTTP/1.1" 200 85 20.330 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T14:58:37.266Z'
+}
+{
+  message: '400 - SIWE message parsing failed',
+  level: 'warn',
+  timestamp: '2025-10-16T14:58:45.970Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/siwe/login HTTP/1.1" 400 178 171.482 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T14:58:45.975Z'
+}
+{
+  message: '401 - unauthorized cookie',
+  level: 'warn',
+  timestamp: '2025-10-16T14:58:56.800Z'
+}
+{
+  message: '46.143.118.87 "GET /api/user/getUserProfileInfo HTTP/1.1" 401 186 3.274 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T14:58:56.803Z'
+}
+{
+  message: '422 - name cn not be empty',
+  level: 'warn',
+  timestamp: '2025-10-16T14:59:08.388Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/register HTTP/1.1" 422 180 9.664 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T14:59:08.393Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T15:09:12.095Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/register HTTP/1.1" 422 192 37.531 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:09:12.109Z'
+}
+{ level: 'warn', timestamp: '2025-10-16T15:09:58.851Z' }
+{
+  message: 'TypeError: fetch is not a function\n' +
+    '    at /root/Projects/TrueD8/backend/src/routes/auth.ts:704:22\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)',
+  level: 'error',
+  timestamp: '2025-10-16T15:09:58.900Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/register HTTP/1.1" 500 142 192.107 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:09:58.910Z'
+}
+{
+  message: '104.167.27.104 "POST /api/auth/register HTTP/1.1" 200 142 102.261 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:19:38.012Z'
+}
+{
+  message: '104.167.27.104 "POST /api/auth/register HTTP/1.1" 200 143 80.324 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:20:03.171Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T15:20:18.667Z'
+}
+{
+  message: '104.167.27.104 "POST /api/auth/login HTTP/1.1" 422 192 6.867 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:20:18.672Z'
+}
+{
+  message: '400 - The email is not verified!',
+  level: 'warn',
+  timestamp: '2025-10-16T15:20:25.557Z'
+}
+{
+  message: '104.167.27.104 "POST /api/auth/login HTTP/1.1" 400 220 72.801 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:20:25.565Z'
+}
+{
+  message: '104.167.27.104 "POST /api/auth/login HTTP/1.1" 200 118 88.118 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:21:07.212Z'
+}
+{
+  message: '104.167.27.104 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 477 13.002 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:21:14.395Z'
+}
+{
+  message: '104.167.27.104 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 477 6.008 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:22:02.990Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 404 110.121 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:25:06.333Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T15:27:03.822Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/?targetId=68f10d233f186a1363fbbbb2 HTTP/1.1" 403 36 10.744 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:27:03.827Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T15:27:38.048Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/?targetId=68f10d233f186a1363fbbbb2 HTTP/1.1" 403 36 4.216 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:27:38.054Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T15:29:10.780Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like?targetId=68f10d233f186a1363fbbbb2 HTTP/1.1" 403 36 6.483 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:29:10.784Z'
+}
+{
+  message: '403 - undefined',
+  level: 'warn',
+  timestamp: '2025-10-16T15:29:54.589Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like?=68f10d233f186a1363fbbbb2 HTTP/1.1" 403 36 6.058 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:29:54.595Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d233f186a1363fbbbb2 HTTP/1.1" 200 44 27.132 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:30:16.829Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/login HTTP/1.1" 200 118 101.959 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:30:34.518Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 404 11.277 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:30:51.730Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d093f186a1363fbbbae HTTP/1.1" 200 82 31.466 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:31:07.738Z'
+}
+{
+  message: '104.167.27.111 "GET /api/dating/ai/prompt HTTP/1.1" 200 868 23.818 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:50:22.318Z'
+}
+{
+  message: '104.167.27.160 "GET /api/dating/likes/received HTTP/1.1" 200 249 21.256 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:52:57.214Z'
+}
+{
+  message: '104.167.27.160 "GET /api/dating/likes/sent HTTP/1.1" 200 249 7.363 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:53:08.052Z'
+}
+{
+  message: '104.167.27.160 "GET /api/dating/matches HTTP/1.1" 200 39 7.498 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:53:27.913Z'
+}
+{
+  message: '104.167.27.29 "GET /api/dating/matches HTTP/1.1" 200 39 11.959 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:55:24.272Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T15:57:25.838Z'
+}
+{
+  message: '::1 "POST /api/auth/register HTTP/1.1" 422 192 30.024 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:25.927Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T15:57:25.953Z'
+}
+{
+  message: '::1 "POST /api/auth/login HTTP/1.1" 422 192 24.071 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:25.957Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 85 4.979 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:25.972Z'
+}
+{
+  message: 'SIWE login success: 0x000000000000000000000000000000000000dead',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:26.132Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 200 171 160.774 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:26.142Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 419 16.545 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:57:26.166Z'
+}
+{
+  message: '104.167.27.209 "POST /api/user/editProfile HTTP/1.1" 200 102 24.361 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:58:32.850Z'
+}
+{
+  message: '104.167.27.209 "POST /api/auth/login HTTP/1.1" 200 118 61.953 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:58:46.902Z'
+}
+{
+  message: '104.167.27.209 "GET /api/dating/discover HTTP/1.1" 200 39 8.742 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:58:55.785Z'
+}
+{
+  message: '104.167.27.209 "GET /api/dating/matches HTTP/1.1" 200 39 4.816 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T15:59:03.577Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d093f186a1363fbbbae HTTP/1.1" 200 55 14.910 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:22:54.317Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d233f186a1363fbbbb2 HTTP/1.1" 200 44 36.984 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:23:18.907Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/login HTTP/1.1" 200 118 127.182 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:23:29.771Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 10.444 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:24:10.398Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 42.851 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:30:14.528Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 16.237 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:30:16.900Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 10.349 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:30:20.487Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 9.368 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:30:22.737Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 39 45.635 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:30:49.043Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/register HTTP/1.1" 200 143 140.606 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:31:08.684Z'
+}
+{
+  message: '400 - The email is not verified!',
+  level: 'warn',
+  timestamp: '2025-10-16T16:31:27.989Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/login HTTP/1.1" 400 220 27.437 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:31:27.993Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/login HTTP/1.1" 200 120 156.148 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:31:59.748Z'
+}
+{
+  message: '46.143.118.87 "GET /api/dating/discover HTTP/1.1" 200 861 9.949 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:32:08.385Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d233f186a1363fbbbb2 HTTP/1.1" 200 44 28.056 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:55:15.413Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f10d093f186a1363fbbbae HTTP/1.1" 200 44 34.796 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:55:39.167Z'
+}
+{
+  message: '46.143.118.87 "POST /api/auth/login HTTP/1.1" 200 118 68.882 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:55:51.735Z'
+}
+{
+  message: '46.143.118.87 "POST /api/dating/like/68f11dcc9de59da78d81c7ef HTTP/1.1" 200 82 38.682 "-" "PostmanRuntime/7.48.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:56:07.081Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T16:57:02.251Z'
+}
+{
+  message: '::1 "POST /api/auth/register HTTP/1.1" 422 192 25.693 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.331Z'
+}
+{
+  message: '422 - Username address is required!',
+  level: 'warn',
+  timestamp: '2025-10-16T16:57:02.346Z'
+}
+{
+  message: '::1 "POST /api/auth/login HTTP/1.1" 422 192 9.833 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.349Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 85 2.662 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.361Z'
+}
+{
+  message: 'SIWE login success: 0x000000000000000000000000000000000000dead',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.483Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 200 171 120.098 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.485Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 419 12.420 "-" "-" \n',
+  level: 'info',
+  timestamp: '2025-10-16T16:57:02.503Z'
+}
+{
+  message: '44.193.254.10 "GET / HTTP/1.1" 404 139 7.021 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:04:14.173Z'
+}
+{
+  message: '35.197.156.85 "GET / HTTP/1.1" 404 139 7.137 "http://date.kakhki.ir/" "Mozilla/5.0 (Linux; Android 5.1.1; SM-J111F)" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:16:53.690Z'
+}
+{
+  message: '35.197.156.85 "GET /wordpress/ HTTP/1.1" 404 149 2.056 "http://date.kakhki.ir/wordpress/" "Mozilla/5.0 (Linux; Android 5.1.1; SM-J111F)" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:16:54.214Z'
+}
+{
+  message: '2a06:4882:5000::6d "GET / HTTP/1.1" 404 139 12.038 "-" "Mozilla/5.0 (compatible; InternetMeasurement/1.0; +https://internet-measurement.com/)" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:31:25.166Z'
+}
+{
+  message: '52.16.245.145 "GET / HTTP/1.1" 404 139 2.949 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:37:59.295Z'
+}
+{
+  message: '52.16.245.145 "GET / HTTP/1.1" 404 139 0.934 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0" \n',
+  level: 'info',
+  timestamp: '2025-10-16T17:37:59.510Z'
+}

@@ -1,3 +1,116 @@
+import { Server } from 'socket.io'
+import * as mongoose from 'mongoose'
+import { User } from '../db/user'
+import { Conversation } from '../db/conversation'
+import { Message } from '../db/message'
+import { Match } from '../db/match'
+import { logger } from './logger'
+
+let io: Server
+
+export const startIo = (server: any, sessionMiddleware: any) => {
+  const sharedsession = require('express-socket.io-session')
+  io = new Server(server, {
+    serveClient: false,
+    cors: {
+      origin: '*',
+      credentials: true
+    }
+  })
+
+  io.use(sharedsession(sessionMiddleware, { autoSave: true }))
+
+  io.on('connection', (socket) => {
+    try {
+      const sess = (socket as any).handshake.session
+      const userId = sess && sess.userId
+      if (!userId) {
+        socket.disconnect(true)
+        return
+      }
+
+      socket.join(`user:${userId}`)
+      logger.info(`socket connected ${socket.id} for user ${userId}`)
+
+      socket.on('join:conversation', async (payload: any = {}) => {
+        try {
+          const { conversationId } = payload
+          if (!mongoose.Types.ObjectId.isValid(conversationId)) return
+          const convo = await Conversation.findOne({ _id: conversationId, participants: userId })
+          if (!convo) return
+          socket.join(`conv:${convo._id}`)
+          socket.emit('join:conversation:ok', { conversationId: String(convo._id) })
+        } catch (err) {
+          logger.warn(err)
+        }
+      })
+
+      socket.on('message:send', async (payload: any = {}) => {
+        try {
+          const { conversationId, text, mediaUrl, type } = payload
+          if (!mongoose.Types.ObjectId.isValid(conversationId)) return
+          const convo = await Conversation.findOne({ _id: conversationId, participants: userId })
+          if (!convo) return
+          const recipient = (convo.participants as any[]).find((p) => String(p) !== String(userId))
+          const message = await Message.create({
+            conversation: convo._id,
+            sender: userId,
+            recipient,
+            type: type || (mediaUrl ? 'image' : 'text'),
+            text,
+            mediaUrl,
+            isRead: false,
+            sentAt: new Date()
+          })
+          await Conversation.updateOne({ _id: convo._id }, { $set: { lastMessageAt: message.sentAt } })
+          io.to(`conv:${convo._id}`).emit('message:new', { message })
+        } catch (err) {
+          logger.warn(err)
+        }
+      })
+
+      socket.on('message:read', async (payload: any = {}) => {
+        try {
+          const { conversationId, messageIds } = payload
+          if (!mongoose.Types.ObjectId.isValid(conversationId) || !Array.isArray(messageIds)) return
+          const convo = await Conversation.findOne({ _id: conversationId, participants: userId })
+          if (!convo) return
+          const now = new Date()
+          await Message.updateMany(
+            { _id: { $in: messageIds }, conversation: convo._id, recipient: userId, isRead: { $ne: true } },
+            { $set: { isRead: true, readAt: now } }
+          )
+          io.to(`conv:${convo._id}`).emit('message:read', { conversationId, messageIds, readAt: now })
+        } catch (err) {
+          logger.warn(err)
+        }
+      })
+
+      socket.on('typing', async (payload: any = {}) => {
+        try {
+          const { conversationId, isTyping } = payload
+          if (!mongoose.Types.ObjectId.isValid(conversationId)) return
+          const convo = await Conversation.findOne({ _id: conversationId, participants: userId })
+          if (!convo) return
+          socket.to(`conv:${convo._id}`).emit('typing', { conversationId, userId, isTyping: !!isTyping })
+        } catch (err) {
+          logger.warn(err)
+        }
+      })
+
+      socket.on('disconnect', () => {
+        logger.info(`socket disconnected ${socket.id} for user ${userId}`)
+      })
+    } catch (err) {
+      logger.warn(err)
+    }
+  })
+
+  return io
+}
+
+export const getIo = () => io
+
 // // import * as scocketIo from 'socket.io'
 // const io = require('socket.io');
 // import { createClient } from 'redis';

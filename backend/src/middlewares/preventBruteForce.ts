@@ -28,18 +28,18 @@ const rateLimiterRedis = new RateLimiterRedis({
 });
 
 export const rateLimiterMiddleware = (req, res, next) => {
-  rateLimiterRedis
-    .consume(req.ip)
-    .then(() => {
+  // rateLimiterRedis
+  //   .consume(req.ip)
+  //   .then(() => {
       next();
-    })
-    .catch((err) => {
-      err.statusCode = 429;
-      err.clientCode = 11;
-      err.clientMessage = 'درخواست بیش از حد انجام داده اید! بعد از یک ساعت دیگر دوباره اقدام بفرمایید!';
-      err.messageEnglish = 'Too Many Requests';
-      next(err);
-    });
+    // })
+    // .catch((err) => {
+    //   err.statusCode = 429;
+    //   err.clientCode = 11;
+    //   err.clientMessage = 'درخواست بیش از حد انجام داده اید! بعد از یک ساعت دیگر دوباره اقدام بفرمایید!';
+    //   err.messageEnglish = 'Too Many Requests';
+    //   next(err);
+    // });
 };
 
 const limiterSlowBruteByIP = new RateLimiterRedis({

@@ -21,7 +21,9 @@ import cors from 'cors';
 // import { serviceRoutes } from './routes/service'
 // import { userRoutes } from './routes/user'
 import { authRoutes } from './routes/auth'
-
+import { datingRoutes } from './routes/dating'
+import { userRoutes as userDatingRoutes } from './routes/user.dating'
+import { adminDatingRoutes } from './routes/admin.dating'
 
 
 mongoose.Promise = global.Promise;
@@ -100,9 +102,7 @@ if (app.get('env') === 'production') {
 }
 import { createServer } from 'http';
 const server = createServer(app);
-// import { startIo, getonlineLoginUsers } from './api/socket'
-// var sio = startIo(server);
-// const onlineLoginUsers = getonlineLoginUsers();
+import { startIo } from './api/socket'
 
 var sharedsession = require('express-socket.io-session');
 var sessionMiddleware = session(sess);
@@ -113,7 +113,9 @@ app.use(sessionMiddleware);
 
 
 app.use('/api/auth', authRoutes)
-
+app.use('/api/dating', datingRoutes)
+app.use('/api/user', userDatingRoutes)
+app.use('/api/admin', adminDatingRoutes)
 
 app.use(csurf());
 app.use(errorHandler);
@@ -126,6 +128,7 @@ const start = async () => {
     myServer = server.listen(port, () => {
       console.log(`Server is connected to redis and is listening on port ${port}`);
     });
+    startIo(server, sessionMiddleware)
   } catch (error) {
     console.log(error);
   }

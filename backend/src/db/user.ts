@@ -61,6 +61,14 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
+  username: {
+    type: String,
+    trim: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { username: { $type: 'string' } }
+    }
+  },
   email: {
     address :{
       type: String,
@@ -107,6 +115,52 @@ const userSchema = new mongoose.Schema({
       type: String
     }
   },
+  gender: {
+    type: String,
+    enum: ['male','female','nonbinary','other'],
+  },
+  showMe: [
+    {
+      type: String,
+      enum: ['male','female','nonbinary','other']
+    }
+  ],
+  bio: {
+    type: String,
+    maxlength: 500
+  },
+  interests: [
+    {
+      type: String,
+      trim: true
+    }
+  ],
+  photos: [
+    {
+      url: { type: String, required: true },
+      isPrimary: { type: Boolean, default: false, required: true },
+      uploadedAt: { type: Date, default: () => new Date() }
+    }
+  ],
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number], // [lng, lat]
+      index: '2dsphere'
+    },
+    updatedAt: { type: Date }
+  },
+  discovery: {
+    distanceKm: { type: Number, default: 50, min: 1, max: 200 },
+    ageMin: { type: Number, default: 18, min: 18, max: 100 },
+    ageMax: { type: Number, default: 35, min: 18, max: 100 },
+    visible: { type: Boolean, default: true, required: true },
+    global: { type: Boolean, default: false, required: true }
+  },
   emailVerificationString: {
     type:  Schema.Types.ObjectId
   },
@@ -117,6 +171,9 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true
+  },
+  lastActiveAt: {
+    type: Date
   },
   password: {
     type: String,
@@ -132,6 +189,42 @@ const userSchema = new mongoose.Schema({
     type : Boolean ,
     required : true,
     default : false
+  },
+  wallet: {
+    provider: { type: String },
+    address: { type: String },
+    connectedAt: { type: Date }
+  },
+  notificationSettings: {
+    pushLikes: { type: Boolean, default: true, required: true },
+    pushMatches: { type: Boolean, default: true, required: true },
+    pushMessages: { type: Boolean, default: true, required: true }
+  },
+  premium: {
+    isPlus: { type: Boolean, default: false, required: true },
+    isGold: { type: Boolean, default: false, required: true },
+    expiresAt: { type: Date }
+  },
+  verification: {
+    photoVerified: { type: Boolean, default: false, required: true },
+    verifiedAt: { type: Date }
+  },
+  onboardingCompleted: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
+  blockedUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  metrics: {
+    likesSent: { type: Number, default: 0, required: true },
+    likesReceived: { type: Number, default: 0, required: true },
+    matchesCount: { type: Number, default: 0, required: true },
+    favoritesCount: { type: Number, default: 0, required: true }
   },
   userActivities: [
     {
@@ -183,28 +276,7 @@ const userSchema = new mongoose.Schema({
     enum: [1, 2, 3, 4, 5],
     required: true,
     default: 1
-  },
-  wallet: [
-    {
-      currency: {
-        
-        type:Schema.Types.ObjectId,
-        required:true,
-      },
-      value: {
-        type:Number,
-        required:true,
-        default:0,
-      },
-      commitment:{
-        type: Number,
-        required:true,
-        default:0,
-      },
-      
-
-    }
-  ]
+  }
 })
 
 // This functions will execute if the password field is modified.
