@@ -1,0 +1,10 @@
+# Dependencies
+/node_modules
+/dist
+/build
+/coverage
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*

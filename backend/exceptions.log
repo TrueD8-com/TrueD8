@@ -1,0 +1,1427 @@
+{
+  error: Error: Cannot find module 'node-memwatch-new'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:17:16)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/home/joseph/Project/trud8/backend/src/index.ts' ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module 'node-memwatch-new'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module 'node-memwatch-new'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:17:16)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module 'node-memwatch-new'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:17:16)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:13:25 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1007828,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 92139520,
+      heapTotal: 35696640,
+      heapUsed: 25722568,
+      external: 20717980,
+      arrayBuffers: 18271577
+    }
+  },
+  os: { loadavg: [ 3.92, 3.35, 3.1 ], uptime: 75405.84 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 16,
+      file: '/home/joseph/Project/trud8/backend/src/index.ts',
+      function: null,
+      line: 17,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T07:43:25.768Z'
+}
+{
+  error: Error: Cannot find module '../db/acceptedOffers'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/api/query.ts
+  - /home/joseph/Project/trud8/backend/src/routes/service.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/service.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/service.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/service.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/service.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:13:49 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1008262,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 142610432,
+      heapTotal: 84148224,
+      heapUsed: 54114920,
+      external: 22018732,
+      arrayBuffers: 18460699
+    }
+  },
+  os: { loadavg: [ 3.25, 3.23, 3.06 ], uptime: 75430 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      function: null,
+      line: 7,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T07:43:49.929Z'
+}
+{
+  error: Error: Cannot find module '../db/accessLevels'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/middlewares/auth.ts
+  - /home/joseph/Project/trud8/backend/src/routes/auth.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:14:57 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1009394,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 112513024,
+      heapTotal: 62554112,
+      heapUsed: 33725136,
+      external: 20915069,
+      arrayBuffers: 18408559
+    }
+  },
+  os: { loadavg: [ 6.39, 4.01, 3.33 ], uptime: 75497.12 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      function: null,
+      line: 3,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T07:44:57.045Z'
+}
+{
+  error: Error: Cannot find module '../db/accessLevels'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/middlewares/auth.ts
+  - /home/joseph/Project/trud8/backend/src/routes/auth.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/accessLevels'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:3:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:29:11 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1024288,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 110215168,
+      heapTotal: 64126976,
+      heapUsed: 41011456,
+      external: 20915069,
+      arrayBuffers: 18408559
+    }
+  },
+  os: { loadavg: [ 10.89, 5.9, 4.23 ], uptime: 76351.18 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      function: null,
+      line: 3,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T07:59:11.105Z'
+}
+{
+  error: Error: Cannot find module '../db/admin'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/middlewares/auth.ts
+  - /home/joseph/Project/trud8/backend/src/routes/auth.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:4:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/admin'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/admin'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:4:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/admin'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/middlewares/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/middlewares/auth.ts:4:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:29:46 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1024986,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 109916160,
+      heapTotal: 64126976,
+      heapUsed: 41726712,
+      external: 20915069,
+      arrayBuffers: 18408559
+    }
+  },
+  os: { loadavg: [ 8.33, 5.77, 4.25 ], uptime: 76386.31 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/middlewares/auth.ts',
+      function: null,
+      line: 4,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T07:59:46.241Z'
+}
+{
+  error: Error: Cannot find module '../db/acceptedOffers'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/api/query.ts
+  - /home/joseph/Project/trud8/backend/src/routes/auth.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:30:13 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1025554,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 148209664,
+      heapTotal: 85909504,
+      heapUsed: 61027280,
+      external: 22176696,
+      arrayBuffers: 18494022
+    }
+  },
+  os: { loadavg: [ 8.43, 5.99, 4.36 ], uptime: 76413.41 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      function: null,
+      line: 7,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T08:00:13.343Z'
+}
+{
+  error: Error: Cannot find module '../db/acceptedOffers'
+  Require stack:
+  - /home/joseph/Project/trud8/backend/src/api/query.ts
+  - /home/joseph/Project/trud8/backend/src/routes/auth.ts
+  - /home/joseph/Project/trud8/backend/src/index.ts
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Function._load (node:internal/modules/cjs/loader:1192:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12)
+      at require (node:internal/modules/helpers:147:16)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      '/home/joseph/Project/trud8/backend/src/routes/auth.ts',
+      '/home/joseph/Project/trud8/backend/src/index.ts'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  stack: "Error: Cannot find module '../db/acceptedOffers'\n" +
+    'Require stack:\n' +
+    '- /home/joseph/Project/trud8/backend/src/api/query.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/routes/auth.ts\n' +
+    '- /home/joseph/Project/trud8/backend/src/index.ts\n' +
+    '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+    '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+    '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)\n' +
+    '    at require (node:internal/modules/helpers:147:16)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/api/query.ts:7:1)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:30:27 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1026003,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 149860352,
+      heapTotal: 88006656,
+      heapUsed: 61964408,
+      external: 22176696,
+      arrayBuffers: 18600219
+    }
+  },
+  os: { loadavg: [ 7.14, 5.82, 4.34 ], uptime: 76427.88 },
+  trace: [
+    {
+      column: 15,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._resolveFilename',
+      line: 1383,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'defaultResolveImpl',
+      line: 1025,
+      method: null,
+      native: false
+    },
+    {
+      column: 22,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'resolveForCJSWithHooks',
+      line: 1030,
+      method: null,
+      native: false
+    },
+    {
+      column: 37,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1192,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 16,
+      file: 'node:internal/modules/helpers',
+      function: 'require',
+      line: 147,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: '/home/joseph/Project/trud8/backend/src/api/query.ts',
+      function: null,
+      line: 7,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T08:00:27.809Z'
+}
+{
+  error: Error: Cannot init client. Please provide correct options
+      at new MongoStore (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:196:13)
+      at Function.create (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:214:12)
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:77:21)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)
+      at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)
+      at Module.m._compile (/tmp/ts-node-dev-hook-9212510944306951.js:69:33)
+      at node:internal/modules/cjs/loader:1839:10
+      at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9212510944306951.js:114:20)
+      at require.extensions.<computed> (/tmp/ts-node-dev-hook-9212510944306951.js:71:20)
+      at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13),
+  level: 'error',
+  message: 'uncaughtException: Cannot init client. Please provide correct options\n' +
+    'Error: Cannot init client. Please provide correct options\n' +
+    '    at new MongoStore (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:196:13)\n' +
+    '    at Function.create (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:214:12)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:77:21)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n' +
+    '    at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9212510944306951.js:69:33)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9212510944306951.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9212510944306951.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)',
+  stack: 'Error: Cannot init client. Please provide correct options\n' +
+    '    at new MongoStore (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:196:13)\n' +
+    '    at Function.create (/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts:214:12)\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:77:21)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n' +
+    '    at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9212510944306951.js:69:33)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9212510944306951.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9212510944306951.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:31:30 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1027068,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 141414400,
+      heapTotal: 79089664,
+      heapUsed: 37480544,
+      external: 22056063,
+      arrayBuffers: 18479586
+    }
+  },
+  os: { loadavg: [ 5.23, 5.54, 4.34 ], uptime: 76490.85 },
+  trace: [
+    {
+      column: 13,
+      file: '/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts',
+      function: 'new MongoStore',
+      line: 196,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: '/home/joseph/Project/trud8/backend/node_modules/connect-mongo/src/lib/MongoStore.ts',
+      function: 'Function.create',
+      line: 214,
+      method: 'create',
+      native: false
+    },
+    {
+      column: 21,
+      file: '/home/joseph/Project/trud8/backend/src/index.ts',
+      function: null,
+      line: 77,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    },
+    {
+      column: 25,
+      file: '/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js',
+      function: 'Module._compile',
+      line: 568,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 33,
+      file: '/tmp/ts-node-dev-hook-9212510944306951.js',
+      function: 'Module.m._compile',
+      line: 69,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 10,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1839,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9212510944306951.js',
+      function: 'require.extensions..jsx.require.extensions..js',
+      line: 114,
+      method: '.js',
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9212510944306951.js',
+      function: 'require.extensions.<computed>',
+      line: 71,
+      method: '<computed>',
+      native: false
+    },
+    {
+      column: 13,
+      file: '/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .ts]',
+      line: 63,
+      method: 'ts]',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T08:01:30.774Z'
+}
+{
+  error: ReferenceError: serviceRoutes is not defined
+      at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:114:25)
+      at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)
+      at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)
+      at Module.m._compile (/tmp/ts-node-dev-hook-9538479018387498.js:69:33)
+      at node:internal/modules/cjs/loader:1839:10
+      at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9538479018387498.js:114:20)
+      at require.extensions.<computed> (/tmp/ts-node-dev-hook-9538479018387498.js:71:20)
+      at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12),
+  level: 'error',
+  message: 'uncaughtException: serviceRoutes is not defined\n' +
+    'ReferenceError: serviceRoutes is not defined\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:114:25)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n' +
+    '    at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9538479018387498.js:69:33)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9538479018387498.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9538479018387498.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)',
+  stack: 'ReferenceError: serviceRoutes is not defined\n' +
+    '    at Object.<anonymous> (/home/joseph/Project/trud8/backend/src/index.ts:114:25)\n' +
+    '    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n' +
+    '    at Module._compile (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js:568:25)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9538479018387498.js:69:33)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9538479018387498.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9538479018387498.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)',
+  exception: true,
+  date: 'Mon Oct 13 2025 11:36:18 GMT+0330 (Iran Standard Time)',
+  process: {
+    pid: 1031816,
+    uid: 1000,
+    gid: 1000,
+    cwd: '/home/joseph/Project/trud8/backend',
+    execPath: '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+    version: 'v22.20.0',
+    argv: [
+      '/home/joseph/.nvm/versions/node/v22.20.0/bin/node',
+      './src/index.ts'
+    ],
+    memoryUsage: {
+      rss: 134340608,
+      heapTotal: 79089664,
+      heapUsed: 41226400,
+      external: 22054462,
+      arrayBuffers: 18477985
+    }
+  },
+  os: { loadavg: [ 3.21, 4.19, 4.08 ], uptime: 76778.4 },
+  trace: [
+    {
+      column: 25,
+      file: '/home/joseph/Project/trud8/backend/src/index.ts',
+      function: null,
+      line: 114,
+      method: null,
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1706,
+      method: null,
+      native: false
+    },
+    {
+      column: 25,
+      file: '/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/source-map-support/source-map-support.js',
+      function: 'Module._compile',
+      line: 568,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 33,
+      file: '/tmp/ts-node-dev-hook-9538479018387498.js',
+      function: 'Module.m._compile',
+      line: 69,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 10,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1839,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9538479018387498.js',
+      function: 'require.extensions..jsx.require.extensions..js',
+      line: 114,
+      method: '.js',
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9538479018387498.js',
+      function: 'require.extensions.<computed>',
+      line: 71,
+      method: '<computed>',
+      native: false
+    },
+    {
+      column: 13,
+      file: '/home/joseph/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .ts]',
+      line: 63,
+      method: 'ts]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-13T08:06:18.333Z'
+}

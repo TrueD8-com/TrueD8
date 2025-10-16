@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": ".ts,.js",
+  "ignore": [],
+  "exec": "npx ts-node-dev --expose-gc --files --transpile-only --respawn --inspect=4321 --project tsconfig.json  ./src/index.ts"
+}
