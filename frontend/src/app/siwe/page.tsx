@@ -21,6 +21,7 @@ export default function SIWEPage() {
   const [authSuccess, setAuthSuccess] = useState(false);
 
   useEffect(() => {
+    // Check if user is already authenticated
     if (isAuthenticated()) {
       router.push("/dashboard");
     }
@@ -36,13 +37,19 @@ export default function SIWEPage() {
       setIsLoading(true);
       setError(null);
 
-      await siweAuthenticate(address, chainId, async (message: string) => {
-        const signature = await signMessageAsync({ message });
-        return signature;
-      });
+      // Execute SIWE authentication flow
+      await siweAuthenticate(
+        address,
+        chainId,
+        async (message: string) => {
+          const signature = await signMessageAsync({ message });
+          return signature;
+        }
+      );
 
       setAuthSuccess(true);
 
+      // Redirect to dashboard after 2 seconds
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
@@ -60,17 +67,18 @@ export default function SIWEPage() {
 
   return (
     <div className="min-h-screen bg-gray-950 relative overflow-hidden flex items-center justify-center p-4">
+      {/* Background */}
       <div className="fixed inset-0 bg-gradient-to-br from-gray-950 via-purple-950/50 to-gray-950" />
       <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-10" />
 
       {/* Floating orbs */}
       <div className="fixed top-20 left-20 w-64 h-64 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
-      <div
-        className="fixed bottom-20 right-20 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse"
+      <div className="fixed bottom-20 right-20 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse"
         style={{ animationDelay: "1s" }}
       />
 
       <div className="relative z-10 w-full max-w-md">
+        {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2 mb-8">
           <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center">
             <Heart className="w-7 h-7 text-white fill-white" />

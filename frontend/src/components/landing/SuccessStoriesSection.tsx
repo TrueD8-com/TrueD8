@@ -179,7 +179,7 @@ export function SuccessStoriesSection() {
                   </p>
 
                   <p className="text-gray-300 leading-relaxed italic">
-                    "{story.story}"
+                    &ldquo;{story.story}&rdquo;
                   </p>
                 </div>
               </Card>
