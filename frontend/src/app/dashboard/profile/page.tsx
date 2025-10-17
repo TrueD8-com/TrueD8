@@ -29,8 +29,8 @@ export default function ProfilePage() {
           const data = await authApi.getMe(token);
           setUserData(data);
         }
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
+      } catch (err) {
+        console.error("Failed to fetch user data:", err);
       } finally {
         setIsLoading(false);
       }
@@ -50,7 +50,7 @@ export default function ProfilePage() {
     );
   }
 
-  const hasProfile = !!userData?.profile;
+  const hasProfile = !!(userData?.name && userData?.bio);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-20 md:pb-8">
@@ -135,13 +135,26 @@ export default function ProfilePage() {
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                     <div>
                       <h2 className="text-2xl font-bold text-white mb-1">
-                        {userData.profile.display_name}, {userData.profile.age}
+                        {userData.name} {userData.lastName}
+                        {userData.username && (
+                          <span className="text-gray-400 text-lg ml-2">
+                            @{userData.username}
+                          </span>
+                        )}
                       </h2>
                       <div className="flex items-center gap-4 text-gray-400">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {userData.profile.location}
-                        </span>
+                        {userData.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            {userData.address?.city || "Location"}
+                          </span>
+                        )}
+                        {userData.birthdate && (
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {new Date(userData.birthdate).toLocaleDateString()}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
@@ -149,19 +162,23 @@ export default function ProfilePage() {
                     </Badge>
                   </div>
 
-                  <p className="text-gray-300 mb-4">{userData.profile.bio}</p>
+                  {userData.bio && (
+                    <p className="text-gray-300 mb-4">{userData.bio}</p>
+                  )}
 
                   {/* Interests */}
-                  <div className="flex flex-wrap gap-2">
-                    {userData.profile.interests.map((interest, i) => (
-                      <Badge
-                        key={i}
-                        className="bg-white/10 text-purple-300 border-white/20"
-                      >
-                        {interest}
-                      </Badge>
-                    ))}
-                  </div>
+                  {userData.interests && userData.interests.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {userData.interests.map((interest, i) => (
+                        <Badge
+                          key={i}
+                          className="bg-white/10 text-purple-300 border-white/20"
+                        >
+                          {interest}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -177,14 +194,26 @@ export default function ProfilePage() {
               </Button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {userData.profile.photos.map((photo, i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 flex items-center justify-center"
-                >
-                  <Camera className="w-8 h-8 text-gray-500" />
-                </div>
-              ))}
+              {userData.photos && userData.photos.length > 0 ? (
+                userData.photos.map((photo, i) => (
+                  <div
+                    key={i}
+                    className="aspect-square rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 overflow-hidden"
+                  >
+                    {photo.url ? (
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL || ""}${photo.url}`}
+                        alt={`Photo ${i + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Camera className="w-8 h-8 text-gray-500" />
+                      </div>
+                    )}
+                  </div>
+                ))
+              ) : null}
               <button className="aspect-square rounded-xl border-2 border-dashed border-white/20 hover:border-purple-500/50 flex items-center justify-center transition-all group">
                 <div className="text-center">
                   <Camera className="w-8 h-8 text-gray-500 group-hover:text-purple-400 mx-auto mb-2 transition-colors" />
@@ -197,63 +226,68 @@ export default function ProfilePage() {
           </Card>
 
           {/* Wallet Info */}
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-5 h-5 text-purple-400" />
-              <h3 className="text-xl font-bold text-white">
-                Blockchain Identity
-              </h3>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-sm text-gray-400">Wallet Address</span>
-                <span className="text-sm text-white font-mono">
-                  {userData.user.wallet.address.slice(0, 6)}...
-                  {userData.user.wallet.address.slice(-4)}
-                </span>
+          {userData.wallet && (
+            <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Shield className="w-5 h-5 text-purple-400" />
+                <h3 className="text-xl font-bold text-white">
+                  Blockchain Identity
+                </h3>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-sm text-gray-400">Chain</span>
-                <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
-                  {userData.user.wallet.chain === "1"
-                    ? "Ethereum"
-                    : `Chain ${userData.user.wallet.chain}`}
-                </Badge>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                  <span className="text-sm text-gray-400">Wallet Address</span>
+                  <span className="text-sm text-white font-mono">
+                    {userData.wallet.address
+                      ? `${userData.wallet.address.slice(0, 6)}...${userData.wallet.address.slice(-4)}`
+                      : "Not connected"}
+                  </span>
+                </div>
+                {userData.wallet.provider && (
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                    <span className="text-sm text-gray-400">Provider</span>
+                    <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                      {userData.wallet.provider}
+                    </Badge>
+                  </div>
+                )}
+                {userData.wallet.connectedAt && (
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                    <span className="text-sm text-gray-400">Connected</span>
+                    <span className="text-sm text-white">
+                      {new Date(userData.wallet.connectedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-sm text-gray-400">Member Since</span>
-                <span className="text-sm text-white">
-                  {new Date(userData.user.created_at).toLocaleDateString()}
-                </span>
-              </div>
-            </div>
-          </Card>
+            </Card>
+          )}
 
           {/* Stats */}
-          {userData.snapshots && (
+          {userData.metrics && (
             <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
               <h3 className="text-xl font-bold text-white mb-4">Your Stats</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="text-center p-4 rounded-xl bg-white/5">
                   <Heart className="w-6 h-6 text-pink-400 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">
-                    {userData.snapshots.likes_received}
+                    {userData.metrics.likesReceived || 0}
                   </div>
                   <div className="text-sm text-gray-400">Likes Received</div>
                 </div>
                 <div className="text-center p-4 rounded-xl bg-white/5">
                   <User className="w-6 h-6 text-purple-400 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">
-                    {userData.snapshots.matches_count}
+                    {userData.metrics.matchesCount || 0}
                   </div>
                   <div className="text-sm text-gray-400">Matches</div>
                 </div>
                 <div className="text-center p-4 rounded-xl bg-white/5">
-                  <Calendar className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                  <Heart className="w-6 h-6 text-rose-400 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">
-                    {userData.snapshots.events_attended}
+                    {userData.metrics.favoritesCount || 0}
                   </div>
-                  <div className="text-sm text-gray-400">Events</div>
+                  <div className="text-sm text-gray-400">Favorites</div>
                 </div>
               </div>
             </Card>

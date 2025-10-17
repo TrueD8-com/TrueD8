@@ -1,28 +1,19 @@
-import { http, createConfig } from "wagmi";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { mainnet, sepolia, base, baseSepolia } from "wagmi/chains";
-import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "";
 
-export const config = createConfig({
+if (!projectId) {
+  console.warn(
+    "⚠️ WalletConnect Project ID is not set. Get one at https://cloud.walletconnect.com"
+  );
+}
+
+export const config = getDefaultConfig({
+  appName: "TrueD8",
+  projectId: projectId,
   chains: [mainnet, sepolia, base, baseSepolia],
-  connectors: [
-    injected(),
-    coinbaseWallet({
-      appName: "TrueD8",
-      preference: "smartWalletOnly",
-    }),
-    walletConnect({
-      projectId,
-    }),
-  ],
   ssr: true,
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [base.id]: http(),
-    [baseSepolia.id]: http(),
-  },
 });
 
 declare module "wagmi" {
