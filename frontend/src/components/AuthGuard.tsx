@@ -15,7 +15,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (!isAuthenticated()) {
+      const authenticated = await isAuthenticated();
+      if (!authenticated) {
         router.push("/siwe");
       } else {
         setIsLoading(false);

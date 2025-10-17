@@ -21,9 +21,12 @@ export default function SIWEPage() {
   const [authSuccess, setAuthSuccess] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated()) {
-      router.push("/dashboard");
-    }
+    // Check if user is already authenticated
+    isAuthenticated().then((authenticated) => {
+      if (authenticated) {
+        router.push("/dashboard");
+      }
+    });
   }, [router]);
 
   const handleSignIn = async () => {
@@ -37,8 +40,22 @@ export default function SIWEPage() {
       setError(null);
 
       await siweAuthenticate(address, chainId, async (message: string) => {
-        const signature = await signMessageAsync({ message });
-        return signature;
+        // Use window.ethereum directly instead of wagmi's signMessageAsync
+        if (typeof window.ethereum !== "undefined") {
+          try {
+            const signature = await window.ethereum.request({
+              method: "personal_sign",
+              params: [message, address],
+            });
+            return signature as string;
+          } catch (err) {
+            throw new Error("User rejected the signature request");
+          }
+        } else {
+          // Fallback to wagmi if window.ethereum is not available
+          const signature = await signMessageAsync({ message });
+          return signature;
+        }
       });
 
       setAuthSuccess(true);

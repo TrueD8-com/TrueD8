@@ -6,7 +6,7 @@ import { authApi } from "./api";
  * 1. Get nonce from backend
  * 2. Create SIWE message using siwe package
  * 3. Sign message with wallet
- * 4. Verify signature and get tokens
+ * 4. Login with signature (session-based)
  */
 export async function siweAuthenticate(
   address: string,
@@ -15,33 +15,41 @@ export async function siweAuthenticate(
 ) {
   try {
     // Step 1: Get nonce from backend
-    const { nonce, domain } = await authApi.getNonce(address);
+    const { nonce } = await authApi.getNonce();
+    console.log("LOG 1: Nonce received successfully:", nonce);
+    const domain = window.location.host.replace("localhost", "127.0.0.1");
+    const origin = window.location.origin.replace("localhost", "127.0.0.1");
+
+    console.log("Domain:", domain, "Origin:", origin);
 
     // Step 2: Create SIWE message using siwe package
     const siweMessage = new SiweMessage({
-      domain: domain,
+      domain: domain, // Use actual domain with port
       address: address,
       statement: "Sign in with Ethereum to TrueD8",
-      uri: window.location.origin,
+      uri: origin, // Use actual origin (http, not https)
       version: "1",
       chainId: chainId,
       nonce: nonce,
+      issuedAt: new Date().toISOString(),
+      expirationTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
     });
 
     // Prepare the message string
     const messageString = siweMessage.prepareMessage();
+    console.log("LOG 2: Message prepared for signing:", messageString);
 
     // Step 3: Sign message with wallet
     const signature = await signMessage(messageString);
+    console.log("LOG 3: Wallet signature received.");
 
-    // Step 4: Verify signature and get tokens from backend
-    const authData = await authApi.verify(messageString, signature);
+    // Step 4: Login with signature
+    const authData = await authApi.login(messageString, signature);
+    console.log("LOG 4: Login API call successful.");
 
-    // Store tokens
-    localStorage.setItem("access_token", authData.accessToken);
-    localStorage.setItem("refresh_token", authData.refreshToken);
-    localStorage.setItem("user_id", authData.user.id.toString());
-    localStorage.setItem("wallet_address", authData.user.wallet.address);
+    // Store wallet info in localStorage
+    localStorage.setItem("wallet_address", authData.address);
+    localStorage.setItem("user_id", authData.userId);
 
     return authData;
   } catch (error) {
@@ -68,65 +76,40 @@ export async function verifySiweMessageLocally(
 }
 
 /**
- * Get stored access token
- */
-export function getAccessToken(): string | null {
-  return localStorage.getItem("access_token");
-}
-
-/**
- * Get stored refresh token
- */
-export function getRefreshToken(): string | null {
-  return localStorage.getItem("refresh_token");
-}
-
-/**
  * Clear all auth data
  */
 export function clearAuthData(): void {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
   localStorage.removeItem("user_id");
   localStorage.removeItem("wallet_address");
 }
 
 /**
- * Check if user is authenticated
+ * Check if user is authenticated (checks with backend)
  */
-export function isAuthenticated(): boolean {
-  return !!getAccessToken();
+export async function isAuthenticated(): Promise<boolean> {
+  try {
+    const result = await authApi.checkAuth();
+    return result.isAuth;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * Check if user appears to be authenticated (local check only)
+ */
+export function hasLocalAuthData(): boolean {
+  return !!localStorage.getItem("wallet_address");
 }
 
 /**
  * Logout user
  */
 export async function logout(): Promise<void> {
-  const token = getAccessToken();
-  if (token) {
-    try {
-      await authApi.logout(token);
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+  try {
+    await authApi.logout();
+  } catch (error) {
+    console.error("Logout error:", error);
   }
   clearAuthData();
-}
-
-/**
- * Refresh access token
- */
-export async function refreshAccessToken(): Promise<string | null> {
-  const refreshToken = getRefreshToken();
-  if (!refreshToken) return null;
-
-  try {
-    const { accessToken } = await authApi.refresh(refreshToken);
-    localStorage.setItem("access_token", accessToken);
-    return accessToken;
-  } catch (error) {
-    console.error("Token refresh error:", error);
-    clearAuthData();
-    return null;
-  }
 }
