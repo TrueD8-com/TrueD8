@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { authApi, UserResponse } from "@/lib/api";
-import { getAccessToken } from "@/lib/siwe";
 
 export default function DashboardPage() {
   const [userData, setUserData] = useState<UserResponse | null>(null);
@@ -25,11 +24,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = getAccessToken();
-        if (token) {
-          const data = await authApi.getMe(token);
-          setUserData(data);
-        }
+        const data = await authApi.getMe();
+        setUserData(data);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       } finally {

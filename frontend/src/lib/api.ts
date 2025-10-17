@@ -1,25 +1,18 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.trued8.com";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.trued8.com";
 
 export interface NonceResponse {
   nonce: string;
-  domain: string;
-  chain: string;
 }
 
-export interface VerifyResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: {
-    id: number;
-    wallet: {
-      address: string;
-      chain: string;
-    };
-  };
+export interface LoginResponse {
+  address: string;
+  userId: string;
 }
 
-export interface RefreshResponse {
-  accessToken: string;
+export interface AuthCheckResponse {
+  isAuth: boolean;
+  address?: string;
 }
 
 export interface Address {
@@ -150,46 +143,51 @@ export interface Message {
 
 // Auth API
 export const authApi = {
-  async getNonce(address: string): Promise<NonceResponse> {
-    const response = await fetch(`${API_URL}/auth/siwe/nonce?address=${address}`);
+  async getNonce(): Promise<NonceResponse> {
+    const response = await fetch(`${API_URL}/auth/siwe/nonce`, {
+      credentials: "include",
+    });
     if (!response.ok) throw new Error("Failed to get nonce");
-    return response.json();
+    const data = await response.json();
+    return data.data || data;
   },
 
-  async verify(message: string, signature: string): Promise<VerifyResponse> {
-    const response = await fetch(`${API_URL}/auth/siwe/verify`, {
+  async login(message: string, signature: string): Promise<LoginResponse> {
+    const response = await fetch(`${API_URL}/auth/siwe/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ message, signature }),
     });
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.message || "Verification failed");
+      throw new Error(error.message || "Login failed");
     }
-    return response.json();
+    const data = await response.json();
+    return data.data || data;
   },
 
-  async refresh(refreshToken: string): Promise<RefreshResponse> {
-    const response = await fetch(`${API_URL}/auth/refresh`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
+  async checkAuth(): Promise<AuthCheckResponse> {
+    const response = await fetch(`${API_URL}/auth/siwe/auth`, {
+      credentials: "include",
     });
-    if (!response.ok) throw new Error("Token refresh failed");
-    return response.json();
+    if (!response.ok) {
+      return { isAuth: false };
+    }
+    const data = await response.json();
+    return data.data || data;
   },
 
-  async logout(accessToken: string): Promise<void> {
-    const response = await fetch(`${API_URL}/auth/logout`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${accessToken}` },
+  async logout(): Promise<void> {
+    const response = await fetch(`${API_URL}/auth/siwe/logout`, {
+      method: "GET",
+      credentials: "include",
     });
     if (!response.ok) throw new Error("Logout failed");
   },
 
-  async getMe(accessToken: string): Promise<UserResponse> {
+  async getMe(): Promise<UserResponse> {
     const response = await fetch(`${API_URL}/user/getUserProfileInfo`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to get user data");
@@ -198,11 +196,7 @@ export const authApi = {
   },
 };
 
-// Helper function to get auth token
-const getAuthToken = () => {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("access_token");
-};
+// Note: Session-based auth uses cookies, no need for token helpers
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -277,12 +271,10 @@ export const userApi = {
     discoveryVisible?: boolean;
     discoveryGlobal?: boolean;
   }): Promise<ApiResponse<EditProfileResponse>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/editProfile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify(profileData),
@@ -292,12 +284,10 @@ export const userApi = {
   },
 
   async uploadPhoto(file: File): Promise<PhotoUploadResponse> {
-    const token = getAuthToken();
     const formData = new FormData();
     formData.append("image", file);
     const response = await fetch(`${API_URL}/user/photos/upload`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
       body: formData,
     });
@@ -306,13 +296,14 @@ export const userApi = {
     return data.data || (data as unknown as PhotoUploadResponse);
   },
 
-  async addPhoto(imageName: string, isPrimary: boolean): Promise<ApiResponse<PhotoResponse>> {
-    const token = getAuthToken();
+  async addPhoto(
+    imageName: string,
+    isPrimary: boolean
+  ): Promise<ApiResponse<PhotoResponse>> {
     const response = await fetch(`${API_URL}/user/photos/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify({ imageName, isPrimary }),
@@ -322,12 +313,10 @@ export const userApi = {
   },
 
   async setPrimaryPhoto(url: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/photos/setPrimary`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify({ url }),
@@ -337,12 +326,10 @@ export const userApi = {
   },
 
   async removePhoto(url: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/photos/remove`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify({ url }),
@@ -360,12 +347,10 @@ export const userApi = {
     phoneOp?: string;
     coordinates?: [number, number];
   }): Promise<ApiResponse<AddressResponse>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/setNewAddress`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify(addressData),
@@ -374,13 +359,14 @@ export const userApi = {
     return response.json();
   },
 
-  async changePassword(password: string, newPassword: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
+  async changePassword(
+    password: string,
+    newPassword: string
+  ): Promise<ApiResponse<void>> {
     const response = await fetch(`${API_URL}/user/changePassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify({ password, newPassword }),
@@ -389,13 +375,14 @@ export const userApi = {
     return response.json();
   },
 
-  async connectWallet(provider: string, address: string): Promise<ApiResponse<WalletResponse>> {
-    const token = getAuthToken();
+  async connectWallet(
+    provider: string,
+    address: string
+  ): Promise<ApiResponse<WalletResponse>> {
     const response = await fetch(`${API_URL}/user/wallet/connect`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
       body: JSON.stringify({ provider, address }),
@@ -405,12 +392,10 @@ export const userApi = {
   },
 
   async disconnectWallet(): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/wallet/disconnect`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       credentials: "include",
     });
@@ -421,14 +406,15 @@ export const userApi = {
 
 // Dating API
 export const datingApi = {
-  async discover(params?: { limit?: number; skip?: number }): Promise<UserProfile[]> {
-    const token = getAuthToken();
+  async discover(params?: {
+    limit?: number;
+    skip?: number;
+  }): Promise<UserProfile[]> {
     const queryParams = new URLSearchParams({
       limit: String(params?.limit || 30),
       skip: String(params?.skip || 0),
     });
     const response = await fetch(`${API_URL}/dating/discover?${queryParams}`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch discover feed");
@@ -437,10 +423,8 @@ export const datingApi = {
   },
 
   async likeUser(targetId: string): Promise<{ matchId?: string }> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/like/${targetId}`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to like user");
@@ -449,10 +433,8 @@ export const datingApi = {
   },
 
   async superlikeUser(targetId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/superlike/${targetId}`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to superlike user");
@@ -460,10 +442,8 @@ export const datingApi = {
   },
 
   async unlikeUser(targetId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/like/${targetId}`, {
       method: "DELETE",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to unlike user");
@@ -471,9 +451,7 @@ export const datingApi = {
   },
 
   async getMatches(): Promise<Match[]> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/matches`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch matches");
@@ -482,10 +460,8 @@ export const datingApi = {
   },
 
   async unmatch(matchId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/unmatch/${matchId}`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to unmatch");
@@ -493,9 +469,7 @@ export const datingApi = {
   },
 
   async getLikesSent(): Promise<Like[]> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/likes/sent`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch sent likes");
@@ -504,9 +478,7 @@ export const datingApi = {
   },
 
   async getLikesReceived(): Promise<Like[]> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/likes/received`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch received likes");
@@ -515,9 +487,7 @@ export const datingApi = {
   },
 
   async getLikesAnalytics(): Promise<{ sent: number; received: number }> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/analytics/likes`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch likes analytics");
@@ -526,10 +496,8 @@ export const datingApi = {
   },
 
   async addFavorite(targetId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/favorites/${targetId}`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to add favorite");
@@ -537,10 +505,8 @@ export const datingApi = {
   },
 
   async removeFavorite(targetId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/favorites/${targetId}`, {
       method: "DELETE",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to remove favorite");
@@ -548,9 +514,7 @@ export const datingApi = {
   },
 
   async getFavorites(): Promise<Favorite[]> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/favorites`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch favorites");
@@ -559,10 +523,8 @@ export const datingApi = {
   },
 
   async blockUser(targetId: string): Promise<ApiResponse<void>> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/block/${targetId}`, {
       method: "POST",
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to block user");
@@ -570,9 +532,7 @@ export const datingApi = {
   },
 
   async getConversations(): Promise<Conversation[]> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/conversations`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch conversations");
@@ -584,14 +544,12 @@ export const datingApi = {
     conversationId: string,
     params?: { limit?: number; before?: string }
   ): Promise<Message[]> {
-    const token = getAuthToken();
     const queryParams = new URLSearchParams();
     if (params?.limit) queryParams.append("limit", String(params.limit));
     if (params?.before) queryParams.append("before", params.before);
     const response = await fetch(
       `${API_URL}/dating/conversations/${conversationId}/messages?${queryParams}`,
       {
-        headers: { ...(token && { Authorization: `Bearer ${token}` }) },
         credentials: "include",
       }
     );
@@ -604,14 +562,12 @@ export const datingApi = {
     conversationId: string,
     messageData: { text?: string; mediaUrl?: string; type?: string }
   ): Promise<Message> {
-    const token = getAuthToken();
     const response = await fetch(
       `${API_URL}/dating/conversations/${conversationId}/messages`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
         },
         credentials: "include",
         body: JSON.stringify(messageData),
@@ -623,9 +579,7 @@ export const datingApi = {
   },
 
   async getAIPrompt(): Promise<AIPromptData> {
-    const token = getAuthToken();
     const response = await fetch(`${API_URL}/dating/ai/prompt`, {
-      headers: { ...(token && { Authorization: `Bearer ${token}` }) },
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch AI prompt");

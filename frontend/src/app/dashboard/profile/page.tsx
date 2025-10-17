@@ -15,7 +15,6 @@ import {
   Shield,
 } from "lucide-react";
 import { authApi, UserResponse } from "@/lib/api";
-import { getAccessToken } from "@/lib/siwe";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState<UserResponse | null>(null);
@@ -24,11 +23,8 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = getAccessToken();
-        if (token) {
-          const data = await authApi.getMe(token);
-          setUserData(data);
-        }
+        const data = await authApi.getMe();
+        setUserData(data);
       } catch (err) {
         console.error("Failed to fetch user data:", err);
       } finally {

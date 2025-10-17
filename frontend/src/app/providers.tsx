@@ -25,6 +25,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               accentColorForeground: "white",
               borderRadius: "large",
             })}
+            modalSize="compact"
           >
             {children}
           </RainbowKitProvider>
