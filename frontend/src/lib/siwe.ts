@@ -24,10 +24,10 @@ export async function siweAuthenticate(
 
     // Step 2: Create SIWE message using siwe package
     const siweMessage = new SiweMessage({
-      domain: domain, // Use actual domain with port
+      domain: domain,
       address: address,
       statement: "Sign in with Ethereum to TrueD8",
-      uri: origin, // Use actual origin (http, not https)
+      uri: origin,
       version: "1",
       chainId: chainId,
       nonce: nonce,
