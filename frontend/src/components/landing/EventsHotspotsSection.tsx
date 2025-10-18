@@ -10,25 +10,28 @@ import { AnimatedSection } from "./AnimatedSection";
 
 const upcomingEvents = [
   {
-    title: "Speed Dating Night",
-    location: "Downtown SF",
-    date: "Tonight, 8 PM",
+    title: "Fitness Date Challenge",
+    location: "PureGym",
+    date: "Tonight, 7 PM",
     attendees: 24,
     badge: "Hot",
+    venue: "Partner Venue",
   },
   {
-    title: "Mystery Match Trail",
-    location: "Golden Gate Park",
-    date: "Tomorrow, 6 PM",
+    title: "Blind Movie Date",
+    location: "Odeon Cinema",
+    date: "Tomorrow, 8 PM",
     attendees: 18,
-    badge: "Trending",
+    badge: "Mystery",
+    venue: "Partner Venue",
   },
   {
-    title: "Coffee Meetup",
-    location: "Marina District",
+    title: "Coffee Quest Meetup",
+    location: "Gail's Bakery",
     date: "This Weekend",
     attendees: 12,
-    badge: "New",
+    badge: "Casual",
+    venue: "Partner Venue",
   },
 ];
 
@@ -48,10 +51,10 @@ export function EventsHotspotsSection() {
             Events & Community
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
-            Meet in Real Life
+            Date in Real Life
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Join local events and discover trending communities near you
+            Meet at partner venues with exclusive date experiences and fun challenges
           </p>
         </AnimatedSection>
 

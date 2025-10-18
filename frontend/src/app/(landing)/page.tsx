@@ -10,8 +10,10 @@ import {
   HeroSection,
   SuccessStoriesSection,
   AIWeb3Section,
+  PartnerBrandsSection,
   HowItWorksSection,
   EventsHotspotsSection,
+  RoadmapSection,
   CTASection,
 } from "@/components/landing";
 
@@ -77,8 +79,10 @@ export default function LandingPage() {
       <HeroSection />
       <SuccessStoriesSection />
       <AIWeb3Section />
+      <PartnerBrandsSection />
       <EventsHotspotsSection />
       <HowItWorksSection />
+      <RoadmapSection />
       <CTASection />
 
       <footer className="py-12 px-4 bg-black/50 backdrop-blur-xl border-t border-white/10 text-white relative">
@@ -91,8 +95,11 @@ export default function LandingPage() {
                 </div>
                 <span className="text-2xl font-bold">TrueD8</span>
               </div>
-              <p className="text-gray-400">
-                The future of dating powered by AI and Web3
+              <p className="text-gray-400 text-sm mb-4">
+                The first Web3 dating platform. Redefining dating with decentralized trust, gamified discovery, and local partnerships.
+              </p>
+              <p className="text-gray-500 text-xs">
+                Founded 2024 • Powered by Blockchain
               </p>
             </div>
 
@@ -135,22 +142,22 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <h4 className="font-bold mb-4">Company</h4>
+              <h4 className="font-bold mb-4">For Business</h4>
               <ul className="space-y-2 text-gray-400">
+                <li>
+                  <Link
+                    href="/siwe"
+                    className="hover:text-white transition-colors"
+                  >
+                    Become a Partner
+                  </Link>
+                </li>
                 <li>
                   <Link
                     href="/about"
                     className="hover:text-white transition-colors"
                   >
                     About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/blog"
-                    className="hover:text-white transition-colors"
-                  >
-                    Blog
                   </Link>
                 </li>
                 <li>
@@ -204,9 +211,14 @@ export default function LandingPage() {
           </div>
 
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © 2025 TrueD8. All rights reserved.
-            </p>
+            <div className="text-center md:text-left">
+              <p className="text-gray-400 text-sm">
+                © 2024-2025 TrueD8. All rights reserved.
+              </p>
+              <p className="text-gray-500 text-xs mt-1">
+                Trust. Connection. Growth. Built for Gen Z.
+              </p>
+            </div>
             <div className="flex gap-6">
               <Link
                 href="https://twitter.com/trued8"

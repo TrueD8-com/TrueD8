@@ -10,6 +10,7 @@ import {
   Heart,
   Calendar,
   Coins,
+  Download,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -39,7 +40,10 @@ export function HeroSection() {
           variants={staggerContainer}
           className="text-center"
         >
-          <motion.div variants={fadeInUp} className="mb-6">
+          <motion.div variants={fadeInUp} className="mb-6 flex flex-wrap gap-3 justify-center">
+            <Badge className="bg-purple-600/20 backdrop-blur-sm text-purple-200 border-purple-500/50 px-4 py-2 text-sm font-semibold">
+              Now in Beta
+            </Badge>
             <Badge className="bg-white/10 backdrop-blur-sm text-purple-300 border-purple-500/30 px-4 py-2 text-sm">
               <Sparkles className="w-4 h-4 mr-2 inline" />
               The Future of Dating is Here
@@ -59,8 +63,8 @@ export function HeroSection() {
             variants={fadeInUp}
             className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
           >
-            Experience the next generation of dating powered by AI matchmaking,
-            blockchain rewards, and real-world connections
+            Date. Earn. Explore. The next generation of dating powered by AI matchmaking,
+            blockchain verification, and real-world connections
           </motion.p>
 
           <motion.div
@@ -84,9 +88,12 @@ export function HeroSection() {
                 size="lg"
                 variant="outline"
                 className="px-8 py-6 text-lg border-2 border-white/20 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10"
+                asChild
               >
-                <Sparkles className="w-5 h-5 mr-2" />
-                See How It Works
+                <a href="/pitch-deck.pdf" download>
+                  <Download className="w-5 h-5 mr-2" />
+                  Download Pitch Deck
+                </a>
               </Button>
             </motion.div>
           </motion.div>
