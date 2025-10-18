@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Brain, Shield, Award, Wallet, User, Sparkles } from "lucide-react";
+import { Brain, Shield, Award, Wallet, User, Sparkles, Image, MapPin, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./AnimatedSection";
 import { staggerContainer, scaleIn } from "./animations";
@@ -30,23 +30,23 @@ const features = [
     category: "ai",
   },
   {
-    icon: User,
-    title: "Own Your Data",
-    description: "Decentralized identity means you control your profile data, not us",
+    icon: Image,
+    title: "NFT Profiles",
+    description: "Own your dating profile as an NFT with verifiable reputation and dating history on-chain",
     color: "from-pink-500 to-purple-500",
     category: "web3",
   },
   {
-    icon: Award,
-    title: "NFT Achievements",
-    description: "Collect unique badges and milestones as NFTs you can showcase or trade",
+    icon: MapPin,
+    title: "MysteryMatch",
+    description: "Gamified dates with daily quests, badges, and smartwatch-guided surprise meetups",
     color: "from-purple-500 to-pink-500",
-    category: "web3",
+    category: "ai",
   },
   {
-    icon: Wallet,
-    title: "Earn Rewards",
-    description: "Get PYUSD tokens for genuine engagement, successful matches, and event participation",
+    icon: MessageSquare,
+    title: "Private Messaging",
+    description: "Wallet-to-wallet encrypted chats with decentralized protocols for maximum privacy",
     color: "from-pink-500 to-purple-500",
     category: "web3",
   },
@@ -164,9 +164,9 @@ export function AIWeb3Section() {
                       transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
                       className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1"
                     >
-                      $50+
+                      500+
                     </motion.div>
-                    <div className="text-xs text-gray-500">Avg. Earned</div>
+                    <div className="text-xs text-gray-500">Partners</div>
                   </div>
                   <div className="text-center">
                     <motion.div
