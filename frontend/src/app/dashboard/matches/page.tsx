@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, X, Star, MapPin, Sparkles, Check } from "lucide-react";
+import { Heart, X, Star, MapPin, Sparkles, Check, Bookmark } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import { datingApi, UserProfile } from "@/lib/api";
 import { toast } from "sonner";
@@ -76,6 +76,20 @@ export default function MatchesPage() {
     setCurrentIndex((prev) => prev + 1);
   };
 
+  const handleFavorite = async () => {
+    if (!currentProfile || actionLoading) return;
+    setActionLoading(true);
+    try {
+      await datingApi.addFavorite(currentProfile._id);
+      toast.success("Added to favorites! ⭐");
+    } catch (err) {
+      console.error("Failed to add favorite:", err);
+      toast.error("Failed to add favorite");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto pb-20 md:pb-8">
@@ -122,8 +136,8 @@ export default function MatchesPage() {
     );
   }
 
-  const primaryPhoto = currentProfile.photos?.find((p) => p.isPrimary) || currentProfile.photos?.[0];
-  const photoUrl = primaryPhoto?.url ? `${process.env.NEXT_PUBLIC_API_URL || ""}${primaryPhoto.url}` : null;
+  const allPhotos = currentProfile.photos || [];
+  const photoUrls = allPhotos.map(p => p.url ? `${process.env.NEXT_PUBLIC_API_URL || ""}${p.url}` : null).filter(Boolean) as string[];
 
   return (
     <div className="max-w-4xl mx-auto pb-20 md:pb-8">
@@ -171,9 +185,10 @@ export default function MatchesPage() {
           {currentProfile && (
             <SwipeCard
               profile={currentProfile}
-              photoUrl={photoUrl}
+              photoUrls={photoUrls}
               onLike={handleLike}
               onPass={handlePass}
+              onFavorite={handleFavorite}
             />
           )}
         </AnimatePresence>
@@ -214,15 +229,19 @@ export default function MatchesPage() {
 
 function SwipeCard({
   profile,
-  photoUrl,
+  photoUrls,
   onLike,
   onPass,
+  onFavorite,
 }: {
   profile: UserProfile;
-  photoUrl: string | null;
+  photoUrls: string[];
   onLike: () => void;
   onPass: () => void;
+  onFavorite: () => void;
 }) {
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0]);
@@ -240,6 +259,27 @@ function SwipeCard({
     }
   };
 
+  const handlePhotoClick = (e: React.MouseEvent) => {
+    if (photoUrls.length <= 1) return;
+
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+
+    if (clickX > width / 2) {
+      setCurrentPhotoIndex((prev) => (prev + 1) % photoUrls.length);
+    } else {
+      setCurrentPhotoIndex((prev) => (prev - 1 + photoUrls.length) % photoUrls.length);
+    }
+  };
+
+  const handleFavoriteClick = () => {
+    setIsFavorited(true);
+    onFavorite();
+  };
+
+  const currentPhotoUrl = photoUrls[currentPhotoIndex];
+
   return (
     <motion.div
       className="absolute inset-0"
@@ -253,11 +293,14 @@ function SwipeCard({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <Card className="border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden h-full relative">
-        {/* Photo */}
-        <div className="h-[400px] bg-gradient-to-br from-purple-500/20 to-pink-500/20 relative">
-          {photoUrl ? (
+        {/* Photo Gallery */}
+        <div
+          className="h-[400px] bg-gradient-to-br from-purple-500/20 to-pink-500/20 relative cursor-pointer"
+          onClick={handlePhotoClick}
+        >
+          {currentPhotoUrl ? (
             <img
-              src={photoUrl}
+              src={currentPhotoUrl}
               alt={profile.name || "Profile"}
               className="w-full h-full object-cover"
             />
@@ -266,6 +309,37 @@ function SwipeCard({
               <Heart className="w-24 h-24 text-white/20" />
             </div>
           )}
+
+          {/* Photo Indicators */}
+          {photoUrls.length > 1 && (
+            <div className="absolute top-2 left-0 right-0 flex gap-1 px-4">
+              {photoUrls.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`flex-1 h-1 rounded-full transition-all ${
+                    idx === currentPhotoIndex
+                      ? "bg-white"
+                      : "bg-white/30"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Favorite Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleFavoriteClick();
+            }}
+            className={`absolute bottom-4 right-4 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+              isFavorited
+                ? "bg-amber-500 text-white"
+                : "bg-black/30 backdrop-blur-sm text-white hover:bg-black/50"
+            }`}
+          >
+            <Bookmark className={`w-6 h-6 ${isFavorited ? "fill-white" : ""}`} />
+          </button>
 
           {/* Verification Badge */}
           {profile.verification?.photoVerified && (
