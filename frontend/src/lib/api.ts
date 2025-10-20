@@ -47,6 +47,7 @@ export interface Metrics {
 }
 
 export interface UserResponse {
+  _id?: string;
   name?: string;
   lastName?: string;
   username?: string;
@@ -89,6 +90,7 @@ export interface UserProfile {
   lastName?: string;
   username?: string;
   gender?: string;
+  birthdate?: string;
   bio?: string;
   interests?: string[];
   photos?: Array<{ url: string; isPrimary: boolean; uploadedAt: string }>;

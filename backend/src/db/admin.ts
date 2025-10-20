@@ -50,13 +50,13 @@ const adminSchema = new mongoose.Schema({
   wallet: [
     {
       currency: {
-        type:mongoose.ObjectId,
-        required:true,
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
       },
       value: {
-        type:Number,
-        required:true,
-        default:0,
+        type: Number,
+        required: true,
+        default: 0,
       }
     }
   ],

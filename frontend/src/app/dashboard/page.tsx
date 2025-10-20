@@ -52,7 +52,7 @@ export default function DashboardPage() {
     {
       icon: Calendar,
       label: "Events Attended",
-      value: 0, // TODO: Add events_attended to backend
+      value: 0,
       color: "from-blue-500 to-cyan-500",
     },
     {
@@ -71,12 +71,13 @@ export default function DashboardPage() {
       href: "/dashboard/profile",
       color: "purple",
       show: !userData?.onboardingCompleted,
+      // show: !userData?.name || !userData?.bio,
     },
     {
       icon: Heart,
       title: "Start Matching",
       description: "Discover people who share your interests",
-      href: "/dashboard/matches",
+      href: "/dashboard/discover",
       color: "pink",
       show: true,
     },
@@ -119,7 +120,8 @@ export default function DashboardPage() {
         </div>
         <p className="text-gray-400">
           {userData?.onboardingCompleted
-            ? "Your matches are waiting for you"
+            ? // {userData?.name && userData?.bio
+              "Your matches are waiting for you"
             : "Complete your profile to start matching"}
         </p>
       </motion.div>
@@ -209,6 +211,7 @@ export default function DashboardPage() {
 
         <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
           {!userData?.onboardingCompleted ? (
+            // {!userData?.name || !userData?.bio ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-gray-500" />
@@ -234,7 +237,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Profile Completion */}
-      {!userData?.profile && (
+      {(!userData?.name || !userData?.bio) && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

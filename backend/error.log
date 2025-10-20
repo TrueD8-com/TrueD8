@@ -159,3 +159,117 @@
   level: 'error',
   timestamp: '2025-10-16T15:09:58.900Z'
 }
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'VEqbfLx8goOcDSHXj',
+    issuedAt: '2025-10-19T23:39:46.852Z',
+    expirationTime: '2025-10-19T23:44:46.852Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:39:47.347Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'GLkEYSDyfgkU50Hse',
+    issuedAt: '2025-10-19T23:39:51.367Z',
+    expirationTime: '2025-10-19T23:44:51.367Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:39:51.608Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: '4vFqt5cRJbrFvYkiE',
+    issuedAt: '2025-10-19T23:40:31.988Z',
+    expirationTime: '2025-10-19T23:45:31.988Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:40:32.831Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'nP6rRzZc04ksAw5Yh',
+    issuedAt: '2025-10-19T23:40:59.290Z',
+    expirationTime: '2025-10-19T23:45:59.290Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:40:59.481Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68f577b69b0d9ac718661dd0.png'",
+  level: 'error',
+  timestamp: '2025-10-19T23:43:50.684Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68f579629b0d9ac718661dd1.png'",
+  level: 'error',
+  timestamp: '2025-10-19T23:50:58.072Z'
+}
