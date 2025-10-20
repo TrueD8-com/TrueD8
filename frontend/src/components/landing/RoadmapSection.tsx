@@ -45,7 +45,7 @@ export function RoadmapSection() {
             Our Journey
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            From beta to global platform - see what's next for TrueD8
+            From beta to global platform - see what&apos;s next for TrueD8
           </p>
         </AnimatedSection>
 

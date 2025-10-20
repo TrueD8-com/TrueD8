@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,25 +14,31 @@ import {
   Edit,
   Camera,
   Shield,
+  Settings,
 } from "lucide-react";
 import { authApi, UserResponse } from "@/lib/api";
-
+import { EditProfileModal } from "@/components/profile/EditProfileModal";
+import { PhotoUploader } from "@/components/profile/PhotoUploader";
+import Image from "next/image";
 export default function ProfilePage() {
+  const router = useRouter();
   const [userData, setUserData] = useState<UserResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+
+  const fetchUserData = async () => {
+    try {
+      const data = await authApi.getMe();
+      setUserData(data);
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await authApi.getMe();
-        setUserData(data);
-      } catch (err) {
-        console.error("Failed to fetch user data:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchUserData();
   }, []);
 
@@ -61,10 +68,22 @@ export default function ProfilePage() {
           </p>
         </div>
         {hasProfile && (
-          <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white">
-            <Edit className="w-4 h-4 mr-2" />
-            Edit Profile
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => router.push("/dashboard/profile/preferences")}
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Preferences
+            </Button>
+            <Button
+              onClick={() => setIsEditModalOpen(true)}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              Edit Profile
+            </Button>
+          </div>
         )}
       </div>
 
@@ -83,12 +102,13 @@ export default function ProfilePage() {
                 Create Your Profile
               </h2>
               <p className="text-gray-400 mb-8">
-                Add your photos, interests, and preferences to start finding your
-                perfect match. Our AI will use this information to suggest the
-                best matches for you.
+                Add your photos, interests, and preferences to start finding
+                your perfect match. Our AI will use this information to suggest
+                the best matches for you.
               </p>
               <Button
                 size="lg"
+                onClick={() => setIsEditModalOpen(true)}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
               >
                 Get Started
@@ -101,8 +121,8 @@ export default function ProfilePage() {
         <div className="space-y-6">
           {/* Profile Header Card */}
           <Card className="border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
-            {/* Cover Photo */}
-            <div className="h-32 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 relative">
+            {/* Cover Photo - Commented out for now */}
+            {/* <div className="h-32 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 relative">
               <Button
                 size="sm"
                 variant="ghost"
@@ -111,17 +131,34 @@ export default function ProfilePage() {
                 <Camera className="w-4 h-4 mr-2" />
                 Change Cover
               </Button>
-            </div>
+            </div> */}
 
             {/* Profile Info */}
             <div className="p-6">
               <div className="flex flex-col md:flex-row gap-6">
                 {/* Profile Picture */}
-                <div className="relative -mt-16 md:-mt-20">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center border-4 border-gray-950">
-                    <User className="w-16 h-16 text-white" />
-                  </div>
-                  <button className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-purple-600 hover:bg-purple-700 flex items-center justify-center">
+                <div className="relative">
+                  {userData.photos?.find((p) => p.isPrimary)?.url ? (
+                    <div className="w-32 h-32 rounded-full border-4 border-gray-950 overflow-hidden">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL || ""}${
+                          userData.photos.find((p) => p.isPrimary)!.url
+                        }`}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                        width={128}
+                        height={128}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center border-4 border-gray-950">
+                      <User className="w-16 h-16 text-white" />
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setIsPhotoModalOpen(true)}
+                    className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-purple-600 hover:bg-purple-700 flex items-center justify-center"
+                  >
                     <Camera className="w-4 h-4 text-white" />
                   </button>
                 </div>
@@ -184,33 +221,45 @@ export default function ProfilePage() {
           <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-white">Photos</h3>
-              <Button size="sm" variant="ghost" className="text-purple-400">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-purple-400"
+                onClick={() => setIsPhotoModalOpen(true)}
+              >
                 <Camera className="w-4 h-4 mr-2" />
                 Add Photos
               </Button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {userData.photos && userData.photos.length > 0 ? (
-                userData.photos.map((photo, i) => (
-                  <div
-                    key={i}
-                    className="aspect-square rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 overflow-hidden"
-                  >
-                    {photo.url ? (
-                      <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL || ""}${photo.url}`}
-                        alt={`Photo ${i + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Camera className="w-8 h-8 text-gray-500" />
-                      </div>
-                    )}
-                  </div>
-                ))
-              ) : null}
-              <button className="aspect-square rounded-xl border-2 border-dashed border-white/20 hover:border-purple-500/50 flex items-center justify-center transition-all group">
+              {userData.photos && userData.photos.length > 0
+                ? userData.photos.map((photo, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 overflow-hidden"
+                    >
+                      {photo.url ? (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL || ""}${
+                            photo.url
+                          }`}
+                          alt={`Photo ${i + 1}`}
+                          className="w-full h-full object-cover"
+                          width={300}
+                          height={300}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Camera className="w-8 h-8 text-gray-500" />
+                        </div>
+                      )}
+                    </div>
+                  ))
+                : null}
+              <button
+                onClick={() => setIsPhotoModalOpen(true)}
+                className="aspect-square rounded-xl border-2 border-dashed border-white/20 hover:border-purple-500/50 flex items-center justify-center transition-all group"
+              >
                 <div className="text-center">
                   <Camera className="w-8 h-8 text-gray-500 group-hover:text-purple-400 mx-auto mb-2 transition-colors" />
                   <span className="text-sm text-gray-500 group-hover:text-purple-400 transition-colors">
@@ -235,7 +284,10 @@ export default function ProfilePage() {
                   <span className="text-sm text-gray-400">Wallet Address</span>
                   <span className="text-sm text-white font-mono">
                     {userData.wallet.address
-                      ? `${userData.wallet.address.slice(0, 6)}...${userData.wallet.address.slice(-4)}`
+                      ? `${userData.wallet.address.slice(
+                          0,
+                          6
+                        )}...${userData.wallet.address.slice(-4)}`
                       : "Not connected"}
                   </span>
                 </div>
@@ -251,7 +303,9 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
                     <span className="text-sm text-gray-400">Connected</span>
                     <span className="text-sm text-white">
-                      {new Date(userData.wallet.connectedAt).toLocaleDateString()}
+                      {new Date(
+                        userData.wallet.connectedAt
+                      ).toLocaleDateString()}
                     </span>
                   </div>
                 )}
@@ -290,6 +344,20 @@ export default function ProfilePage() {
           )}
         </div>
       )}
+
+      {/* Modals */}
+      <EditProfileModal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        user={userData}
+        onProfileUpdated={fetchUserData}
+      />
+      <PhotoUploader
+        open={isPhotoModalOpen}
+        onOpenChange={setIsPhotoModalOpen}
+        user={userData}
+        onPhotosUpdated={fetchUserData}
+      />
     </div>
   );
 }
