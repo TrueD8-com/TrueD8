@@ -40,19 +40,19 @@ export default function DashboardPage() {
     {
       icon: Heart,
       label: "Likes Received",
-      value: userData?.snapshots?.likes_received || 0,
+      value: userData?.metrics?.likesReceived || 0,
       color: "from-pink-500 to-rose-500",
     },
     {
       icon: Users,
       label: "Matches",
-      value: userData?.snapshots?.matches_count || 0,
+      value: userData?.metrics?.matchesCount || 0,
       color: "from-purple-500 to-pink-500",
     },
     {
       icon: Calendar,
       label: "Events Attended",
-      value: userData?.snapshots?.events_attended || 0,
+      value: 0,
       color: "from-blue-500 to-cyan-500",
     },
     {
@@ -70,13 +70,14 @@ export default function DashboardPage() {
       description: "Add photos and interests to get better matches",
       href: "/dashboard/profile",
       color: "purple",
-      show: !userData?.profile,
+      show: !userData?.onboardingCompleted,
+      // show: !userData?.name || !userData?.bio,
     },
     {
       icon: Heart,
       title: "Start Matching",
       description: "Discover people who share your interests",
-      href: "/dashboard/matches",
+      href: "/dashboard/discover",
       color: "pink",
       show: true,
     },
@@ -111,15 +112,16 @@ export default function DashboardPage() {
       >
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-3xl md:text-4xl font-bold text-white">
-            Welcome back{userData?.profile?.display_name ? `, ${userData.profile.display_name}` : ""}!
+            Welcome back{userData?.name ? `, ${userData.name}` : ""}!
           </h1>
           <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
             Online
           </Badge>
         </div>
         <p className="text-gray-400">
-          {userData?.profile
-            ? "Your matches are waiting for you"
+          {userData?.onboardingCompleted
+            ? // {userData?.name && userData?.bio
+              "Your matches are waiting for you"
             : "Complete your profile to start matching"}
         </p>
       </motion.div>
@@ -208,7 +210,8 @@ export default function DashboardPage() {
         </div>
 
         <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
-          {!userData?.profile ? (
+          {!userData?.onboardingCompleted ? (
+            // {!userData?.name || !userData?.bio ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-gray-500" />
@@ -234,7 +237,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Profile Completion */}
-      {!userData?.profile && (
+      {(!userData?.name || !userData?.bio) && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

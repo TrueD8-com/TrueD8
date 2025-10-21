@@ -54,6 +54,7 @@ authRoutes.get(
   rateLimiterMiddleware,
   tryCatch((req, res, next) => {
     const nonce = generateNonce();
+    console.log("Generated nonce:", nonce);
     req.session.siweNonce = nonce;
     successRes(res, "", { nonce });
   })

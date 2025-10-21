@@ -7,7 +7,7 @@ export const fadeInUp = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.4, 0, 0.2, 1],
     },
   },
 };
@@ -30,7 +30,7 @@ export const scaleIn = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: [0.4, 0, 0.2, 1],
     },
   },
 };

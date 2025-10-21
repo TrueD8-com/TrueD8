@@ -738,3 +738,1120 @@
   level: 'info',
   timestamp: '2025-10-16T17:37:59.510Z'
 }
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 66 103.334 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:39:46.865Z'
+}
+{
+  message: '::1 "OPTIONS /api/auth/siwe/login HTTP/1.1" 204 0 0.774 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:39:47.186Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'VEqbfLx8goOcDSHXj',
+    issuedAt: '2025-10-19T23:39:46.852Z',
+    expirationTime: '2025-10-19T23:44:46.852Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:39:47.347Z'
+}
+{
+  message: '401 - SIWE validation failed',
+  level: 'warn',
+  timestamp: '2025-10-19T23:39:47.350Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 401 195 158.620 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:39:47.360Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 66 8.611 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:39:51.347Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'GLkEYSDyfgkU50Hse',
+    issuedAt: '2025-10-19T23:39:51.367Z',
+    expirationTime: '2025-10-19T23:44:51.367Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:39:51.608Z'
+}
+{
+  message: '401 - SIWE validation failed',
+  level: 'warn',
+  timestamp: '2025-10-19T23:39:51.609Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 401 195 22.710 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:39:51.620Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 66 4.339 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:31.986Z'
+}
+{
+  message: '::1 "OPTIONS /api/auth/siwe/login HTTP/1.1" 204 0 0.691 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:32.754Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: '4vFqt5cRJbrFvYkiE',
+    issuedAt: '2025-10-19T23:40:31.988Z',
+    expirationTime: '2025-10-19T23:45:31.988Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:40:32.831Z'
+}
+{
+  message: '401 - SIWE validation failed',
+  level: 'warn',
+  timestamp: '2025-10-19T23:40:32.832Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 401 195 17.268 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:32.863Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/nonce HTTP/1.1" 200 66 11.477 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:59.281Z'
+}
+{
+  message: '::1 "OPTIONS /api/auth/siwe/login HTTP/1.1" 204 0 0.342 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:59.455Z'
+}
+{
+  success: false,
+  data: SiweMessage {
+    scheme: undefined,
+    domain: '127.0.0.1:3000',
+    address: '0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA',
+    statement: 'Sign in with Ethereum to TrueD8',
+    uri: 'http://127.0.0.1:3000',
+    version: '1',
+    nonce: 'nP6rRzZc04ksAw5Yh',
+    issuedAt: '2025-10-19T23:40:59.290Z',
+    expirationTime: '2025-10-19T23:45:59.290Z',
+    notBefore: undefined,
+    requestId: undefined,
+    chainId: 1,
+    resources: undefined
+  },
+  error: SiweError {
+    type: 'Signature does not match address of the message.',
+    expected: undefined,
+    received: 'Resolved address to be 0x74859dBd2A5E1531De2F946EB6A630a4A6CB9eAA'
+  },
+  level: 'error',
+  message: 'SIWE validation failed',
+  timestamp: '2025-10-19T23:40:59.481Z'
+}
+{
+  message: '401 - SIWE validation failed',
+  level: 'warn',
+  timestamp: '2025-10-19T23:40:59.482Z'
+}
+{
+  message: '::1 "POST /api/auth/siwe/login HTTP/1.1" 401 195 22.428 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:40:59.498Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 17.221 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:41:12.777Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 304 - 5.718 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:41:15.715Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 304 - 7.280 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:41:15.732Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 419 61.476 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:41:15.904Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 419 64.049 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:41:15.908Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 6.617 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:42:24.300Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 10.937 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:42:24.318Z'
+}
+{
+  message: '::1 "OPTIONS /api/user/editProfile HTTP/1.1" 204 0 0.488 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:43:29.198Z'
+}
+{
+  message: '::1 "POST /api/user/editProfile HTTP/1.1" 200 104 173.455 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:43:29.402Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 552 19.891 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:43:29.524Z'
+}
+{
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'images/temp/68f577b69b0d9ac718661dd0.png',
+  storageErrors: [],
+  level: 'warn',
+  timestamp: '2025-10-19T23:43:50.683Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68f577b69b0d9ac718661dd0.png'",
+  level: 'error',
+  timestamp: '2025-10-19T23:43:50.684Z'
+}
+{
+  message: '::1 "POST /api/user/photos/upload HTTP/1.1" 500 192 773.459 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:43:51.832Z'
+}
+{
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'images/temp/68f579629b0d9ac718661dd1.png',
+  storageErrors: [],
+  level: 'warn',
+  timestamp: '2025-10-19T23:50:58.072Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68f579629b0d9ac718661dd1.png'",
+  level: 'error',
+  timestamp: '2025-10-19T23:50:58.072Z'
+}
+{
+  message: '::1 "POST /api/user/photos/upload HTTP/1.1" 500 192 17.437 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-19T23:50:58.094Z'
+}
+{
+  message: '::1 "POST /api/user/photos/upload HTTP/1.1" 200 94 230.841 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:29:44.099Z'
+}
+{
+  message: '::1 "OPTIONS /api/user/photos/add HTTP/1.1" 204 0 0.294 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:29:44.501Z'
+}
+{
+  message: '::1 "POST /api/user/photos/add HTTP/1.1" 200 175 125.210 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:29:44.646Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 19.533 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:29:44.778Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 7.152 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:30:45.030Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 155.115 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:30:49.959Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 123.820 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:30:50.127Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 14.809 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:32:45.051Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 18.111 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:32:47.109Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 39.735 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:32:47.255Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 655.227 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:50:15.612Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 360.730 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:50:16.404Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 211.492 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T05:50:16.528Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 167.707 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:07:31.898Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 155.880 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:07:33.127Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 185.494 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:07:33.147Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 38.033 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:12:21.883Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 30.530 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:12:23.953Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 85.562 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:12:24.045Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 149.165 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:12:31.668Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 6.408 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:12:38.595Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 228.300 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:38:27.651Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 212.551 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:38:29.071Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 67.448 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:38:29.138Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 64.876 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:41:23.983Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 16.444 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:41:24.463Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 20.474 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:41:24.507Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 3.947 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:45:19.883Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 2.808 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:45:19.952Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 14.000 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:45:20.204Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 18.957 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:45:20.248Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 103.097 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:45:31.336Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 13.766 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:06.464Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 93.630 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:07.421Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 156.960 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:07.433Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 2.663 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:12.738Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 6.919 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:16.068Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 21.880 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:24.222Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 57.643 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:25.296Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 125.214 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:25.439Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 2.634 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:46:49.100Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 202 3.356 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:48:02.757Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 20.593 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:49:24.801Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 163.816 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:49:25.284Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 104.222 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:49:25.418Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 209 1.203 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:49:25.858Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 404 209 6.812 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T06:49:40.237Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 89.944 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:30:55.480Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 532.926 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:32:09.735Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 168.356 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:32:09.813Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 77.429 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:32:12.505Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 1009.271 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:44:40.402Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 1190.354 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:44:47.347Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 712 67.661 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T07:44:47.434Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 304 - 1211.458 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:34:52.567Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 2393.920 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:34:59.906Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 120.157 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:35:00.128Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 304 - 7.688 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:36:24.232Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 121.094 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:36:25.139Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 125.997 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:36:25.315Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 64.353 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:36:26.077Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 136.165 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:36:26.107Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 1.949 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:38:57.900Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/imagesnull HTTP/1.1" 404 153 161.591 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:44:35.667Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/imagesnull HTTP/1.1" 404 153 233.800 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:49:36.956Z'
+}
+{
+  message: '::1 "POST /api/user/photos/upload HTTP/1.1" 200 94 1077.106 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:09.000Z'
+}
+{
+  message: '::1 "OPTIONS /api/user/photos/add HTTP/1.1" 204 0 22.394 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:09.240Z'
+}
+{
+  message: '::1 "POST /api/user/photos/add HTTP/1.1" 200 176 2132.335 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:11.424Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 133.856 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:11.654Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5f9287fac8034091a18a2.png HTTP/1.1" 200 446887 170.674 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:12.483Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5f9287fac8034091a18a2.png HTTP/1.1" 200 446887 257.808 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:12.484Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 20.972 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:56:19.174Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 304 - 532.308 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:31.156Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 84.951 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:32.755Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 80.209 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:32.882Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 43.517 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:40.250Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5f9287fac8034091a18a2.png HTTP/1.1" 200 446887 11.267 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:40.273Z'
+}
+{
+  message: '::ffff:127.0.0.1 "GET /api/images/users/68f26a44f7725b1663620f97/68f5c8c79b0d9ac718661dd2.png HTTP/1.1" 200 446887 67.793 "-" "node" \n',
+  level: 'info',
+  timestamp: '2025-10-20T08:58:40.294Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 63.484 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:22.631Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 304 - 106.168 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:22.771Z'
+}
+{
+  message: '::1 "OPTIONS /api/user/editProfile HTTP/1.1" 204 0 0.806 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:40.127Z'
+}
+{
+  message: '::1 "POST /api/user/editProfile HTTP/1.1" 200 104 367.105 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:41.027Z'
+}
+{
+  message: '::1 "OPTIONS /api/user/editProfile HTTP/1.1" 204 0 0.727 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:59.081Z'
+}
+{
+  message: '::1 "POST /api/user/editProfile HTTP/1.1" 200 104 29.412 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T09:06:59.167Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 133.555 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:01:26.609Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 134.214 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:01:30.910Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 63.308 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:01:30.980Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 54.882 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:12.544Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 91.300 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:12.558Z'
+}
+{
+  message: '::1 "POST /api/dating/superlike/68f615c74540c57316426aef HTTP/1.1" 200 49 915.402 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:26.826Z'
+}
+{
+  message: '::1 "POST /api/dating/like/68f615c74540c57316426af3 HTTP/1.1" 200 44 164.927 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:45.724Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 103.602 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:50.016Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 87.769 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:51.173Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 39.872 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T11:04:53.847Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 541.116 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:26:42.202Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 260.093 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:28:03.163Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 651.145 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:28:03.326Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 33.747 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:28:43.386Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 25.603 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:28:44.127Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 15.334 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T20:28:44.802Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 209.597 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:25:33.037Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 51.148 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:25:49.254Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 146.091 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:25:50.052Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 96.604 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:25:50.079Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 46.786 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:28:35.999Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 65.510 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:28:36.698Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 83.151 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:28:36.781Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 240.191 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:48:08.261Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 27.849 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:48:09.046Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 262.484 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:48:57.944Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 311.472 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T21:48:58.009Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 16.788 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:10:43.279Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 24.752 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:10:48.617Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 83.041 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:11:39.645Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 50.908 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:11:59.860Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 58.244 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:11:59.863Z'
+}
+{
+  message: '::1 "POST /api/dating/like/68f615c74540c57316426af3 HTTP/1.1" 200 44 123.292 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:12:09.367Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 53.672 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:12:10.762Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 67.421 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:12:11.715Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 69.534 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:12:13.673Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 448.607 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:12:13.955Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 50.259 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:16:04.630Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 93.360 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:16:04.965Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 74.020 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:16:05.057Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 1199.070 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:30.582Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 1001.776 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:30.638Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 990.555 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:30.643Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 96.271 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:30.687Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 153.786 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:39.984Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 728 190.902 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:39.991Z'
+}
+{
+  message: '::1 "POST /api/dating/like/68f615c74540c57316426aef HTTP/1.1" 200 44 91.781 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:41.841Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 42.758 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:44.040Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 55.370 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:44.076Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 28.432 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:44.081Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 26.863 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:44.084Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 45.761 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:46.333Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 53.942 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:46.356Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 108.029 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:47.805Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 24.881 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:49.843Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 39.927 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:49.912Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 43.236 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:49.963Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 80.372 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:49.969Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 56.644 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:52.712Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 89.354 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:29:52.736Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 1424 146.236 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:30:59.057Z'
+}
+{
+  message: '::1 "POST /api/dating/superlike/68f615c74540c57316426aef HTTP/1.1" 200 49 49.923 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:04.824Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 94.965 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:07.372Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 179.865 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:07.510Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 211.318 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:07.526Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 243.958 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:07.532Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 734 34.816 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:14.153Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 734 54.537 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:14.184Z'
+}
+{
+  message: '::1 "POST /api/dating/like/68f615c74540c57316426af3 HTTP/1.1" 200 44 97.746 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:17.789Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 50.467 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:20.126Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 82.807 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:20.190Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 59.233 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:20.241Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 59.165 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:20.285Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 106.397 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:22.287Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 119.284 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:31:22.289Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 34.367 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:11.582Z'
+}
+{
+  message: '::1 "GET /api/dating/discover?limit=30&skip=0 HTTP/1.1" 200 39 24.930 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:22.838Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 6.075 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:43.364Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 27.251 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:43.432Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 20.119 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:43.461Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 34.730 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:32:43.482Z'
+}
+{
+  message: '::1 "GET /api/auth/siwe/auth HTTP/1.1" 200 107 5.399 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:36:19.227Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 18.975 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:36:19.430Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 259.707 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:36:19.722Z'
+}
+{
+  message: '::1 "GET /api/dating/matches HTTP/1.1" 200 39 21.205 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:36:19.782Z'
+}
+{
+  message: '::1 "GET /api/user/getUserProfileInfo HTTP/1.1" 200 874 22.061 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" \n',
+  level: 'info',
+  timestamp: '2025-10-20T22:36:19.790Z'
+}

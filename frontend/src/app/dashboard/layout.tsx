@@ -2,7 +2,7 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { Button } from "@/components/ui/button";
-import { Heart, User, Calendar, Trophy, LogOut, Home } from "lucide-react";
+import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/lib/siwe";
@@ -10,10 +10,11 @@ import { motion } from "framer-motion";
 
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Dashboard" },
-  { href: "/dashboard/profile", icon: User, label: "Profile" },
+  { href: "/dashboard/discover", icon: Sparkles, label: "Discover" },
+  { href: "/dashboard/likes", icon: ThumbsUp, label: "Likes" },
   { href: "/dashboard/matches", icon: Heart, label: "Matches" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
-  { href: "/dashboard/rewards", icon: Trophy, label: "Rewards" },
+  { href: "/dashboard/profile", icon: User, label: "Profile" },
 ];
 
 export default function DashboardLayout({
