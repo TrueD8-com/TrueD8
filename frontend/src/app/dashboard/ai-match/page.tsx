@@ -251,19 +251,22 @@ export default function AIMatchPage() {
         </div>
       </div>
 
-      {/* AI Context Info (Development Only) */}
-      {aiContext && process.env.NODE_ENV === "development" && (
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-4 mt-6">
-          <details className="text-gray-400 text-xs">
-            <summary className="cursor-pointer font-semibold mb-2">
-              AI Context (Dev Only)
-            </summary>
-            <pre className="overflow-auto max-h-40">
-              {JSON.stringify(aiContext, null, 2)}
-            </pre>
-          </details>
-        </Card>
-      )}
+      {/* AI Context Info (Development Only - NOT shown in production) */}
+      {typeof window !== "undefined" &&
+        aiContext &&
+        process.env.NODE_ENV === "development" && (
+          <Card className="border border-amber-500/30 bg-amber-500/5 backdrop-blur-xl p-4 mt-6">
+            <details className="text-gray-400 text-xs">
+              <summary className="cursor-pointer font-semibold mb-2 text-amber-400 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                AI Context (Development Mode Only)
+              </summary>
+              <pre className="overflow-auto max-h-40 text-gray-300 bg-black/20 p-3 rounded-lg mt-2 border border-white/5">
+                {JSON.stringify(aiContext, null, 2)}
+              </pre>
+            </details>
+          </Card>
+        )}
     </div>
   );
 }

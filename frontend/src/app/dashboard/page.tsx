@@ -13,6 +13,7 @@ import {
   TrendingUp,
   Sparkles,
   ChevronRight,
+  Bot,
 } from "lucide-react";
 import Link from "next/link";
 import { authApi, UserResponse } from "@/lib/api";
@@ -72,6 +73,14 @@ export default function DashboardPage() {
       color: "purple",
       show: !userData?.onboardingCompleted,
       // show: !userData?.name || !userData?.bio,
+    },
+    {
+      icon: Bot,
+      title: "AI Matchmaker",
+      description: "Describe your ideal match and let AI find them",
+      href: "/dashboard/ai-match",
+      color: "gradient",
+      show: true,
     },
     {
       icon: Heart,
@@ -169,6 +178,8 @@ export default function DashboardPage() {
                     className={`w-12 h-12 rounded-xl bg-gradient-to-br ${
                       action.color === "purple"
                         ? "from-purple-500 to-pink-500"
+                        : action.color === "gradient"
+                        ? "from-purple-500 via-pink-500 to-orange-500"
                         : action.color === "pink"
                         ? "from-pink-500 to-rose-500"
                         : "from-blue-500 to-cyan-500"
