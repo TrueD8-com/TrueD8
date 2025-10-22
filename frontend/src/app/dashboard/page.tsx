@@ -91,6 +91,14 @@ export default function DashboardPage() {
       show: true,
     },
     {
+      icon: Trophy,
+      title: "Earn Rewards",
+      description: "Complete quests and unlock achievements for PYUSD",
+      href: "/dashboard/rewards",
+      color: "yellow",
+      show: true,
+    },
+    {
       icon: Calendar,
       title: "Join Events",
       description: "Meet people at local dating events",
@@ -182,6 +190,8 @@ export default function DashboardPage() {
                         ? "from-purple-500 via-pink-500 to-orange-500"
                         : action.color === "pink"
                         ? "from-pink-500 to-rose-500"
+                        : action.color === "yellow"
+                        ? "from-yellow-500 to-orange-500"
                         : "from-blue-500 to-cyan-500"
                     } flex items-center justify-center mb-4`}
                   >

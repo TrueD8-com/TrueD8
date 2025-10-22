@@ -15,6 +15,7 @@ const navItems = [
   { href: "/dashboard/likes", icon: ThumbsUp, label: "Likes" },
   { href: "/dashboard/matches", icon: Heart, label: "Matches" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
+  { href: "/dashboard/rewards", icon: Trophy, label: "Rewards" },
   { href: "/dashboard/profile", icon: User, label: "Profile" },
 ];
 

@@ -193,7 +193,7 @@ export function AIWeb3Section() {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {features.map((feature, i) => (
-            <motion.div key={i} variants={scaleIn}>
+            <motion.div key={i} variants={scaleIn} className="h-full">
               <Card className="relative border border-white/10 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 p-6 h-full group overflow-hidden">
                 {/* Category badge */}
                 <div className="absolute top-4 right-4">

@@ -256,6 +256,36 @@ export interface AIPromptData {
   constraints: string[];
 }
 
+export interface Event {
+  _id: string;
+  title: string;
+  description: string;
+  type: "speed_dating" | "mixer" | "mystery_match" | "group_activity";
+  date: string;
+  time: string;
+  location: {
+    name: string;
+    address: string;
+    coordinates: number[];
+  };
+  capacity: number;
+  attendees: number;
+  price: number;
+  image?: string;
+  tags: string[];
+  ageRange?: { min: number; max: number };
+  organizer?: string;
+  rsvpStatus?: "attending" | "interested" | "not_attending";
+}
+
+export interface EventRSVP {
+  eventId: string;
+  userId: string;
+  status: "attending" | "interested" | "not_attending";
+  ticketId?: string;
+  createdAt: string;
+}
+
 // User/Profile API
 export const userApi = {
   async editProfile(profileData: {
@@ -589,3 +619,300 @@ export const datingApi = {
     return data.data || data;
   },
 };
+
+// Events API (Mock - ready for backend implementation)
+export const eventsApi = {
+  async getEvents(): Promise<Event[]> {
+    // Mock data - replace with actual API call when backend is ready
+    // Future: add params for filtering
+    return mockEvents;
+  },
+
+  async getEvent(eventId: string): Promise<Event> {
+    const event = mockEvents.find((e) => e._id === eventId);
+    if (!event) throw new Error("Event not found");
+    return event;
+  },
+
+  async rsvpEvent(
+    eventId: string,
+    status: "attending" | "interested" | "not_attending"
+  ): Promise<ApiResponse<EventRSVP>> {
+    // Mock implementation - replace with actual API call
+    return {
+      success: true,
+      data: {
+        eventId,
+        userId: "current-user",
+        status,
+        createdAt: new Date().toISOString(),
+      },
+    };
+  },
+};
+
+// Rewards & Gamification Types
+export interface Quest {
+  _id: string;
+  title: string;
+  description: string;
+  type: "daily" | "weekly" | "achievement";
+  reward: number; // PYUSD amount
+  progress: number; // 0-100
+  target: number;
+  current: number;
+  isCompleted: boolean;
+  isClaimed: boolean;
+  expiresAt?: string;
+  icon: string;
+}
+
+export interface Achievement {
+  _id: string;
+  title: string;
+  description: string;
+  reward: number;
+  unlocked: boolean;
+  unlockedAt?: string;
+  icon: string;
+  rarity: "common" | "rare" | "epic" | "legendary";
+}
+
+export interface RewardsBalance {
+  total: number;
+  pending: number;
+  claimed: number;
+  lastUpdated: string;
+}
+
+// Rewards API (Mock - ready for backend implementation)
+export const rewardsApi = {
+  async getBalance(): Promise<RewardsBalance> {
+    // Mock data - replace with actual API call
+    return mockRewardsBalance;
+  },
+
+  async getQuests(): Promise<Quest[]> {
+    // Mock data - replace with actual API call
+    return mockQuests;
+  },
+
+  async claimQuest(questId: string): Promise<ApiResponse<{ amount: number; newBalance: number }>> {
+    // Mock implementation - replace with actual API call
+    const quest = mockQuests.find((q) => q._id === questId);
+    if (!quest || !quest.isCompleted || quest.isClaimed) {
+      throw new Error("Quest cannot be claimed");
+    }
+    quest.isClaimed = true;
+    mockRewardsBalance.total += quest.reward;
+    mockRewardsBalance.claimed += quest.reward;
+
+    return {
+      success: true,
+      message: "Reward claimed successfully",
+      data: {
+        amount: quest.reward,
+        newBalance: mockRewardsBalance.total,
+      },
+    };
+  },
+
+  async getAchievements(): Promise<Achievement[]> {
+    // Mock data - replace with actual API call
+    return mockAchievements;
+  },
+};
+
+// Mock rewards data
+const mockRewardsBalance: RewardsBalance = {
+  total: 350,
+  pending: 150,
+  claimed: 200,
+  lastUpdated: new Date().toISOString(),
+};
+
+const mockQuests: Quest[] = [
+  {
+    _id: "q1",
+    title: "Daily Login",
+    description: "Login to the app today",
+    type: "daily",
+    reward: 10,
+    progress: 100,
+    target: 1,
+    current: 1,
+    isCompleted: true,
+    isClaimed: false,
+    expiresAt: new Date(Date.now() + 86400000).toISOString(),
+    icon: "calendar",
+  },
+  {
+    _id: "q2",
+    title: "Send 5 Likes",
+    description: "Like 5 profiles today",
+    type: "daily",
+    reward: 25,
+    progress: 60,
+    target: 5,
+    current: 3,
+    isCompleted: false,
+    isClaimed: false,
+    expiresAt: new Date(Date.now() + 86400000).toISOString(),
+    icon: "heart",
+  },
+  {
+    _id: "q3",
+    title: "Complete Profile",
+    description: "Add bio and 3+ photos",
+    type: "achievement",
+    reward: 50,
+    progress: 66,
+    target: 100,
+    current: 66,
+    isCompleted: false,
+    isClaimed: false,
+    icon: "user",
+  },
+  {
+    _id: "q4",
+    title: "Start a Conversation",
+    description: "Send a message to a match",
+    type: "daily",
+    reward: 15,
+    progress: 0,
+    target: 1,
+    current: 0,
+    isCompleted: false,
+    isClaimed: false,
+    expiresAt: new Date(Date.now() + 86400000).toISOString(),
+    icon: "message",
+  },
+];
+
+const mockAchievements: Achievement[] = [
+  {
+    _id: "a1",
+    title: "First Match",
+    description: "Get your first match",
+    reward: 100,
+    unlocked: false,
+    icon: "trophy",
+    rarity: "rare",
+  },
+  {
+    _id: "a2",
+    title: "Profile Complete",
+    description: "Complete your profile 100%",
+    reward: 50,
+    unlocked: false,
+    icon: "award",
+    rarity: "common",
+  },
+  {
+    _id: "a3",
+    title: "Event Attendee",
+    description: "Attend your first event",
+    reward: 150,
+    unlocked: false,
+    icon: "star",
+    rarity: "epic",
+  },
+  {
+    _id: "a4",
+    title: "Social Butterfly",
+    description: "Get 10 matches",
+    reward: 200,
+    unlocked: false,
+    icon: "users",
+    rarity: "epic",
+  },
+  {
+    _id: "a5",
+    title: "Conversation Starter",
+    description: "Send 50 messages",
+    reward: 75,
+    unlocked: false,
+    icon: "messageCircle",
+    rarity: "common",
+  },
+];
+
+// Mock event data
+const mockEvents: Event[] = [
+  {
+    _id: "1",
+    title: "Speed Dating Night",
+    description: "Meet 10+ singles in one evening through quick 5-minute conversations",
+    type: "speed_dating",
+    date: "2025-10-25",
+    time: "19:00",
+    location: {
+      name: "The Rooftop Lounge",
+      address: "123 Downtown Ave, City Center",
+      coordinates: [-122.4194, 37.7749],
+    },
+    capacity: 40,
+    attendees: 28,
+    price: 25,
+    tags: ["21-35", "professionals", "casual"],
+    ageRange: { min: 21, max: 35 },
+    organizer: "TrueD8 Events",
+  },
+  {
+    _id: "2",
+    title: "Mystery Match Trail",
+    description: "Follow clues to discover potential matches at various city hotspots",
+    type: "mystery_match",
+    date: "2025-10-27",
+    time: "14:00",
+    location: {
+      name: "City Park",
+      address: "456 Park Boulevard",
+      coordinates: [-122.4084, 37.7849],
+    },
+    capacity: 30,
+    attendees: 15,
+    price: 15,
+    tags: ["25-40", "adventure", "gamified"],
+    ageRange: { min: 25, max: 40 },
+    organizer: "TrueD8 Events",
+  },
+  {
+    _id: "3",
+    title: "Wine Tasting Mixer",
+    description: "Sophisticated evening of wine tasting and mingling with like-minded singles",
+    type: "mixer",
+    date: "2025-10-28",
+    time: "18:30",
+    location: {
+      name: "Vineyard Gallery",
+      address: "789 Wine Street",
+      coordinates: [-122.4284, 37.7649],
+    },
+    capacity: 50,
+    attendees: 42,
+    price: 35,
+    tags: ["28-45", "upscale", "wine"],
+    ageRange: { min: 28, max: 45 },
+    organizer: "TrueD8 Events",
+  },
+  {
+    _id: "4",
+    title: "Hiking & Coffee Meetup",
+    description: "Outdoor adventure followed by coffee and conversation",
+    type: "group_activity",
+    date: "2025-10-29",
+    time: "09:00",
+    location: {
+      name: "Mountain Trail Start",
+      address: "Trail Head Park",
+      coordinates: [-122.4384, 37.7949],
+    },
+    capacity: 25,
+    attendees: 18,
+    price: 10,
+    tags: ["22-38", "outdoors", "active"],
+    ageRange: { min: 22, max: 38 },
+    organizer: "TrueD8 Events",
+  },
+];
