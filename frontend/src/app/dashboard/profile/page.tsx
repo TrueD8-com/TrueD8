@@ -15,6 +15,8 @@ import {
   Camera,
   Shield,
   Settings,
+  Trophy,
+  Star,
 } from "lucide-react";
 import { authApi, UserResponse } from "@/lib/api";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
@@ -312,6 +314,48 @@ export default function ProfilePage() {
               </div>
             </Card>
           )}
+
+          {/* Reputation Points */}
+          <Card className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-purple-400" />
+                Reputation Points
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/dashboard/rewards")}
+                className="text-purple-400 hover:text-purple-300"
+              >
+                View All
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  1,250
+                </span>
+                <span className="text-gray-400">points</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm text-gray-400">Level 5</span>
+                <span className="text-xs text-muted-foreground ml-auto">
+                  250 to Level 6
+                </span>
+              </div>
+              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                  style={{ width: "83%" }}
+                />
+              </div>
+              <p className="text-xs text-gray-400">
+                Complete dates and maintain commitments to earn more points
+              </p>
+            </div>
+          </Card>
 
           {/* Stats */}
           {userData.metrics && (

@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
+import { NotificationProvider, TransactionPopupProvider } from "@blockscout/app-sdk";
+import { NexusProvider } from "@/providers/nexus-provider";
 import { config } from "@/config/wagmi";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -27,7 +29,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
             })}
             modalSize="compact"
           >
-            {children}
+            <NotificationProvider>
+              <TransactionPopupProvider>
+                <NexusProvider network="testnet">
+                  {children}
+                </NexusProvider>
+              </TransactionPopupProvider>
+            </NotificationProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>

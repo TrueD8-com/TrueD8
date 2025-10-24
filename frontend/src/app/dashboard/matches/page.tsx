@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, MapPin, X, Sparkles } from "lucide-react";
+import { Heart, MessageCircle, MapPin, X, Sparkles, Lock } from "lucide-react";
 import { motion } from "framer-motion";
 import { datingApi, Match, UserProfile, authApi } from "@/lib/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { StakingCommitmentModal } from "@/components/blockchain";
 
 interface MatchWithProfile extends Match {
   profile?: UserProfile;
@@ -18,6 +19,8 @@ export default function MatchesPage() {
   const [matches, setMatches] = useState<MatchWithProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string>("");
+  const [stakingModalOpen, setStakingModalOpen] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState<MatchWithProfile | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,6 +71,11 @@ export default function MatchesPage() {
   const handleMessage = (matchId: string) => {
     // Navigate to conversations/messages page
     router.push(`/dashboard/messages?match=${matchId}`);
+  };
+
+  const handleStakeCommitment = (match: MatchWithProfile) => {
+    setSelectedMatch(match);
+    setStakingModalOpen(true);
   };
 
   if (loading) {
@@ -154,6 +162,7 @@ export default function MatchesPage() {
                 otherUserId={otherUserId}
                 onMessage={() => handleMessage(match._id)}
                 onUnmatch={() => handleUnmatch(match._id)}
+                onStake={() => handleStakeCommitment(match)}
               />
             </motion.div>
           );
@@ -185,6 +194,24 @@ export default function MatchesPage() {
           </div>
         </Card>
       </div>
+
+      {/* Staking Commitment Modal */}
+      <StakingCommitmentModal
+        isOpen={stakingModalOpen}
+        onClose={() => {
+          setStakingModalOpen(false);
+          setSelectedMatch(null);
+        }}
+        dateDetails={
+          selectedMatch
+            ? {
+                matchId: selectedMatch._id,
+                matchName: selectedMatch.profile?.name || "Match",
+                dateTime: new Date(Date.now() + 86400000 * 3), // 3 days from now
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }
@@ -193,11 +220,13 @@ function MatchCard({
   match,
   onMessage,
   onUnmatch,
+  onStake,
 }: {
   match: MatchWithProfile;
   otherUserId: string;
   onMessage: () => void;
   onUnmatch: () => void;
+  onStake: () => void;
 }) {
   // In a real implementation, the backend should return populated profiles
   const profile = match.profile || null;
@@ -278,21 +307,31 @@ function MatchCard({
         </p>
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Button
+              onClick={onMessage}
+              className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Message
+            </Button>
+            <Button
+              onClick={onUnmatch}
+              variant="outline"
+              size="icon"
+              className="border-white/20 bg-white/5 hover:bg-red-500/20 hover:border-red-500/30 text-gray-400 hover:text-red-400"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
           <Button
-            onClick={onMessage}
-            className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-          >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            Message
-          </Button>
-          <Button
-            onClick={onUnmatch}
+            onClick={onStake}
             variant="outline"
-            size="icon"
-            className="border-white/20 bg-white/5 hover:bg-red-500/20 hover:border-red-500/30 text-gray-400 hover:text-red-400"
+            className="w-full border-yellow-500/30 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 hover:text-yellow-300"
           >
-            <X className="w-4 h-4" />
+            <Lock className="w-4 h-4 mr-2" />
+            Stake Date Commitment
           </Button>
         </div>
       </div>

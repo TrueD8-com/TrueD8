@@ -723,11 +723,11 @@ export const rewardsApi = {
   },
 };
 
-// Mock rewards data
+// Mock rewards data - Realistic PYUSD values (cents to few dollars)
 const mockRewardsBalance: RewardsBalance = {
-  total: 350,
-  pending: 150,
-  claimed: 200,
+  total: 12.50,
+  pending: 3.25,
+  claimed: 9.25,
   lastUpdated: new Date().toISOString(),
 };
 
@@ -737,7 +737,7 @@ const mockQuests: Quest[] = [
     title: "Daily Login",
     description: "Login to the app today",
     type: "daily",
-    reward: 10,
+    reward: 0.10, // 10 cents
     progress: 100,
     target: 1,
     current: 1,
@@ -751,7 +751,7 @@ const mockQuests: Quest[] = [
     title: "Send 5 Likes",
     description: "Like 5 profiles today",
     type: "daily",
-    reward: 25,
+    reward: 0.25, // 25 cents
     progress: 60,
     target: 5,
     current: 3,
@@ -765,7 +765,7 @@ const mockQuests: Quest[] = [
     title: "Complete Profile",
     description: "Add bio and 3+ photos",
     type: "achievement",
-    reward: 50,
+    reward: 2.00, // $2
     progress: 66,
     target: 100,
     current: 66,
@@ -778,7 +778,7 @@ const mockQuests: Quest[] = [
     title: "Start a Conversation",
     description: "Send a message to a match",
     type: "daily",
-    reward: 15,
+    reward: 0.50, // 50 cents
     progress: 0,
     target: 1,
     current: 0,
@@ -794,7 +794,7 @@ const mockAchievements: Achievement[] = [
     _id: "a1",
     title: "First Match",
     description: "Get your first match",
-    reward: 100,
+    reward: 1.00, // $1
     unlocked: false,
     icon: "trophy",
     rarity: "rare",
@@ -803,7 +803,7 @@ const mockAchievements: Achievement[] = [
     _id: "a2",
     title: "Profile Complete",
     description: "Complete your profile 100%",
-    reward: 50,
+    reward: 2.00, // $2
     unlocked: false,
     icon: "award",
     rarity: "common",
@@ -812,7 +812,7 @@ const mockAchievements: Achievement[] = [
     _id: "a3",
     title: "Event Attendee",
     description: "Attend your first event",
-    reward: 150,
+    reward: 5.00, // $5
     unlocked: false,
     icon: "star",
     rarity: "epic",
@@ -821,7 +821,7 @@ const mockAchievements: Achievement[] = [
     _id: "a4",
     title: "Social Butterfly",
     description: "Get 10 matches",
-    reward: 200,
+    reward: 10.00, // $10
     unlocked: false,
     icon: "users",
     rarity: "epic",
@@ -830,7 +830,7 @@ const mockAchievements: Achievement[] = [
     _id: "a5",
     title: "Conversation Starter",
     description: "Send 50 messages",
-    reward: 75,
+    reward: 3.00, // $3
     unlocked: false,
     icon: "messageCircle",
     rarity: "common",

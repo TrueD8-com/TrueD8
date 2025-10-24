@@ -24,7 +24,7 @@ export const profileSchema = z.object({
     .optional()
     .or(z.literal("")),
   profileGender: z.enum(["male", "female", "non-binary", "other"], {
-    required_error: "Please select a gender",
+    message: "Please select a gender",
   }),
   profileShowMe: z
     .array(z.string())
