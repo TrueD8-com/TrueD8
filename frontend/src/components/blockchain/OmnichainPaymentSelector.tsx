@@ -33,7 +33,9 @@ export function OmnichainPaymentSelector({
   const selectedToken = SUPPORTED_TOKENS.find((t) => t.symbol === selectedTokenSymbol);
   const tokenAddress = selectedToken?.addresses[selectedChainId as keyof typeof selectedToken.addresses] as `0x${string}` | undefined;
 
-  const { formattedBalance, symbol, isLoading } = useTokenBalance(tokenAddress);
+  // Get balance for the currently connected chain, not the selected chain
+  const currentChainTokenAddress = selectedToken?.addresses[currentChainId as keyof typeof selectedToken.addresses] as `0x${string}` | undefined;
+  const { formattedBalance, symbol, isLoading } = useTokenBalance(currentChainTokenAddress);
 
   const handleSwitchChain = async (chainId: number) => {
     if (chainId !== currentChainId) {
