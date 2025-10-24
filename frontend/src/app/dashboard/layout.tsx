@@ -2,11 +2,13 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { Button } from "@/components/ui/button";
-import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp, Bot } from "lucide-react";
+import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp, Bot, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/lib/siwe";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Dashboard" },
@@ -26,10 +28,21 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
-    await logout();
-    router.push("/");
+    if (isLoggingOut) return; // Prevent double calls
+
+    try {
+      setIsLoggingOut(true);
+      await logout();
+      toast.success("Logged out successfully");
+      router.push("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Failed to logout");
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -56,10 +69,15 @@ export default function DashboardLayout({
                 onClick={handleLogout}
                 variant="ghost"
                 size="sm"
-                className="text-gray-400 hover:text-white hover:bg-white/10"
+                disabled={isLoggingOut}
+                className="text-gray-400 hover:text-white hover:bg-white/10 disabled:opacity-50"
               >
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
+                {isLoggingOut ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <LogOut className="w-4 h-4 mr-2" />
+                )}
+                {isLoggingOut ? "Logging out..." : "Logout"}
               </Button>
             </div>
           </div>

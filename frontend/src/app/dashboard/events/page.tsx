@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import EventCard from "@/components/events/EventCard";
 import MysteryMatchTrail from "@/components/events/MysteryMatchTrail";
+import { OmnichainPaymentSelector } from "@/components/blockchain";
 import { eventsApi, Event } from "@/lib/api";
 import { toast } from "sonner";
 import { Calendar, Filter, Search } from "lucide-react";
@@ -14,6 +16,8 @@ export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "speed_dating" | "mixer" | "mystery_match" | "group_activity">("all");
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
     loadEvents();
@@ -33,6 +37,15 @@ export default function EventsPage() {
   };
 
   const handleRSVP = async (eventId: string, status: "attending" | "interested") => {
+    const event = events.find(e => e._id === eventId);
+
+    // If event has a price and user wants to attend, open payment modal
+    if (event && event.price > 0 && status === "attending") {
+      setSelectedEvent(event);
+      setPaymentModalOpen(true);
+      return;
+    }
+
     try {
       await eventsApi.rsvpEvent(eventId, status);
       toast.success(status === "attending" ? "You're attending! 🎉" : "Marked as interested");
@@ -40,6 +53,21 @@ export default function EventsPage() {
     } catch (err) {
       console.error("RSVP failed:", err);
       toast.error("Failed to RSVP");
+    }
+  };
+
+  const handlePaymentComplete = async (txHash: string) => {
+    if (!selectedEvent) return;
+
+    try {
+      await eventsApi.rsvpEvent(selectedEvent._id, "attending");
+      toast.success("Payment successful! You're attending! 🎉");
+      setEvents(events.map(e => e._id === selectedEvent._id ? { ...e, rsvpStatus: "attending" } : e));
+      setPaymentModalOpen(false);
+      setSelectedEvent(null);
+    } catch (err) {
+      console.error("RSVP failed:", err);
+      toast.error("Failed to complete RSVP");
     }
   };
 
@@ -135,6 +163,26 @@ export default function EventsPage() {
           </div>
         </Card>
       )}
+
+      {/* Payment Modal */}
+      <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Pay for Event</DialogTitle>
+          </DialogHeader>
+          {selectedEvent && (
+            <OmnichainPaymentSelector
+              amount={selectedEvent.price.toString()}
+              purpose="event"
+              onConfirm={(chainId, tokenAddress, amount) => {
+                // In production, this would trigger actual payment
+                console.log("Payment:", { chainId, tokenAddress, amount });
+                handlePaymentComplete("0xmock-tx-hash");
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
