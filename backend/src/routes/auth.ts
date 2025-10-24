@@ -91,7 +91,6 @@ authRoutes.post(
     // Parse SIWE message
     let siweMessageObj;
     try {
-      const { SiweMessage } = require("siwe");
       siweMessageObj = new SiweMessage(message);
       console.log("Parsed SIWE message:", siweMessageObj); // ADD LOG
     } catch (err) {
