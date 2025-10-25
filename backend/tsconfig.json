@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./src/types", "./src/types/process-env.d.ts", "./node_modules/@types", "./typing-stubs"],
+    "typeRoots": [
+      "./src/types",
+      "./src/types/process-env.d.ts",
+      "./node_modules/@types",
+      "./typing-stubs"
+    ],
     //"target": "es6",
     "module": "commonjs",
     "sourceMap": true,
@@ -20,5 +25,5 @@
     "checkJs": false
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.spec.ts"]
+  "exclude": ["src/**/*.spec.ts", "src/scripts", "node_modules"]
 }
