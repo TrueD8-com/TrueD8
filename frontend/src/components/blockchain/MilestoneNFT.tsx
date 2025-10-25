@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAvailExecute } from "@/hooks/useAvailExecute";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import { SUPPORTED_CHAINS } from "@/config/contracts";
-import { Trophy, Lock, CheckCircle2, Sparkles, Loader2, ExternalLink } from "lucide-react";
+import { Trophy, Lock, CheckCircle2, Sparkles, Loader2, ExternalLink, Calculator, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import type { SUPPORTED_CHAINS_IDS } from "@avail-project/nexus-core";
 
 interface Milestone {
   id: string;
@@ -37,7 +38,16 @@ export function MilestoneNFT({ userPoints, milestones, onMilestoneUnlocked }: Mi
   const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
   const [selectedChain, setSelectedChain] = useState<number>(84532); // Base Sepolia default
   const [mintModalOpen, setMintModalOpen] = useState(false);
+  const [costSimulation, setCostSimulation] = useState<{
+    estimatedGas: string;
+    estimatedTime: string;
+    sourceChain: string;
+    targetChain: string;
+  } | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
+
   const { address } = useAccount();
+  const chainId = useChainId();
   const { transfer, isExecuting, executionHash, executionSteps } = useAvailExecute();
 
   const getRarityColor = (rarity: Milestone["rarity"]) => {
@@ -63,6 +73,44 @@ export function MilestoneNFT({ userPoints, milestones, onMilestoneUnlocked }: Mi
         return "bg-blue-500/20 text-blue-300";
       default:
         return "bg-gray-500/20 text-gray-300";
+    }
+  };
+
+  // Simulate cost when chain changes
+  useEffect(() => {
+    if (selectedChain && chainId && address) {
+      simulateCost();
+    }
+  }, [selectedChain, chainId, address]);
+
+  const simulateCost = async () => {
+    if (!chainId || !selectedChain || !address) return;
+
+    setIsSimulating(true);
+    try {
+      const sourceChainName = SUPPORTED_CHAINS.find(c => c.id === chainId)?.name || "Unknown";
+      const targetChainName = SUPPORTED_CHAINS.find(c => c.id === selectedChain)?.name || "Unknown";
+
+      // Estimate gas costs based on chain selection
+      // In production, this would use simulateTransfer from Avail SDK
+      // For now, providing static estimates
+      setCostSimulation({
+        estimatedGas: "~0.002 ETH",
+        estimatedTime: selectedChain === chainId ? "30 seconds" : "2-5 minutes",
+        sourceChain: sourceChainName,
+        targetChain: targetChainName,
+      });
+    } catch (error) {
+      console.error("Cost simulation failed:", error);
+      // Fallback to default estimates
+      setCostSimulation({
+        estimatedGas: "~0.002 ETH",
+        estimatedTime: "2-5 minutes",
+        sourceChain: SUPPORTED_CHAINS.find(c => c.id === chainId)?.name || "Unknown",
+        targetChain: SUPPORTED_CHAINS.find(c => c.id === selectedChain)?.name || "Unknown",
+      });
+    } finally {
+      setIsSimulating(false);
     }
   };
 
@@ -360,11 +408,38 @@ export function MilestoneNFT({ userPoints, milestones, onMilestoneUnlocked }: Mi
                 </div>
               </div>
 
-              {/* Mint Fee */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Minting Fee</span>
-                <span className="font-medium text-white">0.01 USDC</span>
-              </div>
+              {/* Cost Simulation */}
+              {costSimulation && (
+                <Card className="border border-green-500/30 bg-green-500/10">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calculator className="w-4 h-4 text-green-400" />
+                      <span className="text-sm font-medium text-green-300">Cost Estimate</span>
+                      {isSimulating && <Loader2 className="w-3 h-3 animate-spin text-green-400" />}
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-400">Minting Fee</span>
+                        <span className="font-medium text-white">0.01 USDC</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-400">Estimated Gas</span>
+                        <span className="font-medium text-white">{costSimulation.estimatedGas}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-400">Estimated Time</span>
+                        <span className="font-medium text-white">{costSimulation.estimatedTime}</span>
+                      </div>
+                      <div className="pt-2 border-t border-white/10">
+                        <div className="flex items-center gap-1 text-xs text-gray-400">
+                          <AlertCircle className="w-3 h-3" />
+                          <span>Bridging from {costSimulation.sourceChain} to {costSimulation.targetChain}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-2">

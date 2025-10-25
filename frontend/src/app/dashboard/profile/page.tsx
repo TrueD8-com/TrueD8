@@ -17,17 +17,26 @@ import {
   Settings,
   Trophy,
   Star,
+  History,
+  ExternalLink,
+  Crown,
 } from "lucide-react";
 import { authApi, UserResponse } from "@/lib/api";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
 import { PhotoUploader } from "@/components/profile/PhotoUploader";
+import { PremiumModal } from "@/components/premium/PremiumModal";
 import Image from "next/image";
+import { useTransactionPopup } from "@blockscout/app-sdk";
+import { useChainId } from "wagmi";
 export default function ProfilePage() {
   const router = useRouter();
+  const chainId = useChainId();
+  const { openPopup } = useTransactionPopup();
   const [userData, setUserData] = useState<UserResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
 
   const fetchUserData = async () => {
     try {
@@ -71,6 +80,14 @@ export default function ProfilePage() {
         </div>
         {hasProfile && (
           <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsPremiumModalOpen(true)}
+              className="border-yellow-500/30 text-yellow-300 hover:bg-yellow-500/10"
+            >
+              <Crown className="w-4 h-4 mr-2" />
+              Upgrade to Premium
+            </Button>
             <Button
               variant="outline"
               onClick={() => router.push("/dashboard/profile/preferences")}
@@ -275,11 +292,29 @@ export default function ProfilePage() {
           {/* Wallet Info */}
           {userData.wallet && (
             <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <Shield className="w-5 h-5 text-purple-400" />
-                <h3 className="text-xl font-bold text-white">
-                  Blockchain Identity
-                </h3>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-purple-400" />
+                  <h3 className="text-xl font-bold text-white">
+                    Blockchain Identity
+                  </h3>
+                </div>
+                <Button
+                  onClick={() => {
+                    if (chainId && userData.wallet?.address) {
+                      openPopup({
+                        chainId: String(chainId),
+                        address: userData.wallet.address
+                      });
+                    }
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300"
+                >
+                  <History className="w-4 h-4 mr-2" />
+                  View Activity
+                </Button>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
@@ -311,6 +346,19 @@ export default function ProfilePage() {
                     </span>
                   </div>
                 )}
+                <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                  <div className="flex items-start gap-2">
+                    <ExternalLink className="w-4 h-4 text-purple-400 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white mb-1">
+                        On-Chain Verification
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        All your dates, stakes, and commitments are verified on the blockchain
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Card>
           )}
@@ -401,6 +449,10 @@ export default function ProfilePage() {
         onOpenChange={setIsPhotoModalOpen}
         user={userData}
         onPhotosUpdated={fetchUserData}
+      />
+      <PremiumModal
+        isOpen={isPremiumModalOpen}
+        onClose={() => setIsPremiumModalOpen(false)}
       />
     </div>
   );

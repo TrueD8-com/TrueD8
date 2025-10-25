@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, MapPin, X, Sparkles, Lock } from "lucide-react";
+import { Heart, MessageCircle, MapPin, X, Sparkles, Lock, History } from "lucide-react";
 import { motion } from "framer-motion";
 import { datingApi, Match, UserProfile, authApi } from "@/lib/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { StakingCommitmentModal } from "@/components/blockchain";
+import { useTransactionPopup } from "@blockscout/app-sdk";
+import { useAccount, useChainId } from "wagmi";
 
 interface MatchWithProfile extends Match {
   profile?: UserProfile;
@@ -22,6 +24,9 @@ export default function MatchesPage() {
   const [stakingModalOpen, setStakingModalOpen] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<MatchWithProfile | null>(null);
   const router = useRouter();
+  const { address } = useAccount();
+  const chainId = useChainId();
+  const { openPopup } = useTransactionPopup();
 
   useEffect(() => {
     loadMatches();
@@ -76,6 +81,15 @@ export default function MatchesPage() {
   const handleStakeCommitment = (match: MatchWithProfile) => {
     setSelectedMatch(match);
     setStakingModalOpen(true);
+  };
+
+  const handleViewTransactions = () => {
+    if (chainId && address) {
+      openPopup({
+        chainId: String(chainId),
+        address: address
+      });
+    }
   };
 
   if (loading) {
@@ -136,12 +150,24 @@ export default function MatchesPage() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-          Your Matches
-        </h1>
-        <p className="text-gray-400">
-          {matches.length} {matches.length === 1 ? "match" : "matches"}
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              Your Matches
+            </h1>
+            <p className="text-gray-400">
+              {matches.length} {matches.length === 1 ? "match" : "matches"}
+            </p>
+          </div>
+          <Button
+            onClick={handleViewTransactions}
+            variant="outline"
+            className="border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300"
+          >
+            <History className="w-4 h-4 mr-2" />
+            View Transactions
+          </Button>
+        </div>
       </motion.div>
 
       {/* Matches Grid */}
