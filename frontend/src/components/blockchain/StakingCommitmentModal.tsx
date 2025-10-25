@@ -5,11 +5,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { useAvailExecute } from "@/hooks/useAvailExecute";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
-import { Loader2, CheckCircle2, XCircle, Lock, Calendar, Trophy } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, Lock, Calendar, Trophy, Coins } from "lucide-react";
 import { useAccount, useChainId } from "wagmi";
 import { PYUSD_ADDRESSES, ChainId } from "@/config/contracts";
+import { useNotification } from "@blockscout/app-sdk";
 
 interface StakingCommitmentModalProps {
   isOpen: boolean;
@@ -21,6 +24,15 @@ interface StakingCommitmentModalProps {
   };
 }
 
+import type { SUPPORTED_TOKENS as AVAIL_TOKENS } from "@avail-project/nexus-core";
+
+type TokenType = AVAIL_TOKENS; // "ETH" | "USDC" | "USDT"
+
+const SUPPORTED_STAKE_TOKENS: { value: TokenType; label: string; description: string }[] = [
+  { value: "USDC", label: "USDC", description: "USD Coin - Most widely accepted" },
+  { value: "USDT", label: "USDT", description: "Tether USD - Highest liquidity" },
+];
+
 export function StakingCommitmentModal({
   isOpen,
   onClose,
@@ -29,9 +41,11 @@ export function StakingCommitmentModal({
   const { address } = useAccount();
   const chainId = useChainId() as ChainId;
   const [amount, setAmount] = useState("");
+  const [selectedToken, setSelectedToken] = useState<TokenType>("USDC");
 
   const { stakeAcrossChains, isExecuting, executionError, executionHash, executionSteps } = useAvailExecute();
   const { formattedBalance, symbol, decimals, refetch } = useTokenBalance();
+  const { openTxToast } = useNotification();
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [pointsEarned, setPointsEarned] = useState(0);
@@ -48,9 +62,13 @@ export function StakingCommitmentModal({
     try {
       const dateCommitmentId = `${dateDetails.matchId}-${Date.now()}`;
 
-      // Use USDC as the staking token (supported by Nexus)
-      // Can be configured to allow user to choose token
-      await stakeAcrossChains(chainId, "USDC", amount, dateCommitmentId);
+      // Use selected token for staking (all supported by Avail Nexus)
+      await stakeAcrossChains(chainId, selectedToken, amount, dateCommitmentId);
+
+      // Show Blockscout transaction notification with real-time status
+      if (executionHash) {
+        openTxToast(String(chainId), executionHash);
+      }
 
       // Calculate points based on stake amount
       const points = Math.floor(amountNum * 10); // 10 points per token
@@ -107,11 +125,41 @@ export function StakingCommitmentModal({
             </div>
           )}
 
+          {/* Token Selector */}
+          <div className="space-y-2">
+            <Label htmlFor="token-select" className="flex items-center gap-2">
+              <Coins className="w-4 h-4" />
+              Select Token
+            </Label>
+            <Select
+              value={selectedToken}
+              onValueChange={(value) => setSelectedToken(value as TokenType)}
+              disabled={isExecuting || isSuccess}
+            >
+              <SelectTrigger id="token-select">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {SUPPORTED_STAKE_TOKENS.map((token) => (
+                  <SelectItem key={token.value} value={token.value}>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">{token.label}</span>
+                      <span className="text-xs text-gray-500">- {token.description}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-gray-400">
+              Stablecoins supported by Avail Nexus for cross-chain commitments
+            </p>
+          </div>
+
           {/* Balance Display */}
           <div className="rounded-lg bg-muted p-4">
-            <p className="text-sm text-muted-foreground">Available Balance</p>
+            <p className="text-sm text-muted-foreground">Available {selectedToken} Balance</p>
             <p className="text-2xl font-bold">
-              {formattedBalance} {symbol}
+              {formattedBalance} {selectedToken}
             </p>
           </div>
 
@@ -262,7 +310,7 @@ export function StakingCommitmentModal({
                 ) : (
                   <>
                     <Lock className="mr-2 h-4 w-4" />
-                    Stake {amount || "0"} {symbol}
+                    Stake {amount || "0"} {selectedToken}
                   </>
                 )}
               </Button>

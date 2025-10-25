@@ -8,25 +8,25 @@ import { AnimatedSection } from "./AnimatedSection";
 
 const roadmapItems = [
   {
-    quarter: "Q2 2025",
+    quarter: "Q4 2025",
     title: "Beta Launch",
     description: "Limited testing with initial partners",
-    status: "completed",
-  },
-  {
-    quarter: "Q3 2025",
-    title: "Public Release",
-    description: "Full app with expanded partnerships",
     status: "current",
   },
   {
-    quarter: "Q4 2025",
+    quarter: "Q1 2026",
+    title: "Public Release",
+    description: "Full app with expanded partnerships",
+    status: "upcoming",
+  },
+  {
+    quarter: "Q2 2026",
     title: "Advanced Features",
     description: "NFT profiles and enhanced gamification",
     status: "upcoming",
   },
   {
-    quarter: "Q1 2026",
+    quarter: "Q3 2026",
     title: "Global Expansion",
     description: "International rollout and localized partners",
     status: "upcoming",

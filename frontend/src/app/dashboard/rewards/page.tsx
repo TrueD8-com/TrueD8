@@ -5,14 +5,21 @@ import { TokenBalance } from "@/components/rewards/TokenBalance";
 import { QuestCard } from "@/components/rewards/QuestCard";
 import { BadgeCard } from "@/components/rewards/BadgeCard";
 import { CustomTransactionHistory, PointsProgram } from "@/components/blockchain";
+import { QuickActionsWidget } from "@/components/nexus/QuickActionsWidget";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { rewardsApi, type Quest, type Achievement, type RewardsBalance } from "@/lib/api";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
+import { useTransactionPopup } from "@blockscout/app-sdk";
+import { History, ExternalLink } from "lucide-react";
 
 export default function RewardsPage() {
   const { address } = useAccount();
+  const chainId = useChainId();
+  const { openPopup } = useTransactionPopup();
   const [balance, setBalance] = useState<RewardsBalance | null>(null);
   const [quests, setQuests] = useState<Quest[]>([]);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
@@ -221,6 +228,42 @@ export default function RewardsPage() {
         {/* Blockchain Tab */}
         <TabsContent value="blockchain" className="space-y-6">
           <TokenBalance useRealBalance={true} showDetails={true} />
+
+          {/* Quick Actions with Nexus Widgets */}
+          <QuickActionsWidget />
+
+          {/* Blockscout Transaction Explorer */}
+          <Card className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
+                  <History className="w-5 h-5 text-purple-400" />
+                  Blockchain Explorer
+                </h3>
+                <p className="text-sm text-gray-400">
+                  View all your on-chain transactions with real-time status
+                </p>
+              </div>
+              <Button
+                onClick={() => {
+                  if (chainId && address) {
+                    openPopup({
+                      chainId: String(chainId),
+                      address: address
+                    });
+                  }
+                }}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Open Explorer
+              </Button>
+            </div>
+            <p className="text-xs text-gray-500">
+              Track stakes, rewards, matches, and all blockchain activity in one place
+            </p>
+          </Card>
+
           <CustomTransactionHistory />
         </TabsContent>
 

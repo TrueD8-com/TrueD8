@@ -4,8 +4,14 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Trophy, Star, Target, TrendingUp, Award, Zap } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Trophy, Star, Target, TrendingUp, Award, Zap, Wallet, TrendingDown } from "lucide-react";
 import { MilestoneNFT } from "./MilestoneNFT";
+import { YieldOptimizer } from "./YieldOptimizer";
+import { GasRefuel } from "./GasRefuel";
+import { useAccount, useBalance, useChainId } from "wagmi";
+import { SUPPORTED_CHAINS } from "@/config/contracts";
+import { formatEther } from "viem";
 
 interface PointsData {
   total: number;
@@ -96,6 +102,16 @@ const getMockPointsData = (): PointsData => ({
 export function PointsProgram() {
   const [pointsData, setPointsData] = useState<PointsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<"overview" | "defi" | "gas">("overview");
+
+  const { address } = useAccount();
+  const chainId = useChainId();
+
+  // Get ETH balance for gas info
+  const { data: ethBalance } = useBalance({
+    address,
+    chainId,
+  });
 
   useEffect(() => {
     // Simulate API call
@@ -195,6 +211,11 @@ export function PointsProgram() {
     },
   ];
 
+  // Current chain gas info
+  const currentChain = SUPPORTED_CHAINS.find(c => c.id === chainId);
+  const ethBalanceFormatted = ethBalance ? parseFloat(formatEther(ethBalance.value)) : 0;
+  const isLowGas = ethBalanceFormatted < 0.005; // Less than 0.005 ETH
+
   return (
     <div className="space-y-4">
       {/* Main Points Card */}
@@ -230,6 +251,25 @@ export function PointsProgram() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Gas Status Warning */}
+      {isLowGas && (
+        <Card className="border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 backdrop-blur-xl">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+                <TrendingDown className="w-5 h-5 text-orange-400" />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-white mb-1">Low Gas Balance</p>
+                <p className="text-sm text-gray-400">
+                  You have {ethBalanceFormatted.toFixed(4)} ETH on {currentChain?.name}. Refuel to continue using TrueD8 features.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Points Breakdown */}
       <Card>
@@ -283,27 +323,49 @@ export function PointsProgram() {
         </CardContent>
       </Card>
 
-      {/* Achievement Milestones with Avail Nexus Multi-Chain Minting */}
-      <div className="mt-8">
-        <div className="mb-4 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30">
-          <div className="flex items-center gap-2 text-purple-300 mb-2">
-            <Zap className="w-5 h-5" />
-            <h3 className="font-semibold">Powered by Avail Nexus</h3>
-          </div>
-          <p className="text-sm text-gray-400">
-            Mint your achievement NFTs on any supported chain. Choose your preferred blockchain and Avail Nexus handles the cross-chain minting automatically!
-          </p>
-        </div>
+      {/* Tabs for Points, DeFi, and Gas Management */}
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "overview" | "defi" | "gas")} className="mt-6">
+        <TabsList className="bg-white/5 border border-white/10 mb-6">
+          <TabsTrigger value="overview">Points & Achievements</TabsTrigger>
+          <TabsTrigger value="defi">DeFi Yield</TabsTrigger>
+          <TabsTrigger value="gas">Gas Management</TabsTrigger>
+        </TabsList>
 
-        <MilestoneNFT
-          userPoints={pointsData.total}
-          milestones={milestones}
-          onMilestoneUnlocked={(id) => {
-            console.log("Milestone unlocked:", id);
-            // In production: refetch points data from backend
-          }}
-        />
-      </div>
+        {/* Points & Achievements Tab */}
+        <TabsContent value="overview">
+          {/* Achievement Milestones with Avail Nexus Multi-Chain Minting */}
+          <div>
+            <div className="mb-4 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30">
+              <div className="flex items-center gap-2 text-purple-300 mb-2">
+                <Zap className="w-5 h-5" />
+                <h3 className="font-semibold">Powered by Avail Nexus</h3>
+              </div>
+              <p className="text-sm text-gray-400">
+                Mint your achievement NFTs on any supported chain. Choose your preferred blockchain and Avail Nexus handles the cross-chain minting automatically!
+              </p>
+            </div>
+
+            <MilestoneNFT
+              userPoints={pointsData.total}
+              milestones={milestones}
+              onMilestoneUnlocked={(id) => {
+                console.log("Milestone unlocked:", id);
+                // In production: refetch points data from backend
+              }}
+            />
+          </div>
+        </TabsContent>
+
+        {/* DeFi Yield Tab */}
+        <TabsContent value="defi">
+          <YieldOptimizer />
+        </TabsContent>
+
+        {/* Gas Management Tab */}
+        <TabsContent value="gas">
+          <GasRefuel />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
