@@ -53,7 +53,10 @@ export default function SIWEPage() {
           }
         } else {
           // Fallback to wagmi if window.ethereum is not available
-          const signature = await signMessageAsync({ message });
+          const signature = await signMessageAsync({
+            message,
+            account: address
+          });
           return signature;
         }
       });
