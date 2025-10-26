@@ -6,7 +6,7 @@
       "./node_modules/@types",
       "./typing-stubs"
     ],
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "target": "ES2022",
     "sourceMap": true,
