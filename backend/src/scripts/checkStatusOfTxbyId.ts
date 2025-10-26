@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import * as _ from 'lodash-es'
+import * as _ from 'lodash'
 
 import { PendingTransfers } from '../db/pendingTransfers'
 import { SuccessfulTransfers } from '../db/successfulTransfers'

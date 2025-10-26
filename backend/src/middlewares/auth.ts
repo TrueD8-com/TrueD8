@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es'
+import * as _ from 'lodash'
 import myError from '../api/myError'
 import { AccessLevels } from '../db/accessLevels'
 import { Admin } from '../db/admin'

@@ -9,7 +9,7 @@ import myError from '../api/myError'
 var moment = require('moment');
 import "moment-timezone"
 import { Currencies } from "../db/currencies"
-import * as _ from 'lodash-es'
+import * as _ from 'lodash'
 
 export const localHourlySetPrice = async () => {
 
