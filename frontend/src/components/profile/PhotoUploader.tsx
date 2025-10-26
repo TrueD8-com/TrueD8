@@ -118,14 +118,12 @@ export function PhotoUploader({
 
       // Step 1: Upload to temp storage
       const uploadResponse = await userApi.uploadPhoto(selectedFile);
-      const imageName = `${uploadResponse.imagePath}.${uploadResponse.imageExt}`;
 
       clearInterval(progressInterval);
       setUploadProgress(95);
 
-      // Step 2: Commit to profile (set as primary if it's the first photo)
-      const isPrimary = currentPhotoCount === 0;
-      await userApi.addPhoto(imageName, isPrimary);
+      // Step 2: Commit to profile
+      await userApi.addPhoto(uploadResponse.imagePath, uploadResponse.imageExt);
 
       setUploadProgress(100);
       toast.success("Photo uploaded successfully!");

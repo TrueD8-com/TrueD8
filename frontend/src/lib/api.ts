@@ -318,61 +318,6 @@ export const userApi = {
     return response.json();
   },
 
-  async uploadPhoto(file: File): Promise<PhotoUploadResponse> {
-    const formData = new FormData();
-    formData.append("image", file);
-    const response = await fetch(`${API_URL}/user/photos/upload`, {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    });
-    if (!response.ok) throw new Error("Failed to upload photo");
-    const data: ApiResponse<PhotoUploadResponse> = await response.json();
-    return data.data || (data as unknown as PhotoUploadResponse);
-  },
-
-  async addPhoto(
-    imageName: string,
-    isPrimary: boolean
-  ): Promise<ApiResponse<PhotoResponse>> {
-    const response = await fetch(`${API_URL}/user/photos/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ imageName, isPrimary }),
-    });
-    if (!response.ok) throw new Error("Failed to add photo");
-    return response.json();
-  },
-
-  async setPrimaryPhoto(url: string): Promise<ApiResponse<void>> {
-    const response = await fetch(`${API_URL}/user/photos/setPrimary`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ url }),
-    });
-    if (!response.ok) throw new Error("Failed to set primary photo");
-    return response.json();
-  },
-
-  async removePhoto(url: string): Promise<ApiResponse<void>> {
-    const response = await fetch(`${API_URL}/user/photos/remove`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ url }),
-    });
-    if (!response.ok) throw new Error("Failed to remove photo");
-    return response.json();
-  },
-
   async setAddress(addressData: {
     provinceOp?: string;
     cityOp?: string;
