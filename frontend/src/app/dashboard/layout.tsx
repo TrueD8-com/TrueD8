@@ -2,7 +2,7 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { Button } from "@/components/ui/button";
-import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp, Bot, Loader2 } from "lucide-react";
+import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp, Bot, Loader2, MessageCircle, Crown } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/lib/siwe";
@@ -16,8 +16,10 @@ const navItems = [
   { href: "/dashboard/ai-match", icon: Bot, label: "AI Match" },
   { href: "/dashboard/likes", icon: ThumbsUp, label: "Likes" },
   { href: "/dashboard/matches", icon: Heart, label: "Matches" },
+  { href: "/dashboard/messages", icon: MessageCircle, label: "Messages" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/rewards", icon: Trophy, label: "Rewards" },
+  { href: "/dashboard/premium", icon: Crown, label: "Premium" },
   { href: "/dashboard/profile", icon: User, label: "Profile" },
 ];
 
