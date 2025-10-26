@@ -1,0 +1,18 @@
+{
+  "github": {
+    "enabled": true,
+    "autoAlias": true,
+    "silent": false,
+    "autoJobCancelation": true
+  },
+  "scope": null,
+  "projectSettings": {
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "framework": null,
+    "nodeVersion": "20.x"
+  }
+}

@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import * as _ from "lodash-es";
 
 import * as redis from "../api/redis";
 import { ObjectId } from "mongodb";

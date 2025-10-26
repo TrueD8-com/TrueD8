@@ -2,7 +2,7 @@
 
 import { roundToSix } from "./getFee";
 import * as redisMethods from "./redis";
-import * as _ from "lodash";
+import * as _ from "lodash-es";
 
 import { getonlineLoginUsers } from "./socket";
 

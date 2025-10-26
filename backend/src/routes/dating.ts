@@ -12,7 +12,7 @@ import { Conversation } from '../db/conversation'
 import { Message } from '../db/message'
 import { Favorite } from '../db/favorite'
 import { getIo } from '../api/socket'
-import * as _ from 'lodash'
+import * as _ from 'lodash-es'
 
 export const datingRoutes = express.Router()
 

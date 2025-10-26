@@ -1,0 +1,27 @@
+name: Auto-promote Vercel Preview to Production
+
+on:
+  push:
+    branches:
+      - main  # Change this to your production branch
+
+jobs:
+  promote-to-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for Vercel Preview Deployment
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: wait-for-deployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300
+          check_interval: 10
+
+      - name: Promote to Production
+        run: |
+          curl -X POST "https://api.vercel.com/v13/deployments/${{ steps.wait-for-deployment.outputs.deployment_id }}/promote" \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json"
