@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.28;
 
 /**
  * TrueD8Profile.sol
@@ -20,12 +20,10 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 
 contract TrueD8Profile is ERC721, ERC721Enumerable, Ownable, ERC2981 {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIdCounter;
+    uint256 private _tokenIdCounter;
 
     /// tokenId => metadata URI (expected to be ipfs://... or https://....)
     mapping(uint256 => string) private _tokenURIs;
@@ -47,7 +45,7 @@ contract TrueD8Profile is ERC721, ERC721Enumerable, Ownable, ERC2981 {
 
     constructor(address defaultRoyaltyReceiver, uint96 defaultRoyaltyBps) ERC721("TrueD8Profile", "TD8P") {
         // Start token IDs at 1 for clarity
-        _tokenIdCounter.increment();
+        _tokenIdCounter++;
 
         // Optionally set default royalty; if you don't want royalties, pass address(0) or 0 bps
         if (defaultRoyaltyReceiver != address(0) && defaultRoyaltyBps > 0) {
@@ -68,8 +66,8 @@ contract TrueD8Profile is ERC721, ERC721Enumerable, Ownable, ERC2981 {
             require(_ownerToToken[msg.sender] == 0, "Profile: already has one");
         }
 
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter++;
 
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, ipfsUri);
@@ -91,8 +89,8 @@ contract TrueD8Profile is ERC721, ERC721Enumerable, Ownable, ERC2981 {
             require(_ownerToToken[to] == 0, "Profile: recipient has one");
         }
 
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter++;
 
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, ipfsUri);
