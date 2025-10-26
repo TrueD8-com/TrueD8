@@ -1,14 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAvailExecute } from "@/hooks/useAvailExecute";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
-import { Loader2, CheckCircle2, XCircle, Lock, Calendar, Trophy, Coins } from "lucide-react";
+import {
+  Loader2,
+  CheckCircle2,
+  XCircle,
+  Lock,
+  Calendar,
+  Trophy,
+  Coins,
+} from "lucide-react";
 import { useAccount, useChainId } from "wagmi";
 import { ChainId } from "@/config/contracts";
 import { useNotification } from "@blockscout/app-sdk";
@@ -27,9 +47,21 @@ import type { SUPPORTED_TOKENS as AVAIL_TOKENS } from "@avail-project/nexus-core
 
 type TokenType = AVAIL_TOKENS; // "ETH" | "USDC" | "USDT"
 
-const SUPPORTED_STAKE_TOKENS: { value: TokenType; label: string; description: string }[] = [
-  { value: "USDC", label: "USDC", description: "USD Coin - Most widely accepted" },
-  { value: "USDT", label: "USDT", description: "Tether USD - Highest liquidity" },
+const SUPPORTED_STAKE_TOKENS: {
+  value: TokenType;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "USDC",
+    label: "USDC",
+    description: "USD Coin - Most widely accepted",
+  },
+  {
+    value: "USDT",
+    label: "USDT",
+    description: "Tether USD - Highest liquidity",
+  },
 ];
 
 export function StakingCommitmentModal({
@@ -42,7 +74,13 @@ export function StakingCommitmentModal({
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState<TokenType>("USDC");
 
-  const { stakeAcrossChains, isExecuting, executionError, executionHash, executionSteps } = useAvailExecute();
+  const {
+    stakeAcrossChains,
+    isExecuting,
+    executionError,
+    executionHash,
+    executionSteps,
+  } = useAvailExecute();
   const { formattedBalance, refetch } = useTokenBalance();
   const { openTxToast } = useNotification();
 
@@ -109,7 +147,8 @@ export function StakingCommitmentModal({
             </DialogTitle>
           </div>
           <DialogDescription className="text-gray-400">
-            Lock tokens to prove you&apos;re serious about this date. Both parties stake, both win when you show up.
+            Lock tokens to prove you&apos;re serious about this date. Both
+            parties stake, both win when you show up.
           </DialogDescription>
         </DialogHeader>
 
@@ -119,10 +158,16 @@ export function StakingCommitmentModal({
             <div className="rounded-xl border border-pink-500/30 bg-gradient-to-r from-pink-500/10 to-purple-500/10 p-4 space-y-2">
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-pink-400" />
-                <span className="font-semibold text-white">{dateDetails.matchName}</span>
+                <span className="font-semibold text-white">
+                  {dateDetails.matchName}
+                </span>
               </div>
               <p className="text-sm text-gray-300">
-                📅 {dateDetails.dateTime.toLocaleDateString()} at {dateDetails.dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                📅 {dateDetails.dateTime.toLocaleDateString()} at{" "}
+                {dateDetails.dateTime.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </p>
             </div>
           )}
@@ -152,7 +197,8 @@ export function StakingCommitmentModal({
               </Select>
             </div>
             <p className="text-3xl font-bold text-white">
-              {formattedBalance} <span className="text-xl text-gray-400">{selectedToken}</span>
+              {formattedBalance}{" "}
+              <span className="text-xl text-gray-400">{selectedToken}</span>
             </p>
             <p className="text-xs text-gray-400 mt-2">
               💎 Cross-chain stablecoin staking via Avail Nexus
@@ -161,7 +207,10 @@ export function StakingCommitmentModal({
 
           {/* Stake Amount */}
           <div className="space-y-3">
-            <Label htmlFor="stake-amount" className="text-base font-semibold text-white">
+            <Label
+              htmlFor="stake-amount"
+              className="text-base font-semibold text-white"
+            >
               How much do you want to stake?
             </Label>
             <div className="relative">
@@ -179,7 +228,9 @@ export function StakingCommitmentModal({
                 variant="ghost"
                 size="sm"
                 className="absolute right-2 top-1/2 -translate-y-1/2 h-10 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300"
-                onClick={() => setAmount((Number(formattedBalance) * 0.1).toFixed(2))}
+                onClick={() =>
+                  setAmount((Number(formattedBalance) * 0.1).toFixed(2))
+                }
                 disabled={isExecuting || isSuccess}
               >
                 10%
@@ -192,7 +243,11 @@ export function StakingCommitmentModal({
                   variant="outline"
                   size="sm"
                   className="flex-1 bg-white/5 border-white/10 hover:bg-white/10"
-                  onClick={() => setAmount((Number(formattedBalance) * (percent / 100)).toFixed(2))}
+                  onClick={() =>
+                    setAmount(
+                      (Number(formattedBalance) * (percent / 100)).toFixed(2)
+                    )
+                  }
                   disabled={isExecuting || isSuccess}
                 >
                   {percent}%
@@ -213,7 +268,9 @@ export function StakingCommitmentModal({
                     <Trophy className="h-6 w-6 text-yellow-300" />
                   </div>
                   <div>
-                    <p className="font-medium text-sm text-gray-300">You'll Earn</p>
+                    <p className="font-medium text-sm text-gray-300">
+                      You&apos;ll Earn
+                    </p>
                     <p className="text-3xl font-bold bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
                       +{Math.floor(Number(amount) * 10)} Points
                     </p>
@@ -222,7 +279,8 @@ export function StakingCommitmentModal({
               </div>
               <div className="mt-3 pt-3 border-t border-yellow-500/20">
                 <p className="text-xs text-gray-300">
-                  ✨ <strong>Win-win</strong>: Both of you earn points when the date completes successfully!
+                  ✨ <strong>Win-win</strong>: Both of you earn points when the
+                  date completes successfully!
                 </p>
               </div>
             </div>
@@ -233,14 +291,13 @@ export function StakingCommitmentModal({
             <div className="space-y-2 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/50 p-4">
               <div className="flex items-center gap-2 text-blue-900 dark:text-blue-100 mb-3">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm font-medium">Bridge & Execute in Progress</span>
+                <span className="text-sm font-medium">
+                  Bridge & Execute in Progress
+                </span>
               </div>
               <div className="space-y-2">
                 {executionSteps.map((step, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 text-xs"
-                  >
+                  <div key={idx} className="flex items-center gap-2 text-xs">
                     {step.status === "completed" ? (
                       <CheckCircle2 className="h-3 w-3 text-green-600" />
                     ) : (
@@ -272,8 +329,12 @@ export function StakingCommitmentModal({
                   <CheckCircle2 className="h-9 w-9 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">Stake Locked!</h3>
-                  <p className="text-sm text-gray-400 mt-1">Your commitment has been recorded on-chain</p>
+                  <h3 className="text-2xl font-bold text-white">
+                    Stake Locked!
+                  </h3>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Your commitment has been recorded on-chain
+                  </p>
                 </div>
               </div>
 
@@ -300,7 +361,9 @@ export function StakingCommitmentModal({
 
               {/* Next Steps */}
               <div className="rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 p-4">
-                <p className="font-semibold text-white mb-2 text-sm">What&apos;s Next?</p>
+                <p className="font-semibold text-white mb-2 text-sm">
+                  What&apos;s Next?
+                </p>
                 <ul className="text-xs text-gray-300 space-y-1.5">
                   <li>📅 Confirm your date details with your match</li>
                   <li>💬 Keep the conversation going until the date</li>
@@ -331,9 +394,16 @@ export function StakingCommitmentModal({
                   <p className="font-semibold text-white">How Staking Works:</p>
                   <ul className="space-y-1.5">
                     <li>🔒 Your tokens lock until the date completes</li>
-                    <li>✅ Both show up → Both get stake back + bonus points</li>
-                    <li>❌ Someone ghosts → They forfeit their stake to the other person</li>
-                    <li>⚡ Powered by Avail Nexus cross-chain Bridge & Execute</li>
+                    <li>
+                      ✅ Both show up → Both get stake back + bonus points
+                    </li>
+                    <li>
+                      ❌ Someone ghosts → They forfeit their stake to the other
+                      person
+                    </li>
+                    <li>
+                      ⚡ Powered by Avail Nexus cross-chain Bridge & Execute
+                    </li>
                   </ul>
                 </div>
               </div>
