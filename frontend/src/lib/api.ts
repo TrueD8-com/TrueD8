@@ -1,6 +1,9 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.trued8.com";
 
+export const getImageUrl = (imageType: string, imagePath: string, imageName: string) =>
+  `${API_URL}/user/getImages/${imageType}/${imagePath}/${imageName}`;
+
 export interface NonceResponse {
   nonce: string;
 }
@@ -434,6 +437,53 @@ export const userApi = {
     if (!response.ok) throw new Error("Failed to disconnect wallet");
     return response.json();
   },
+
+  async uploadPhoto(file: File): Promise<PhotoUploadResponse> {
+    const fd = new FormData();
+    fd.append("photo", file);
+    const response = await fetch(`${API_URL}/user/photos/upload`, {
+      method: "POST",
+      credentials: "include",
+      body: fd,
+    });
+    if (!response.ok) throw new Error("Failed to upload photo");
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  async addPhoto(imagePath: string, imageExt: string): Promise<PhotoResponse> {
+    const response = await fetch(`${API_URL}/user/photos/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ imagePath, imageExt }),
+    });
+    if (!response.ok) throw new Error("Failed to add photo");
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  async setPrimaryPhoto(photoUrl: string): Promise<ApiResponse<void>> {
+    const response = await fetch(`${API_URL}/user/photos/setPrimary`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ photoUrl }),
+    });
+    if (!response.ok) throw new Error("Failed to set primary photo");
+    return response.json();
+  },
+
+  async removePhoto(photoUrl: string): Promise<ApiResponse<void>> {
+    const response = await fetch(`${API_URL}/user/photos/remove`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ photoUrl }),
+    });
+    if (!response.ok) throw new Error("Failed to remove photo");
+    return response.json();
+  },
 };
 
 // Dating API
@@ -450,6 +500,18 @@ export const datingApi = {
       credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch discover feed");
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  async customDiscover(customPrompt: string): Promise<UserProfile[]> {
+    const response = await fetch(`${API_URL}/dating/ai/discover/custom`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ customPrompt }),
+    });
+    if (!response.ok) throw new Error("Failed to fetch custom AI matches");
     const data = await response.json();
     return data.data || data;
   },

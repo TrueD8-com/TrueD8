@@ -49,28 +49,21 @@ export default function AIMatchPage() {
     setIsLoading(true);
 
     try {
-      // Simulate AI processing (replace with actual API call when backend is ready)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Mock AI response
       const aiResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `I understand you're looking for: "${userMessage}"\n\nLet me analyze your preferences and find the best matches for you. This will take just a moment...`,
+        content: `Analyzing your preferences: "${userMessage}"\n\nFinding your best matches...`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiResponse]);
 
-      // Simulate finding matches
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Call custom AI discover API
+      const profiles = await datingApi.customDiscover(userMessage);
 
-      // Get discover profiles as mock AI results
-      const profiles = await datingApi.discover({ limit: 5 });
-
-      // Create mock match results with scores and reasons
+      // Create match results (backend returns ranked profiles)
       const results: AIMatchResult[] = profiles.map((profile, idx) => ({
         profile,
-        score: 95 - idx * 5, // Mock decreasing scores
+        score: 95 - idx * 5,
         reason: generateMatchReason(userMessage, profile),
       }));
 
