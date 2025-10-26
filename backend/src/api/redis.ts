@@ -1,10 +1,10 @@
-import { createClient } from "redis";
-import myError from "./myError";
-import { getonlineLoginUsers } from "../api/socket";
+import { createClient } from 'redis';
+import myError from './myError';
+import { getonlineLoginUsers } from '../api/socket';
 const onlineLoginUsers = getonlineLoginUsers();
 
 export const globalRedisClient = createClient(
-  { url: process.env.REDIS_HOST }
+  { url: process.env.REDIS_HOST },
 
   // enable_offline_queue: false
 );
@@ -19,46 +19,44 @@ export const globalRedisClient = createClient(
 //   console.log('will be true if successfull: ', succeeded); // will be true if successfull
 // });
 
-globalRedisClient.on("connect", function (err) {
+globalRedisClient.on('connect', function (err) {
   if (err) {
     console.log(err);
   } else {
-    console.log("Redis-server is connected");
+    console.log('Redis-server is connected');
   }
 });
 
-globalRedisClient.on("error", function (err) {
-  console.log("Error " + err);
+globalRedisClient.on('error', function (err) {
+  console.log('Error ' + err);
 });
 
 export const hashget = (tag) => {
   // It is corresponded to hashset
   try {
-    return new Promise((resolve, reject) => {
-      //@ts-ignore
-
-      globalRedisClient.get(tag, (err, reply) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(reply);
-        }
-      });
+  return new Promise((resolve, reject) => {
+    globalRedisClient.get(tag, (err, reply) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(reply);
+      }
     });
-  } catch (err) {
-    throw err;
-  }
+  });
+}catch (err){
+  throw(err);
+}
 };
 
 export const hashset = (tag, val) => {
   // value could be only a string
   return new Promise((resolve, reject) => {
-    //@ts-ignore
-
+    
     globalRedisClient.set(tag, val, (err, reply) => {
       if (err) {
         reject(err);
       } else {
+      
         resolve(reply);
       }
     });
@@ -106,22 +104,23 @@ export const hashSetMembers = (tag) => {
 export function getCurrentPrice(currency) {
   return hashGetAll(currency.toString())
     .then((currencyInfo: any) => {
-      return hashGetAll(currencyInfo.ab_name + "-g")
+      return hashGetAll( currencyInfo.ab_name + "-g")
         .then((currencyInstantPrice: any) => {
-          return hashget("dollarPrice").then((rialprice) => {
+          return hashget("dollarPrice").then((rialprice)=>{
             if (currencyInstantPrice) {
-              return Number(currencyInstantPrice.current) * Number(rialprice);
+              return Number(currencyInstantPrice.current)* Number(rialprice);
             } else {
               const error = new myError(
-                "It is not possible to get price currently!",
+                'It is not possible to get price currently!',
                 400,
                 11,
-                "امکان قیمت گیری در حال حاضر وجود ندارد!",
-                "خطا رخ داد"
+                'امکان قیمت گیری در حال حاضر وجود ندارد!',
+                'خطا رخ داد',
               );
               throw error;
             }
-          });
+          })
+          
         })
         .catch((err) => {
           throw err;
@@ -132,12 +131,7 @@ export function getCurrentPrice(currency) {
     });
 }
 
-export const setCurrentPrice = ({
-  curGivenId,
-  curGivenVal,
-  curTakenId,
-  curTakenVal,
-}) => {
+export const setCurrentPrice = ({ curGivenId, curGivenVal, curTakenId, curTakenVal }) => {
   let curGivenObj;
   let curTakenObj;
   let ab_name;
@@ -167,10 +161,10 @@ export const setCurrentPrice = ({
   return Promise.all([findCurGivenObj(), findCurTakenObj()])
     .then(() => {
       if (curTakenObj) {
-        if (curGivenObj && curGivenObj.ab_name === "IRR") {
+        if (curGivenObj && curGivenObj.ab_name === 'IRR') {
           ab_name = curTakenObj.ab_name;
           current = curGivenVal;
-        } else if (curGivenObj && curGivenObj.ab_name !== "IRR") {
+        } else if (curGivenObj && curGivenObj.ab_name !== 'IRR') {
           ab_name = curGivenObj.ab_name;
           current = curTakenVal;
         }
@@ -180,15 +174,15 @@ export const setCurrentPrice = ({
         return hashGetAll(ab_name + "-g")
           .then((redisGetObj) => {
             if (redisGetObj) {
-              if (current < redisGetObj["min"]) {
+              if (current < redisGetObj['min']) {
                 min = current;
               } else {
-                min = redisGetObj["min"];
+                min = redisGetObj['min'];
               }
-              if (current > redisGetObj["max"]) {
+              if (current > redisGetObj['max']) {
                 max = current;
               } else {
-                max = redisGetObj["max"];
+                max = redisGetObj['max'];
               }
               currentPricesArr = [
                 {
@@ -200,7 +194,7 @@ export const setCurrentPrice = ({
               ];
               getonlineLoginUsers().emit(`new_current_price`, currentPricesArr);
 
-              return hashHMset("L_" + ab_name, {
+              return hashHMset('L_' + ab_name, {
                 current: current,
                 min: min,
                 max: max,
@@ -218,7 +212,7 @@ export const setCurrentPrice = ({
               ];
               getonlineLoginUsers().emit(`new_current_price`, currentPricesArr);
 
-              return hashHMset("L_" + ab_name, {
+              return hashHMset('L_' + ab_name, {
                 current: current,
                 min: current,
                 max: current,

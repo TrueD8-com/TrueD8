@@ -4032,3 +4032,1292 @@
   ],
   timestamp: '2025-10-16T15:17:39.794Z'
 }
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 148115456,
+      heapTotal: 94924800,
+      heapUsed: 66234136,
+      external: 22038889,
+      arrayBuffers: 18471706
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.65 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .ts]',
+      line: 61,
+      method: 'ts]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.793Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at compile (/tmp/ts-node-dev-hook-9573864437723543.js:46:21)
+      at Module.m._compile (/tmp/ts-node-dev-hook-9573864437723543.js:69:44)
+      at node:internal/modules/cjs/loader:1839:10
+      at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9573864437723543.js:114:20)
+      at require.extensions.<computed> (/tmp/ts-node-dev-hook-9573864437723543.js:71:20)
+      at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at compile (/tmp/ts-node-dev-hook-9573864437723543.js:46:21)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9573864437723543.js:69:44)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9573864437723543.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9573864437723543.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at compile (/tmp/ts-node-dev-hook-9573864437723543.js:46:21)\n' +
+    '    at Module.m._compile (/tmp/ts-node-dev-hook-9573864437723543.js:69:44)\n' +
+    '    at node:internal/modules/cjs/loader:1839:10\n' +
+    '    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-9573864437723543.js:114:20)\n' +
+    '    at require.extensions.<computed> (/tmp/ts-node-dev-hook-9573864437723543.js:71:20)\n' +
+    '    at Object.nodeDevHook [as .ts] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:63:13)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 149295104,
+      heapTotal: 95186944,
+      heapUsed: 66585360,
+      external: 22044109,
+      arrayBuffers: 18476886
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.65 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 21,
+      file: '/tmp/ts-node-dev-hook-9573864437723543.js',
+      function: 'compile',
+      line: 46,
+      method: null,
+      native: false
+    },
+    {
+      column: 44,
+      file: '/tmp/ts-node-dev-hook-9573864437723543.js',
+      function: 'Module.m._compile',
+      line: 69,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 10,
+      file: 'node:internal/modules/cjs/loader',
+      function: null,
+      line: 1839,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9573864437723543.js',
+      function: 'require.extensions..jsx.require.extensions..js',
+      line: 114,
+      method: '.js',
+      native: false
+    },
+    {
+      column: 20,
+      file: '/tmp/ts-node-dev-hook-9573864437723543.js',
+      function: 'require.extensions.<computed>',
+      line: 71,
+      method: '<computed>',
+      native: false
+    },
+    {
+      column: 13,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .ts]',
+      line: 63,
+      method: 'ts]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.796Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 66807704,
+      external: 22049262,
+      arrayBuffers: 18482039
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.65 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.798Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 67023392,
+      external: 22054418,
+      arrayBuffers: 18487195
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.65 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.798Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 67226896,
+      external: 22059574,
+      arrayBuffers: 18492351
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.66 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.801Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 67437008,
+      external: 22064730,
+      arrayBuffers: 18497507
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.66 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.802Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 67629216,
+      external: 22069886,
+      arrayBuffers: 18502663
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.66 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.802Z'
+}
+{
+  error: Error: write EPIPE
+      at process.target._send (node:internal/child_process:877:20)
+      at process.target.send (node:internal/child_process:751:19)
+      at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)
+      at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9
+      at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)
+      at Module.load (node:internal/modules/cjs/loader:1441:32)
+      at Function._load (node:internal/modules/cjs/loader:1263:12)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+      at Module.require (node:internal/modules/cjs/loader:1463:12) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  },
+  level: 'error',
+  message: 'uncaughtException: write EPIPE\n' +
+    'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  stack: 'Error: write EPIPE\n' +
+    '    at process.target._send (node:internal/child_process:877:20)\n' +
+    '    at process.target.send (node:internal/child_process:751:19)\n' +
+    '    at Object.exports.send (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js:17:14)\n' +
+    '    at /root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js:88:9\n' +
+    '    at Object.nodeDevHook [as .js] (/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js:61:17)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1441:32)\n' +
+    '    at Function._load (node:internal/modules/cjs/loader:1263:12)\n' +
+    '    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n' +
+    '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1463:12)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:22 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941052,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 147292160,
+      heapTotal: 95186944,
+      heapUsed: 67823232,
+      external: 22075042,
+      arrayBuffers: 18507819
+    }
+  },
+  os: { loadavg: [ 0.48, 0.4, 0.27 ], uptime: 2317492.66 },
+  trace: [
+    {
+      column: 20,
+      file: 'node:internal/child_process',
+      function: 'process.target._send',
+      line: 877,
+      method: '_send',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'node:internal/child_process',
+      function: 'process.target.send',
+      line: 751,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 14,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/ipc.js',
+      function: 'Object.exports.send',
+      line: 17,
+      method: 'send',
+      native: false
+    },
+    {
+      column: 9,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/wrap.js',
+      function: null,
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 17,
+      file: '/root/.npm/_npx/2351b2a15f5189cb/node_modules/ts-node-dev/lib/hook.js',
+      function: 'Object.nodeDevHook [as .js]',
+      line: 61,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.load',
+      line: 1441,
+      method: 'load',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Function._load',
+      line: 1263,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 14,
+      file: 'node:diagnostics_channel',
+      function: 'TracingChannel.traceSync',
+      line: 322,
+      method: 'traceSync',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'wrapModuleLoad',
+      line: 237,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:internal/modules/cjs/loader',
+      function: 'Module.require',
+      line: 1463,
+      method: 'require',
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:22.803Z'
+}
+{
+  error: Error: listen EADDRINUSE: address already in use :::4000
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at /root/Projects/TrueD8/backend/src/index.ts:129:23
+      at step (/root/Projects/TrueD8/backend/src/index.ts:66:23)
+      at Object.next (/root/Projects/TrueD8/backend/src/index.ts:47:53)
+      at /root/Projects/TrueD8/backend/src/index.ts:41:71
+      at new Promise (<anonymous>)
+      at __awaiter (/root/Projects/TrueD8/backend/src/index.ts:37:12)
+      at start (/root/Projects/TrueD8/backend/src/index.ts:127:15) {
+    code: 'EADDRINUSE',
+    errno: -98,
+    syscall: 'listen',
+    address: '::',
+    port: 4000
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::4000\n' +
+    'Error: listen EADDRINUSE: address already in use :::4000\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at /root/Projects/TrueD8/backend/src/index.ts:129:23\n' +
+    '    at step (/root/Projects/TrueD8/backend/src/index.ts:66:23)\n' +
+    '    at Object.next (/root/Projects/TrueD8/backend/src/index.ts:47:53)\n' +
+    '    at /root/Projects/TrueD8/backend/src/index.ts:41:71\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at __awaiter (/root/Projects/TrueD8/backend/src/index.ts:37:12)\n' +
+    '    at start (/root/Projects/TrueD8/backend/src/index.ts:127:15)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::4000\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at /root/Projects/TrueD8/backend/src/index.ts:129:23\n' +
+    '    at step (/root/Projects/TrueD8/backend/src/index.ts:66:23)\n' +
+    '    at Object.next (/root/Projects/TrueD8/backend/src/index.ts:47:53)\n' +
+    '    at /root/Projects/TrueD8/backend/src/index.ts:41:71\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at __awaiter (/root/Projects/TrueD8/backend/src/index.ts:37:12)\n' +
+    '    at start (/root/Projects/TrueD8/backend/src/index.ts:127:15)',
+  exception: true,
+  date: 'Sun Oct 26 2025 09:34:26 GMT+0000 (Coordinated Universal Time)',
+  process: {
+    pid: 1941143,
+    uid: 0,
+    gid: 0,
+    cwd: '/root/Projects/TrueD8/backend',
+    execPath: '/root/.nvm/versions/node/v22.19.0/bin/node',
+    version: 'v22.19.0',
+    argv: [ '/root/.nvm/versions/node/v22.19.0/bin/node', './src/index.ts' ],
+    memoryUsage: {
+      rss: 155521024,
+      heapTotal: 92372992,
+      heapUsed: 70333472,
+      external: 22046100,
+      arrayBuffers: 18478917
+    }
+  },
+  os: { loadavg: [ 0.53, 0.41, 0.27 ], uptime: 2317496.68 },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 23,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: null,
+      line: 129,
+      method: null,
+      native: false
+    },
+    {
+      column: 23,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: 'step',
+      line: 66,
+      method: null,
+      native: false
+    },
+    {
+      column: 53,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: 'Object.next',
+      line: 47,
+      method: 'next',
+      native: false
+    },
+    {
+      column: 71,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: null,
+      line: 41,
+      method: null,
+      native: false
+    },
+    {
+      column: null,
+      file: null,
+      function: 'new Promise',
+      line: null,
+      method: null,
+      native: false
+    },
+    {
+      column: 12,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: '__awaiter',
+      line: 37,
+      method: null,
+      native: false
+    },
+    {
+      column: 15,
+      file: '/root/Projects/TrueD8/backend/src/index.ts',
+      function: 'start',
+      line: 127,
+      method: null,
+      native: false
+    }
+  ],
+  timestamp: '2025-10-26T09:34:26.825Z'
+}

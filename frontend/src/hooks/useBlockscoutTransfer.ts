@@ -12,7 +12,7 @@ export function useBlockscoutTransfer(tokenAddress?: `0x${string}`) {
 
   const {
     data: hash,
-    writeContract,
+    writeContractAsync,
     isPending: isWritePending,
     isError: isWriteError,
     error: writeError,
@@ -33,19 +33,16 @@ export function useBlockscoutTransfer(tokenAddress?: `0x${string}`) {
   ) => {
     try {
       const parsedAmount = parseUnits(amount, decimals);
-      await writeContract({
+      const txHash = await writeContractAsync({
         address: targetToken,
         abi: ERC20_ABI,
         functionName: "transfer",
         args: [to, parsedAmount],
-      });
+      } as any);
 
-      // Wait for hash to be available
-      if (hash) {
-        setLastTxHash(hash);
-        await openTxToast(chainId.toString(), hash);
-        return hash;
-      }
+      setLastTxHash(txHash);
+      await openTxToast(chainId.toString(), txHash);
+      return txHash;
     } catch (error) {
       console.error("Transfer error:", error);
       throw error;
@@ -59,19 +56,16 @@ export function useBlockscoutTransfer(tokenAddress?: `0x${string}`) {
   ) => {
     try {
       const parsedAmount = parseUnits(amount, decimals);
-      await writeContract({
+      const txHash = await writeContractAsync({
         address: targetToken,
         abi: ERC20_ABI,
         functionName: "approve",
         args: [spender, parsedAmount],
-      });
+      } as any);
 
-      // Wait for hash to be available
-      if (hash) {
-        setLastTxHash(hash);
-        await openTxToast(chainId.toString(), hash);
-        return hash;
-      }
+      setLastTxHash(txHash);
+      await openTxToast(chainId.toString(), txHash);
+      return txHash;
     } catch (error) {
       console.error("Approve error:", error);
       throw error;

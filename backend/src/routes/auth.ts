@@ -343,8 +343,6 @@ authRoutes.get(
               } else {
                 return User.findOne({ email: doc.email })
                   .then((user) => {
-                    // @ts-ignore
-
                     if (user && user.email === doc.email) {
                       user.email = {
                         address: doc.email,
@@ -426,8 +424,6 @@ authRoutes.get(
                 return user
                   .save()
                   .then(() => {
-                    //@ts-ignore
-
                     fetch("http://rest.ippanel.com/v1/messages/patterns/send", {
                       method: "POST",
                       body: JSON.stringify(data),
@@ -450,7 +446,6 @@ authRoutes.get(
                       })
                       .then((res) => res.json())
                       .then((response) => {
-                        // @ts-ignore
                         if (response.status === "OK") {
                           successRes(res, "");
                         } else {
@@ -486,7 +481,6 @@ authRoutes.get(
               next(err);
             });
         } else {
-          //@ts-ignore
           return fetch("http://rest.ippanel.com/v1/messages/patterns/send", {
             method: "POST",
             body: JSON.stringify(data),
@@ -509,7 +503,6 @@ authRoutes.get(
             })
             .then((res) => res.json())
             .then((response) => {
-              // @ts-ignore
               if (response.status === "OK") {
                 successRes(res, "");
               } else {
@@ -718,7 +711,6 @@ authRoutes.post(
         return verificationPhoneCode
           .save()
           .then(async () => {
-            // @ts-ignore
             const currencies = await getCurrencies();
             console.log("currencies", currencies);
 
@@ -812,8 +804,6 @@ authRoutes.post(
               successRes(res, "Registration is done successfully", data, {
                 isPhoneNumber,
               });
-              //@ts-ignore
-
               fetch("http://rest.ippanel.com/v1/messages/patterns/send", {
                 method: "POST",
                 body: JSON.stringify(dataSms),
@@ -835,7 +825,6 @@ authRoutes.post(
                   logger.error(error.message);
                   next(err);
                 })
-                // @ts-ignore
                 .then((res) => res.json()) // expecting a json response
                 .then((response) => {
                   if (response.status !== "OK") {
@@ -852,7 +841,6 @@ authRoutes.post(
                 .catch((err) => {
                   logger.error(err);
                 });
-              //@ts-ignore
 
               return fetch(process.env.API + "api/tickets/register", {
                 method: "POST",
@@ -1233,37 +1221,34 @@ authRoutes.post(
           );
           next(error);
         } else {
-          return (
-            user
-              // @ts-ignore
-              .comparePasswordPromise(req.body.password)
-              .then((isMatch) => {
-                if (!isMatch) {
-                  logger.warn("Password is not valid!");
-                  const error = new myError(
-                    "Inputs are not valid!",
-                    400,
-                    15,
-                    "ورودی های درخواستی معتبر نیستند!",
-                    "خطا رخ داد"
-                  );
-                  next(error);
-                } else {
-                  user.password = req.body.newPassword;
-                  return user
-                    .save()
-                    .then(() => {
-                      successRes(res, "password is successfuly changed");
-                    })
-                    .catch((err) => {
-                      next(err);
-                    });
-                }
-              })
-              .catch((err) => {
-                next(err);
-              })
-          );
+          return user
+            .comparePasswordPromise(req.body.password)
+            .then((isMatch) => {
+              if (!isMatch) {
+                logger.warn("Password is not valid!");
+                const error = new myError(
+                  "Inputs are not valid!",
+                  400,
+                  15,
+                  "ورودی های درخواستی معتبر نیستند!",
+                  "خطا رخ داد"
+                );
+                next(error);
+              } else {
+                user.password = req.body.newPassword;
+                return user
+                  .save()
+                  .then(() => {
+                    successRes(res, "password is successfuly changed");
+                  })
+                  .catch((err) => {
+                    next(err);
+                  });
+              }
+            })
+            .catch((err) => {
+              next(err);
+            });
         }
       })
       .catch((err) => {
@@ -1341,66 +1326,63 @@ authRoutes.post(
           );
           next(error);
         } else {
-          return (
-            user
-              // @ts-ignore
-              .comparePasswordPromise(req.body.password)
-              .then((isMatch) => {
-                if (!isMatch) {
-                  logger.info("Passwords are not match");
-                  const error = new myError(
-                    "Username or Password are not valid!",
-                    400,
-                    8,
-                    "نام کاربری یا گذرواژه معتبر نیستند!",
-                    "خطا رخ داد"
-                  );
-                  next(error);
-                } else {
-                  const userActivity = {
-                    action: "LOGIN",
-                    timestamp: Date.now(),
-                    device: agent.source,
-                    ip: req.ip,
-                  };
-                  user.userActivities.push(userActivity);
-                  return user
-                    .save()
-                    .then(() => {
-                      req.session.userId = user._id;
-                      const profile = {
-                        name: user.name,
-                        lastName: user.lastName,
-                        userId: user._id,
-                        userType: user.userType,
-                      };
-                      successRes(res, "", profile);
-                    })
-                    .catch((err) => {
-                      logger.error(`Adding activity has some errors: ${err}`);
-                      const error = new myError(
-                        "Error happened during the login!",
-                        500,
-                        16,
-                        "در ورود شما مشکلی پیش آمده است!",
-                        "خطا در سرور"
-                      );
-                      next(error);
-                    });
-                }
-              })
-              .catch((err) => {
-                logger.error(`comparePassword method has some errors: ${err}`);
+          return user
+            .comparePasswordPromise(req.body.password)
+            .then((isMatch) => {
+              if (!isMatch) {
+                logger.info("Passwords are not match");
                 const error = new myError(
-                  "Error happened during the login!",
-                  500,
-                  16,
-                  "در ورود شما مشکلی پیش آمده است!",
-                  "خطا در سرور"
+                  "Username or Password are not valid!",
+                  400,
+                  8,
+                  "نام کاربری یا گذرواژه معتبر نیستند!",
+                  "خطا رخ داد"
                 );
                 next(error);
-              })
-          );
+              } else {
+                const userActivity = {
+                  action: "LOGIN",
+                  timestamp: Date.now(),
+                  device: agent.source,
+                  ip: req.ip,
+                };
+                user.userActivities.push(userActivity);
+                return user
+                  .save()
+                  .then(() => {
+                    req.session.userId = user._id;
+                    const profile = {
+                      name: user.name,
+                      lastName: user.lastName,
+                      userId: user._id,
+                      userType: user.userType,
+                    };
+                    successRes(res, "", profile);
+                  })
+                  .catch((err) => {
+                    logger.error(`Adding activity has some errors: ${err}`);
+                    const error = new myError(
+                      "Error happened during the login!",
+                      500,
+                      16,
+                      "در ورود شما مشکلی پیش آمده است!",
+                      "خطا در سرور"
+                    );
+                    next(error);
+                  });
+              }
+            })
+            .catch((err) => {
+              logger.error(`comparePassword method has some errors: ${err}`);
+              const error = new myError(
+                "Error happened during the login!",
+                500,
+                16,
+                "در ورود شما مشکلی پیش آمده است!",
+                "خطا در سرور"
+              );
+              next(error);
+            });
         }
       })
       .catch((err) => {

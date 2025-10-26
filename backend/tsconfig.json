@@ -1,29 +1,24 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "./src/types",
-      "./src/types/process-env.d.ts",
-      "./node_modules/@types",
-      "./typing-stubs"
-    ],
+    "typeRoots": ["./src/types", "./src/types/process-env.d.ts", "./node_modules/@types", "./typing-stubs"],
+    //"target": "es6",
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "src/build/",
     "lib": ["es6"],
     "allowJs": false,
     "rootDir": "src",
+    "strict": true,
     "esModuleInterop": true,
     "types": ["node", "jest"],
     "skipLibCheck": true,
+    "strictNullChecks": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
-    "strict": false,
     "noImplicitAny": false,
-    "strictNullChecks": false,
     "noEmitOnError": false,
     "checkJs": false
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.spec.ts", "src/scripts", "node_modules"]
+  "exclude": ["src/**/*.spec.ts"]
 }

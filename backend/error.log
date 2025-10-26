@@ -273,3 +273,78 @@
   level: 'error',
   timestamp: '2025-10-19T23:50:58.072Z'
 }
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf05db25c228a5d947ab0.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T09:56:45.081Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf0cdb25c228a5d947ab1.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T09:58:37.010Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf0fab25c228a5d947ab2.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T09:59:22.556Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf0fdb25c228a5d947ab3.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T09:59:25.733Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf0feb25c228a5d947ab4.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T09:59:26.777Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf145b25c228a5d947ab5.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T10:00:37.769Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf16fb25c228a5d947ab6.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T10:01:19.142Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf1cda61b38cf2a4e59c6.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T10:02:53.725Z'
+}
+{
+  message: "Error: ENOENT: no such file or directory, open 'images/temp/68fdf1dea61b38cf2a4e59c7.jpeg'",
+  level: 'error',
+  timestamp: '2025-10-26T10:03:10.951Z'
+}
+{
+  message: 'E11000 duplicate key error collection: trud8.users index: phoneNumber.number_1 dup key: { phoneNumber.number: "+15555555555" }',
+  level: 'error',
+  timestamp: '2025-10-26T10:29:27.030Z'
+}
+{
+  message: 'MongoServerError: E11000 duplicate key error collection: trud8.users index: phoneNumber.number_1 dup key: { phoneNumber.number: "+15555555555" }\n' +
+    '    at UpdateOneOperation.handleOk (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/update.ts:152:32)\n' +
+    '    at tryOperation (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/execute_operation.ts:290:26)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at executeOperation (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/execute_operation.ts:119:12)\n' +
+    '    at Collection.updateOne (/root/Projects/TrueD8/backend/node_modules/mongodb/src/collection.ts:410:12)',
+  level: 'error',
+  timestamp: '2025-10-26T10:29:27.040Z'
+}
+{
+  message: 'E11000 duplicate key error collection: trud8.users index: phoneNumber.number_1 dup key: { phoneNumber.number: "+15555555555" }',
+  level: 'error',
+  timestamp: '2025-10-26T10:29:54.868Z'
+}
+{
+  message: 'MongoServerError: E11000 duplicate key error collection: trud8.users index: phoneNumber.number_1 dup key: { phoneNumber.number: "+15555555555" }\n' +
+    '    at UpdateOneOperation.handleOk (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/update.ts:152:32)\n' +
+    '    at tryOperation (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/execute_operation.ts:290:26)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at executeOperation (/root/Projects/TrueD8/backend/node_modules/mongodb/src/operations/execute_operation.ts:119:12)\n' +
+    '    at Collection.updateOne (/root/Projects/TrueD8/backend/node_modules/mongodb/src/collection.ts:410:12)',
+  level: 'error',
+  timestamp: '2025-10-26T10:29:54.869Z'
+}
