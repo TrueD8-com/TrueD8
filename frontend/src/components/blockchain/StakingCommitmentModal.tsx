@@ -6,12 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { useAvailExecute } from "@/hooks/useAvailExecute";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
 import { Loader2, CheckCircle2, XCircle, Lock, Calendar, Trophy, Coins } from "lucide-react";
 import { useAccount, useChainId } from "wagmi";
-import { PYUSD_ADDRESSES, ChainId } from "@/config/contracts";
+import { ChainId } from "@/config/contracts";
 import { useNotification } from "@blockscout/app-sdk";
 
 interface StakingCommitmentModalProps {
@@ -44,7 +43,7 @@ export function StakingCommitmentModal({
   const [selectedToken, setSelectedToken] = useState<TokenType>("USDC");
 
   const { stakeAcrossChains, isExecuting, executionError, executionHash, executionSteps } = useAvailExecute();
-  const { formattedBalance, symbol, decimals, refetch } = useTokenBalance();
+  const { formattedBalance, refetch } = useTokenBalance();
   const { openTxToast } = useNotification();
 
   const [isSuccess, setIsSuccess] = useState(false);

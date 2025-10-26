@@ -6,6 +6,7 @@ import { QuestCard } from "@/components/rewards/QuestCard";
 import { BadgeCard } from "@/components/rewards/BadgeCard";
 import { CustomTransactionHistory, PointsProgram } from "@/components/blockchain";
 import { QuickActionsWidget } from "@/components/nexus/QuickActionsWidget";
+import { IntentExplorer } from "@/components/nexus/IntentExplorer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -231,6 +232,9 @@ export default function RewardsPage() {
 
           {/* Quick Actions with Nexus Widgets */}
           <QuickActionsWidget />
+
+          {/* Nexus Intent Explorer */}
+          <IntentExplorer />
 
           {/* Blockscout Transaction Explorer */}
           <Card className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-6">

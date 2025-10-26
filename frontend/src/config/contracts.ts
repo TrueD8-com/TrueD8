@@ -156,6 +156,7 @@ export const SUPPORTED_CHAINS = [
   { id: 42161, name: "Arbitrum", icon: "🔵", network: "mainnet" },
   { id: 43114, name: "Avalanche", icon: "🔺", network: "mainnet" },
   { id: 8453, name: "Base", icon: "🔵", network: "mainnet" },
+  { id: 295, name: "Hedera Mainnet", icon: "🔷", network: "mainnet" },
 
   // Testnet chains (Avail Nexus supported)
   { id: 11155111, name: "Sepolia", icon: "⟠", network: "testnet" },
@@ -163,6 +164,7 @@ export const SUPPORTED_CHAINS = [
   { id: 80002, name: "Polygon Amoy", icon: "🟣", network: "testnet" },
   { id: 421614, name: "Arbitrum Sepolia", icon: "🔵", network: "testnet" },
   { id: 11155420, name: "Optimism Sepolia", icon: "🔴", network: "testnet" },
+  { id: 296, name: "Hedera Testnet", icon: "🔷", network: "testnet" },
 ] as const;
 
 // Supported tokens for omnichain payments
