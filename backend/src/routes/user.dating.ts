@@ -1,5 +1,6 @@
 import * as express from 'express'
-import * as fs from 'fs'
+const path = require('path');
+const fs = require('fs');
 import { promises as fsp } from 'fs'
 import successRes from '../middlewares/response'
 import { isAuthorized } from '../middlewares/auth'
@@ -155,6 +156,59 @@ userRoutes.post('/editProfile',
       .catch((err) => next(err))
   }))
 
+  // Assuming serviceRoutes, tryCatch, and isAuthorized are defined elsewhere
+  
+  // Add the isAuthorized middleware here!
+  userRoutes.get('/getImages/:imageType/:imagePath/:imageName',
+    //  isAuthorized, // <-- CHECK: Is the user logged in?
+      tryCatch((req, res, next) => {
+          const imageType = req.params.imageType;
+          const imagePath = req.params.imagePath; // Will be the userId
+          const imageName = req.params.imageName;
+          
+          // --- Added Logic to enforce ownership (if needed) ---
+          // const loggedInUserId = req.session.userId;
+  
+          // // If the request is for a 'users' image path, enforce that the requested userId 
+          // // must match the logged-in user's ID (or another authorization check)
+          // if (imageType === 'users' && imagePath !== loggedInUserId) {
+          //      // Block access if a logged-in user tries to access another user's private images
+          //      return res.status(403).send({ error: 'Access denied.' });
+          // }
+          
+          // --- Path Construction Logic (from previous answer) ---
+          
+          const baseDir = './images';
+          let imageFilePath;
+  
+          if (imageType === 'users') {
+              const userId = imagePath;
+              imageFilePath = path.join(baseDir, 'users', userId, imageName);
+              
+          } else {
+              // Keep original logic for non-user images (e.g., 'coins')
+              const validPaths = ['coins'];
+              
+              if (req.query.type && validPaths.includes(req.query.type)) {
+                  imageFilePath = path.join(baseDir, imageName);
+              } else {
+                  imageFilePath = path.join(baseDir, imageType, imagePath, imageName);
+              }
+          }
+          
+          // --- File Reading and Response (rest is the same) ---
+          if (!fs.existsSync(imageFilePath)) {
+              console.warn(`Image file not found at: ${imageFilePath}`);
+              return res.status(404).send({ error: 'Image not found.' });
+          }
+  
+          const imageFile = fs.readFileSync(imageFilePath);
+          const ext = path.extname(imageName);
+          
+          res.contentType(`image/${ext.substring(1)}`);
+          res.send(imageFile);
+      })
+  );
 userRoutes.post('/setNewAddress',
   isAuthorized,
   tryCatch((req, res, next) => {

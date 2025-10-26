@@ -59,6 +59,7 @@
     "@types/dotenv": "^8.2.3",
     "@types/node": "^24.7.2",
     "amqp": "^0.2.7",
+    "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "bson": "6.10.4",

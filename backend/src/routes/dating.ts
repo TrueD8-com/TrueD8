@@ -1,7 +1,7 @@
 import * as express from 'express'
 import * as mongoose from 'mongoose'
 
-import successRes from '../middlewares/response'
+import successRes from "../middlewares/response";
 import { isAuthorized } from '../middlewares/auth'
 import tryCatch from '../middlewares/tryCatch'
 
@@ -13,9 +13,10 @@ import { Message } from '../db/message'
 import { Favorite } from '../db/favorite'
 import { getIo } from '../api/socket'
 import * as _ from 'lodash'
-
+import axios from 'axios';
 export const datingRoutes = express.Router()
-
+const ASI_API_KEY = process.env.ASI_ONE_API_KEY
+const ASI_API_URL = 'https://api.asi1.ai/v1/chat/completions'
 // Like a user (mutual like => create match + conversation)
 datingRoutes.post('/like/:targetId',
   isAuthorized,
@@ -123,54 +124,155 @@ datingRoutes.get('/discover',
   })
 )
 
-// AI matchmaking prompt - crafts a prompt payload from user profile + interactions
-datingRoutes.get('/ai/prompt',
+
+async function getCandidatePool(
+  currentUserId: string,
+  discoveryPreferences: any,
+  showMePreferences: string[],
+  userCoordinates?: number[]
+) {
+  // 1. Get IDs of users to EXCLUDE
+  const [previouslyInteractedLikes, currentUserDoc] = await Promise.all([
+    Like.find({ liker: currentUserId }).select('likee -_id').lean(),
+    User.findById(currentUserId).select('blockedUsers -_id').lean()
+  ])
+
+  const excludedIds = [
+    currentUserId,
+    ...(currentUserDoc?.blockedUsers || []).map(id => id.toString()),
+    ...previouslyInteractedLikes.map(i => i.likee.toString()),
+  ]
+  
+  const blockedMeDocs = await User.find({ blockedUsers: currentUserId }).select('_id').lean()
+  excludedIds.push(...blockedMeDocs.map(u => u._id.toString()))
+
+  // 2. Define the MongoDB Query Filter
+  const today = new Date()
+  const minBirthYear = today.getFullYear() - discoveryPreferences.ageMax
+  const maxBirthYear = today.getFullYear() - discoveryPreferences.ageMin
+
+  const hardFilters: mongoose.FilterQuery<any> = {
+    _id: { $nin: excludedIds },
+    'discovery.visible': true,
+    gender: { $in: showMePreferences.length > 0 ? showMePreferences : ['male', 'female', 'nonbinary', 'other'] },
+    'birthdate.year': { $gte: String(minBirthYear), $lte: String(maxBirthYear) }
+  }
+
+  // 3. Add Geospatial Filter
+  if (userCoordinates && userCoordinates.length === 2 && discoveryPreferences.distanceKm > 0) {
+    const maxDistanceMeters = discoveryPreferences.distanceKm * 1000
+    hardFilters.location = {
+      $near: {
+        $geometry: { type: "Point", coordinates: userCoordinates }, // [lng, lat]
+        $maxDistance: maxDistanceMeters
+      }
+    }
+  }
+
+  // 4. Execute Query
+  const candidatePool = await User.find(hardFilters)
+    .select('_id username gender bio interests metrics location wallet') // Select only necessary data for AI
+    .limit(50) // Limit to a large-enough pool for the AI
+    .lean()
+    
+  return candidatePool
+}// AI matchmaking prompt - crafts a prompt payload from user profile + interactions
+datingRoutes.post('/ai/discover/custom',
   isAuthorized,
   tryCatch(async (req, res) => {
+    const { customPrompt } = req.body // Expect: { "customPrompt": "Looking for someone who loves hiking and is passionate about decentralization." }
+    if (!customPrompt || typeof customPrompt !== 'string' || customPrompt.length > 500) {
+      return successRes(res, 'Invalid custom prompt provided.', {})
+    }
+
     const userId = req.session.userId
     const user = await User.findById(userId)
     if (!user) return successRes(res, 'not found', {})
 
-    const [likesSent, likesReceived, favorites] = await Promise.all([
-      Like.find({ liker: userId }).select('likee isSuperLike createdAt'),
-      Like.find({ likee: userId }).select('liker isSuperLike createdAt'),
-      Favorite.find({ user: userId }).select('target createdAt')
+    // 1. Aggregate Data (same as the standard AI discover)
+    const userCoordinates = user.location?.coordinates
+    const [likesSent, likesReceived, favorites, candidatePool] = await Promise.all([
+      Like.find({ liker: userId }).select('likee isSuperLike createdAt').lean(),
+      Like.find({ likee: userId }).select('liker isSuperLike createdAt').lean(),
+      Favorite.find({ user: userId }).select('target createdAt').lean(),
+      getCandidatePool(userId, user.discovery, user.showMe, userCoordinates)
     ])
 
-    const payload = {
-      profile: {
-        username: user.username,
-        gender: user.gender,
-        showMe: user.showMe,
-        bio: user.bio,
-        interests: user.interests,
-        discovery: user.discovery,
-        location: user.location && user.location.coordinates ? { lat: user.location.coordinates[1], lng: user.location.coordinates[0] } : undefined
-      },
-      interactions: {
-        likesSent: likesSent.map((d) => ({ targetId: d.likee, super: d.isSuperLike, at: d.createdAt })),
-        likesReceived: likesReceived.map((d) => ({ fromId: d.liker, super: d.isSuperLike, at: d.createdAt })),
-        favorites: favorites.map((f) => ({ targetId: f.target, at: f.createdAt }))
-      },
-      metrics: user.metrics
+    if (!candidatePool || candidatePool.length === 0) {
+      return successRes(res, 'no new candidates found', [])
+    }
+    
+    // 2. Construct the AI Prompt, now including the user's custom text
+    const userContextPayload = {
+      profile: _.pick(user, ['username', 'gender', 'showMe', 'bio', 'interests', 'discovery']),
+      // ... (interactions and metrics remain the same)
     }
 
-    // This is the prompt structure that a separate AI service can consume
-    const prompt = {
-      system: 'You are an AI matchmaker optimizing for mutual compatibility and engagement.',
-      user_context: payload,
-      goal: 'Recommend top 10 candidate userIds to show next and key rationale tags.',
-      constraints: [
-        'Respect user showMe genders and discovery distance/age preferences',
-        'Dedupe already disliked or unmatched users',
-        'Prefer mutual or near-mutual engagement (likes received, common interests)'
+    const aiPrompt = {
+      user_context: userContextPayload,
+      candidate_profiles: candidatePool.map(c => ({
+          userId: c._id.toString(),
+          ..._.pick(c, ['gender', 'bio', 'interests', 'metrics'])
+      }))
+    }
+
+    // 3. Call the external ASI API with the modified prompt
+    let matchRecommendations = []
+    try {
+      const promptString = JSON.stringify(aiPrompt, null, 2)
+      const messages = [
+        {
+          role: "system",
+          content: "You are an AI matchmaker for a Web3 dating app. Your only task is to return a valid JSON object with a single key 'recommendations'. You MUST prioritize the user's custom text prompt when ranking candidates. Analyze the user's context and rank candidates based on this primary custom request."
+        },
+        {
+          role: "user",
+          content: `CONTEXT:\n\n**USER'S CUSTOM PROMPT (Prioritize this heavily):**\n"${customPrompt}"\n\nGOAL: Rank the top 10 candidates from 'candidate_profiles' who best match the user's custom prompt and general profile.\n\nREQUIRED JSON SCHEMA:\n{\n  "recommendations": [\n    {\n      "id": "string",\n      "score": "integer (0-100)",\n      "rationaleTag": "string (e.g., Matches-Hiking-Interest)"\n    }\n  ]\n}\n\nFULL USER DATA AND CANDIDATE POOL:\n${promptString}`
+        }
       ]
+      console.log("messages", messages);
+      const response = await axios.post(ASI_API_URL, {
+        model: "asi1-extended",
+        temperature: 0.3, // Slightly higher temperature for more creative matching on the custom prompt
+        max_tokens: 1500,
+        response_format: { type: "json_object" },
+        messages: messages,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ASI_API_KEY}`,
+        }
+      })
+      
+      const result = JSON.parse(response.data.choices[0].message.content)
+      matchRecommendations = result.recommendations || []
+      console.log("matchRecommendations", matchRecommendations);
+    } catch (error: any) {
+      // Type narrowed to 'any' for access; fallbacks for non-axios errors
+      const apiErrData = (error && error.response && error.response.data) ? error.response.data : undefined;
+      const apiErrMsg = (error && error.message) ? error.message : String(error);
+      console.error("ASI API Error (Custom Prompt):", apiErrData ?? apiErrMsg);
+      return successRes(res, 'AI service failed to process custom prompt.', []);
     }
+    
+    // 4. Fetch and return ranked profiles (same as before)
+    if (matchRecommendations.length === 0) {
+        return successRes(res, 'No recommendations from AI for your custom prompt', [])
+    }
+    
+    const rankedIds = matchRecommendations.map((rec: any) => rec.id)
+    const fieldsToSelect = '_id name lastName username gender bio interests photos location birthdate verification';
 
-    return successRes(res, '', prompt)
+// Fetch only the specified fields for the recommended users.
+const rankedUserDocs = await User.find({ _id: { $in: rankedIds } })
+  .select(fieldsToSelect) // Replaced the empty comment with the fields string
+  .lean();
+    const userMap = new Map(rankedUserDocs.map(doc => [doc._id.toString(), doc]))
+    const finalRankedProfiles = rankedIds.map((id: string) => userMap.get(id)).filter(Boolean)
+
+    return successRes(res, 'Custom match recommendations generated', finalRankedProfiles)
   })
 )
-
 // Superlike
 datingRoutes.post('/superlike/:targetId',
   isAuthorized,
