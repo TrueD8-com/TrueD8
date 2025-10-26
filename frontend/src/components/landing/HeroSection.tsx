@@ -21,12 +21,12 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
-  const stats = [
-    { number: "10K+", label: "Active Users", icon: Users },
-    { number: "2.5K", label: "Matches Made", icon: Heart },
-    { number: "500+", label: "Events Hosted", icon: Calendar },
-    { number: "$50K", label: "Rewards Earned", icon: Coins },
-  ];
+  // const stats = [
+  //   { number: "10K+", label: "Active Users", icon: Users },
+  //   { number: "2.5K", label: "Matches Made", icon: Heart },
+  //   { number: "500+", label: "Events Hosted", icon: Calendar },
+  //   { number: "$50K", label: "Rewards Earned", icon: Coins },
+  // ];
 
   return (
     <section className="pt-32 pb-20 px-4 relative">
@@ -99,7 +99,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* Stats */}
-          <motion.div
+          {/* <motion.div
             variants={staggerContainer}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24"
           >
@@ -124,7 +124,7 @@ export function HeroSection() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </motion.div>
     </section>
