@@ -1,16 +1,17 @@
-import { useWriteContract, useWaitForTransactionReceipt, useChainId } from "wagmi";
+import { useWriteContract, useWaitForTransactionReceipt, useChainId, useAccount } from "wagmi";
 import { parseUnits } from "viem";
 import { PYUSD_ADDRESSES, ERC20_ABI, ChainId } from "@/config/contracts";
 import { useState } from "react";
 
 export function useTokenTransfer(tokenAddress?: `0x${string}`) {
   const chainId = useChainId() as ChainId;
+  const { address: account } = useAccount();
   const targetToken = tokenAddress || PYUSD_ADDRESSES[chainId];
   const [lastTxHash, setLastTxHash] = useState<`0x${string}` | undefined>();
 
   const {
     data: hash,
-    writeContract,
+    writeContractAsync,
     isPending: isWritePending,
     isError: isWriteError,
     error: writeError,
@@ -31,16 +32,14 @@ export function useTokenTransfer(tokenAddress?: `0x${string}`) {
   ) => {
     try {
       const parsedAmount = parseUnits(amount, decimals);
-      await writeContract({
+      const txHash = await writeContractAsync({
         address: targetToken,
         abi: ERC20_ABI,
         functionName: "transfer",
         args: [to, parsedAmount],
-      });
-      if (hash) {
-        setLastTxHash(hash);
-        return hash;
-      }
+      } as any);
+      setLastTxHash(txHash);
+      return txHash;
     } catch (error) {
       console.error("Transfer error:", error);
       throw error;
@@ -54,16 +53,14 @@ export function useTokenTransfer(tokenAddress?: `0x${string}`) {
   ) => {
     try {
       const parsedAmount = parseUnits(amount, decimals);
-      await writeContract({
+      const txHash = await writeContractAsync({
         address: targetToken,
         abi: ERC20_ABI,
         functionName: "approve",
         args: [spender, parsedAmount],
-      });
-      if (hash) {
-        setLastTxHash(hash);
-        return hash;
-      }
+      } as any);
+      setLastTxHash(txHash);
+      return txHash;
     } catch (error) {
       console.error("Approve error:", error);
       throw error;
