@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { TokenBalance } from "@/components/rewards/TokenBalance";
 import { QuestCard } from "@/components/rewards/QuestCard";
 import { BadgeCard } from "@/components/rewards/BadgeCard";
-import { CustomTransactionHistory, PointsProgram } from "@/components/blockchain";
+import { CustomTransactionHistory, PointsProgram, BlockchainGamification } from "@/components/blockchain";
 import { QuickActionsWidget } from "@/components/nexus/QuickActionsWidget";
 import { IntentExplorer } from "@/components/nexus/IntentExplorer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -229,6 +229,9 @@ export default function RewardsPage() {
         {/* Blockchain Tab */}
         <TabsContent value="blockchain" className="space-y-6">
           <TokenBalance useRealBalance={true} showDetails={true} />
+
+          {/* Blockchain Dating Academy - Gamification */}
+          <BlockchainGamification />
 
           {/* Quick Actions with Nexus Widgets */}
           <QuickActionsWidget />
