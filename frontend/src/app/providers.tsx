@@ -33,7 +33,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <NotificationProvider>
               <TransactionPopupProvider>
                 <NexusProvider network="testnet">
-                  <NexusWidgetsProvider config={{ network: "testnet" }}>
+                  <NexusWidgetsProvider>
                     {children}
                   </NexusWidgetsProvider>
                 </NexusProvider>
