@@ -91,7 +91,7 @@ export default function SIWEPage() {
       />
 
       <div className="relative z-10 w-full max-w-md">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-8">
+        <Link href="https://trued8.com" className="flex items-center justify-center gap-2 mb-8">
           <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center">
             <Heart className="w-7 h-7 text-white fill-white" />
           </div>
@@ -262,7 +262,7 @@ export default function SIWEPage() {
 
           <p className="text-center text-gray-500 text-sm mt-6">
             <Link
-              href="/"
+              href="https://trued8.com"
               className="hover:text-purple-400 transition-colors inline-flex items-center gap-1"
             >
               ← Back to Home
