@@ -378,7 +378,7 @@ export function BlockchainGamification() {
                   <div>
                     <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
                       <GraduationCap className="w-5 h-5 text-purple-400" />
-                      What You'll Learn
+                      What You&apos;ll Learn
                     </h4>
                     <ul className="space-y-2">
                       {selectedTask.learningPoints.map((point, idx) => (
