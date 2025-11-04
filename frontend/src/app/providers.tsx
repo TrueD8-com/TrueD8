@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { NotificationProvider, TransactionPopupProvider } from "@blockscout/app-sdk";
 import { NexusProvider } from "@/providers/nexus-provider";
+import { NexusProvider as NexusWidgetsProvider } from "@avail-project/nexus-widgets";
 import { config } from "@/config/wagmi";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -32,7 +33,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <NotificationProvider>
               <TransactionPopupProvider>
                 <NexusProvider network="testnet">
-                  {children}
+                  <NexusWidgetsProvider>
+                    {children}
+                  </NexusWidgetsProvider>
                 </NexusProvider>
               </TransactionPopupProvider>
             </NotificationProvider>
