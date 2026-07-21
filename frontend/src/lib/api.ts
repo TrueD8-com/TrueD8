@@ -18,6 +18,16 @@ export interface AuthCheckResponse {
   address?: string;
 }
 
+export interface EmailOtpRequestResponse {
+  ok?: boolean;
+  expiresInSeconds?: number;
+}
+
+export interface EmailOtpVerifyResponse {
+  userId: string;
+  email?: string;
+}
+
 export interface Address {
   province?: string;
   city?: string;
@@ -146,8 +156,75 @@ export interface Message {
   sentAt: string;
 }
 
-// Auth API
+/**
+ * Auth API
+ *
+ * Primary login: email OTP → session cookie (`sessionId`) with `req.session.userId`.
+ * SIWE endpoints are for optional wallet ownership / legacy wallet login only.
+ * Always send `credentials: "include"` so the session cookie is attached.
+ * See docs/AUTH_API_HANDLING.md and docs/BACKEND_AUTH_CHANGES.md.
+ */
 export const authApi = {
+  // --- Email OTP (primary auth; requires backend OTP routes) ---
+
+  async requestEmailOtp(email: string): Promise<EmailOtpRequestResponse> {
+    const response = await fetch(`${API_URL}/auth/otp/request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email }),
+    });
+    if (!response.ok) {
+      // Generic message — do not leak whether the email exists.
+      throw new Error("Unable to send login code. Please try again shortly.");
+    }
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  async verifyEmailOtp(
+    email: string,
+    code: string
+  ): Promise<EmailOtpVerifyResponse> {
+    const response = await fetch(`${API_URL}/auth/otp/verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, code }),
+    });
+    if (!response.ok) {
+      throw new Error("Invalid or expired code. Request a new one and try again.");
+    }
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  /**
+   * Session check for app auth (email OTP or any flow that sets userId).
+   * Use this for AuthGuard / dating APIs — NOT /auth/siwe/auth.
+   */
+  async checkSessionAuth(): Promise<AuthCheckResponse> {
+    const response = await fetch(`${API_URL}/auth/auth`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      return { isAuth: false };
+    }
+    const data = await response.json();
+    return data.data || data;
+  },
+
+  /** Full session logout (clears userId). Prefer for email-primary auth. */
+  async logoutSession(): Promise<void> {
+    const response = await fetch(`${API_URL}/auth/logout`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) throw new Error("Logout failed");
+  },
+
+  // --- SIWE (optional wallet ownership / legacy wallet login) ---
+
   async getNonce(): Promise<NonceResponse> {
     const response = await fetch(`${API_URL}/auth/siwe/nonce`, {
       credentials: "include",
@@ -165,14 +242,15 @@ export const authApi = {
       body: JSON.stringify({ message, signature }),
     });
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Login failed");
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || "Wallet sign-in failed");
     }
     const data = await response.json();
     return data.data || data;
   },
 
-  async checkAuth(): Promise<AuthCheckResponse> {
+  /** Checks session.siwe only — for Web3 gates, not app login. */
+  async checkSiweAuth(): Promise<AuthCheckResponse> {
     const response = await fetch(`${API_URL}/auth/siwe/auth`, {
       credentials: "include",
     });
@@ -183,12 +261,23 @@ export const authApi = {
     return data.data || data;
   },
 
-  async logout(): Promise<void> {
+  /** @deprecated Prefer checkSessionAuth for app auth. Kept for SIWE-only callers. */
+  async checkAuth(): Promise<AuthCheckResponse> {
+    return this.checkSessionAuth();
+  },
+
+  /** Clears SIWE fields only — does not fully destroy email session. */
+  async logoutSiwe(): Promise<void> {
     const response = await fetch(`${API_URL}/auth/siwe/logout`, {
       method: "GET",
       credentials: "include",
     });
-    if (!response.ok) throw new Error("Logout failed");
+    if (!response.ok) throw new Error("SIWE logout failed");
+  },
+
+  /** @deprecated Prefer logoutSession for app logout. */
+  async logout(): Promise<void> {
+    return this.logoutSession();
   },
 
   async getMe(): Promise<UserResponse> {
@@ -201,7 +290,7 @@ export const authApi = {
   },
 };
 
-// Note: Session-based auth uses cookies, no need for token helpers
+// Session-based auth uses HttpOnly cookies — never put JWTs in localStorage for API auth.
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -357,7 +446,8 @@ export const userApi = {
 
   async connectWallet(
     provider: string,
-    address: string
+    address: string,
+    proof?: { message: string; signature: string }
   ): Promise<ApiResponse<WalletResponse>> {
     const response = await fetch(`${API_URL}/user/wallet/connect`, {
       method: "POST",
@@ -365,7 +455,13 @@ export const userApi = {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ provider, address }),
+      body: JSON.stringify({
+        provider,
+        address,
+        ...(proof
+          ? { message: proof.message, signature: proof.signature }
+          : {}),
+      }),
     });
     if (!response.ok) throw new Error("Failed to connect wallet");
     return response.json();

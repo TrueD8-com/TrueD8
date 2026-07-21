@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Sparkles,
-  Wallet,
+  Mail,
   ArrowRight,
   Users,
   Heart,
@@ -71,13 +71,13 @@ export function HeroSection() {
             variants={fadeInUp}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Link href="/siwe">
+            <Link href="/login">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 hover:from-purple-700 hover:via-pink-700 hover:to-orange-700 text-white px-8 py-6 text-lg border-0 shadow-2xl shadow-purple-500/50"
                 >
-                  <Wallet className="w-5 h-5 mr-2" />
+                  <Mail className="w-5 h-5 mr-2" />
                   Start Dating Now
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>

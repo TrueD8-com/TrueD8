@@ -2,28 +2,38 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { isAuthenticated } from "@/lib/siwe";
+import { isAuthenticated } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 
+/**
+ * Gates dashboard on session cookie (`/auth/auth` → userId), not SIWE.
+ * Unauthenticated users go to email OTP login.
+ */
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     const checkAuth = async () => {
       const authenticated = await isAuthenticated();
+      if (cancelled) return;
       if (!authenticated) {
-        router.push("/siwe");
+        router.replace("/login");
       } else {
         setIsLoading(false);
       }
     };
 
-    checkAuth();
+    void checkAuth();
+    return () => {
+      cancelled = true;
+    };
   }, [router]);
 
   if (isLoading) {

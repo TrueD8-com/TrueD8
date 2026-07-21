@@ -66,7 +66,7 @@ export default function LandingPage() {
 
           <div className="flex items-center gap-3">
             {/* <ThemeToggle /> */}
-            <Link href="/siwe">
+            <Link href="/login">
               <Button className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 hover:from-purple-700 hover:via-pink-700 hover:to-orange-700 text-white border-0 shadow-lg shadow-purple-500/50">
                 <Wallet className="w-4 h-4 mr-2" />
                 Connect Wallet
@@ -132,7 +132,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    href="/siwe"
+                    href="/login"
                     className="hover:text-white transition-colors"
                   >
                     Get Started
@@ -146,7 +146,7 @@ export default function LandingPage() {
               <ul className="space-y-2 text-gray-400">
                 <li>
                   <Link
-                    href="/siwe"
+                    href="/login"
                     className="hover:text-white transition-colors"
                   >
                     Become a Partner

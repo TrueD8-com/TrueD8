@@ -1,27 +1,27 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only apply middleware to the root path
-  if (pathname === '/') {
-    // Check if user has authentication data (wallet_address in cookie or header)
-    const cookies = request.cookies;
-    const hasAuthCookie = cookies.get('connect.sid'); // Session cookie from express-session
+  if (pathname === "/") {
+    // Express session cookie name is `sessionId` (see backend session config).
+    const hasAuthCookie = request.cookies.get("sessionId");
 
-    // If user is authenticated, redirect to dashboard
     if (hasAuthCookie) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
-    // If not authenticated, redirect to siwe
-    return NextResponse.redirect(new URL('/siwe', request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (pathname === "/siwe") {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/',
+  matcher: ["/", "/siwe"],
 };

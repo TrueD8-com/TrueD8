@@ -1,66 +1,84 @@
 import { SiweMessage } from "siwe";
-import { authApi } from "./api";
+import { authApi, userApi } from "./api";
 
 /**
- * Complete SIWE authentication flow using the siwe package
- * 1. Get nonce from backend
- * 2. Create SIWE message using siwe package
- * 3. Sign message with wallet
- * 4. Login with signature (session-based)
+ * SIWE helpers for optional wallet linking / Web3 ownership proof.
+ * Primary app login is email OTP (`lib/auth.ts`) — do not use SIWE as the main gate.
+ *
+ * IMPORTANT: Prefer `linkWalletToSession` when the user already has an email session.
+ * Calling `siweAuthenticate` (SIWE login) can replace `session.userId` with a
+ * wallet-keyed user until the backend supports authenticated wallet linking.
+ */
+
+export async function buildSiweMessage(
+  address: string,
+  chainId: number
+): Promise<{ messageString: string; nonce: string }> {
+  const { nonce } = await authApi.getNonce();
+  const domain = window.location.host.replace("localhost", "127.0.0.1");
+  const origin = window.location.origin.replace("localhost", "127.0.0.1");
+
+  const siweMessage = new SiweMessage({
+    domain,
+    address,
+    statement: "Link this wallet to your TrueD8 account",
+    uri: origin,
+    version: "1",
+    chainId,
+    nonce,
+    issuedAt: new Date().toISOString(),
+    expirationTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+  });
+
+  return { messageString: siweMessage.prepareMessage(), nonce };
+}
+
+/**
+ * Prove wallet ownership and attach it to the current email session.
+ * Does NOT call /auth/siwe/login (avoids swapping the logged-in user).
+ *
+ * Sends message+signature to /user/wallet/connect for when backend adds verification
+ * (see docs/BACKEND_AUTH_CHANGES.md). Today the backend may ignore the proof fields.
+ */
+export async function linkWalletToSession(
+  address: string,
+  chainId: number,
+  signMessage: (message: string) => Promise<string>,
+  provider = "walletconnect"
+): Promise<{ address: string }> {
+  const normalized = address.toLowerCase();
+  const { messageString } = await buildSiweMessage(normalized, chainId);
+  const signature = await signMessage(messageString);
+
+  await userApi.connectWallet(provider, normalized, {
+    message: messageString,
+    signature,
+  });
+
+  localStorage.setItem("wallet_address", normalized);
+  return { address: normalized };
+}
+
+/**
+ * Legacy full SIWE login (creates/finds user by wallet).
+ * Avoid for email-primary users — use linkWalletToSession instead.
  */
 export async function siweAuthenticate(
   address: string,
   chainId: number,
   signMessage: (message: string) => Promise<string>
 ) {
-  try {
-    // Step 1: Get nonce from backend
-    const { nonce } = await authApi.getNonce();
-    console.log("LOG 1: Nonce received successfully:", nonce);
-    const domain = window.location.host.replace("localhost", "127.0.0.1");
-    const origin = window.location.origin.replace("localhost", "127.0.0.1");
+  const { messageString } = await buildSiweMessage(address, chainId);
+  const signature = await signMessage(messageString);
+  const authData = await authApi.login(messageString, signature);
 
-    console.log("Domain:", domain, "Origin:", origin);
+  localStorage.setItem("wallet_address", authData.address);
+  localStorage.setItem("user_id", authData.userId);
+  localStorage.setItem("auth_method", "siwe");
 
-    // Step 2: Create SIWE message using siwe package
-    const siweMessage = new SiweMessage({
-      domain: domain,
-      address: address,
-      statement: "Sign in with Ethereum to TrueD8",
-      uri: origin,
-      version: "1",
-      chainId: chainId,
-      nonce: nonce,
-      issuedAt: new Date().toISOString(),
-      expirationTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
-    });
-
-    // Prepare the message string
-    const messageString = siweMessage.prepareMessage();
-    console.log("LOG 2: Message prepared for signing:", messageString);
-
-    // Step 3: Sign message with wallet
-    const signature = await signMessage(messageString);
-    console.log("LOG 3: Wallet signature received.");
-
-    // Step 4: Login with signature
-    const authData = await authApi.login(messageString, signature);
-    console.log("LOG 4: Login API call successful.");
-
-    // Store wallet info in localStorage
-    localStorage.setItem("wallet_address", authData.address);
-    localStorage.setItem("user_id", authData.userId);
-
-    return authData;
-  } catch (error) {
-    console.error("SIWE authentication error:", error);
-    throw error;
-  }
+  return authData;
 }
 
-/**
- * Verify a SIWE message locally (client-side validation)
- */
 export async function verifySiweMessageLocally(
   message: string,
   signature: string
@@ -69,45 +87,35 @@ export async function verifySiweMessageLocally(
     const siweMessage = new SiweMessage(message);
     const result = await siweMessage.verify({ signature });
     return result.success;
-  } catch (error) {
-    console.error("SIWE local verification error:", error);
+  } catch {
     return false;
   }
 }
 
-/**
- * Clear all auth data
- */
 export function clearAuthData(): void {
   localStorage.removeItem("user_id");
   localStorage.removeItem("wallet_address");
+  localStorage.removeItem("auth_method");
 }
 
-/**
- * Check if user is authenticated (checks with backend)
- */
+/** @deprecated Use isAuthenticated from @/lib/auth (session /auth/auth). */
 export async function isAuthenticated(): Promise<boolean> {
   try {
-    const result = await authApi.checkAuth();
+    const result = await authApi.checkSessionAuth();
     return result.isAuth;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
 
-/**
- * Check if user appears to be authenticated (local check only)
- */
 export function hasLocalAuthData(): boolean {
-  return !!localStorage.getItem("wallet_address");
+  return !!localStorage.getItem("user_id") || !!localStorage.getItem("wallet_address");
 }
 
-/**
- * Logout user
- */
+/** @deprecated Use logout from @/lib/auth. */
 export async function logout(): Promise<void> {
   try {
-    await authApi.logout();
+    await authApi.logoutSession();
   } catch (error) {
     console.error("Logout error:", error);
   }
