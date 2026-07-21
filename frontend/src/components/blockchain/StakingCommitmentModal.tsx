@@ -32,6 +32,7 @@ import {
 import { useAccount, useChainId } from "wagmi";
 import { ChainId } from "@/config/contracts";
 import { useNotification } from "@blockscout/app-sdk";
+import { WalletRequiredGate } from "@/components/wallet";
 
 interface StakingCommitmentModalProps {
   isOpen: boolean;
@@ -153,6 +154,10 @@ export function StakingCommitmentModal({
         </DialogHeader>
 
         <div className="space-y-5 py-4">
+          <WalletRequiredGate
+            title="Wallet required to stake"
+            reason="Date staking locks tokens on-chain. Connect and sign once to link a wallet to your email account."
+          >
           {/* Date Details */}
           {dateDetails && (
             <div className="rounded-xl border border-pink-500/30 bg-gradient-to-r from-pink-500/10 to-purple-500/10 p-4 space-y-2">
@@ -451,6 +456,7 @@ export function StakingCommitmentModal({
               </Button>
             )}
           </div>
+          </WalletRequiredGate>
         </div>
       </DialogContent>
     </Dialog>

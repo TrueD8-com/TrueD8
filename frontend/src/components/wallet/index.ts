@@ -1,0 +1,1 @@
+export { WalletRequiredGate } from "./WalletRequiredGate";
