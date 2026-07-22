@@ -1,172 +1,351 @@
-# Backend auth changes required
+# Backend auth changes — how each API should accept requests
 
-Frontend-only work landed on branch `feature/frontend/email-otp-auth`.  
-**This document specifies backend work that is still required** for email OTP and safe optional wallets. Do not treat the frontend as fully functional against production until these exist.
+Companion to [AUTH_API_HANDLING.md](./AUTH_API_HANDLING.md) (exact fields/headers the frontend sends).
 
-Status legend: **Exists** · **Needs change** · **Needs implement**
+**Legend:** **Exists** · **Needs implement** · **Needs change**
+
+Mount note: app uses `app.use('/api/auth', …)` etc.; public URL may be `/auth` via reverse proxy. Match whatever the frontend `API_URL` already hits.
 
 ---
 
-## 1. Email OTP login — **Needs implement**
+## Global: how backend authenticates API calls
 
-Frontend calls:
+| Mechanism | Detail |
+|-----------|--------|
+| Token type | **Session cookie**, not JWT |
+| Cookie name | `sessionId` |
+| Read identity | `req.session.userId` |
+| Middleware | existing `isAuthorized` (checks `userId`) |
+| CORS | Must allow frontend origin + `credentials: true` |
+| Cookie flags | `httpOnly: true`; production `secure: true`, `sameSite: "none"` if cross-site |
 
-- `POST /auth/otp/request` body: `{ "email": "user@example.com" }`
-- `POST /auth/otp/verify` body: `{ "email": "user@example.com", "code": "123456" }`
+**Do not require** `Authorization` header for these APIs.
 
-### Suggested contract
+Optional later: CSRF if `csurf` is enforced on mutating routes — then document the CSRF cookie/header the frontend must send. Today the frontend does **not** send a CSRF header; align backend + frontend together if you enable it.
 
-#### `POST /auth/otp/request`
+---
 
-1. Normalize email (trim, lowercase).
-2. Rate-limit by IP **and** email (e.g. 1 code / 60s, max N / hour).
-3. Generate cryptographically random 6-digit code (or longer).
-4. Store hashed code + expiry (e.g. 10 minutes) + attempt counter keyed by email/session.
-5. Send email with the code (never return the code in the JSON response).
-6. Always return the same success shape whether or not the email is new (anti-enumeration), e.g.:
+## A. Email OTP — **Needs implement**
 
-```json
-{ "success": true, "message": "If that email can receive mail, a code was sent.", "data": { "expiresInSeconds": 600 } }
+### `POST /auth/otp/request`
+
+**Accept:**
+
+```ts
+req.headers["content-type"] // application/json
+req.body.email: string      // required
+// Cookie optional; may create anonymous session
 ```
 
-7. Optionally create a pending/unverified user, or create user only on verify.
+**Validate:**
 
-#### `POST /auth/otp/verify`
+- Normalize email (`trim().toLowerCase()`).
+- Reject invalid email format (`400`).
+- Rate-limit by IP + email.
 
-1. Rate-limit attempts; lock out after N failures.
-2. Verify code (constant-time compare against hash), check expiry, single-use.
-3. Find or create `User` with `email.address` + `email.validated: true`.
-4. Set `req.session.userId = String(user._id)`.
-5. Regenerate session id on login (session fixation).
-6. Return:
+**Behavior:**
 
-```json
-{ "success": true, "data": { "userId": "<id>", "email": "user@example.com" } }
-```
+1. Generate OTP (6 digits), store **hash** + expiry + attempts.
+2. Send email (never put OTP in JSON response).
+3. Always return same success shape (anti-enumeration).
 
-### Security requirements
-
-- Hash OTPs at rest; short TTL; single use.
-- Generic responses on request; careful errors on verify.
-- No OTP in logs / analytics.
-- HTTPS + secure, HttpOnly, SameSite cookies (already largely via `sessionId`).
-
-### Related existing pieces (reuse patterns)
-
-- Phone OTP: `/auth/requestForPhoneCode`, `/auth/verifyPhoneCode`
-- Session check: `GET /auth/auth` (**Exists** — uses `userId`)
-- Full logout: `GET /auth/logout` (**Exists**)
-- Email/password `POST /auth/login` (**Exists**, legacy — not used by new UI)
-
----
-
-## 2. Auth check for email sessions — **Exists** (frontend switched)
-
-| Endpoint | Status | Notes |
-|----------|--------|-------|
-| `GET /auth/auth` | **Exists** | Returns `{ isAuth: true }` when `req.session.userId` is set. Frontend `AuthGuard` now uses this. |
-| `GET /auth/siwe/auth` | **Exists** | SIWE-only. Do not use as primary app gate. |
-
-No backend change required for shell auth if OTP verify sets `userId`.
-
----
-
-## 3. Secure wallet link while logged in — **Needs change**
-
-### Current
-
-- `POST /user/wallet/connect` (**Exists**): `{ provider, address }` → writes `user.wallet` if `userId` session.  
-  **Problem:** No proof of ownership; any logged-in user can claim any address.
-- `POST /auth/siwe/login` (**Exists**): Verifies SIWE, then **finds/creates user by wallet** and sets `userId` — can **hijack / swap** identity for an email user who only wanted to link.
-
-### Required
-
-#### Option A (recommended): enhance `POST /user/wallet/connect`
-
-Accept:
+**Respond `200`:**
 
 ```json
 {
-  "provider": "MetaMask",
-  "address": "0x…",
-  "message": "<siwe message>",
-  "signature": "0x…"
+  "success": true,
+  "message": "If that email can receive mail, a code was sent.",
+  "data": { "expiresInSeconds": 600 }
 }
 ```
 
-Backend must:
-
-1. Require `req.session.userId`.
-2. Verify SIWE message + signature (reuse nonce from `GET /auth/siwe/nonce` / `session.siweNonce`).
-3. Ensure message address matches `address` (checksum/lowercase normalize).
-4. Reject if that wallet is already linked to a **different** user.
-5. Set `user.wallet = { provider, address, connectedAt }` on the **current** user.
-6. Optionally set `session.siwe` for Web3-gated APIs **without** changing `userId`.
-7. Do **not** create a second user.
-
-Frontend already sends `message` + `signature` when linking via `linkWalletToSession()`.
-
-#### Option B: new route `POST /auth/siwe/link`
-
-Same verification rules; keep `/wallet/connect` as a thin alias or deprecate unsigned connect.
-
-### Also update `POST /auth/siwe/login` — **Needs change**
-
-If `req.session.userId` already exists:
-
-- Prefer **link** wallet to that user (after verify), **or**
-- Return `409` asking the client to use `/wallet/connect` / `/siwe/link`.
-
-Never silently replace `userId` with another account when an email session is active.
-
 ---
 
-## 4. Optional: Web3-only API middleware — **Needs implement** (if desired)
+### `POST /auth/otp/verify`
 
-If some APIs must require a linked wallet:
+**Accept:**
 
 ```ts
-// e.g. isWalletLinked
-// 1. isAuthorized (userId)
-// 2. user.wallet.address present
-// and/or session.siwe.address matches user.wallet.address
+req.body.email: string  // required
+req.body.code: string   // required, 6 digits
+// Cookie: sessionId (anonymous or existing)
 ```
 
-Apply only to stake/premium/NFT recording endpoints — not dating.
+**Validate:**
+
+- Rate-limit attempts; lock after N failures.
+- Constant-time compare against hashed OTP; check expiry; single-use.
+
+**Behavior:**
+
+1. Find or create `User` with `email.address` + `email.validated: true`.
+2. `req.session.regenerate` (or equivalent) then:
+   - `req.session.userId = String(user._id)`
+3. Delete OTP record.
+4. `Set-Cookie: sessionId=…`
+
+**Respond `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "userId": "<mongoId>",
+    "email": "user@example.com"
+  }
+}
+```
+
+**Errors:** `400` invalid/expired code (generic message).
+
+After this, **all** `isAuthorized` routes work the same as before SIWE-era wallet login.
 
 ---
 
-## 5. CORS / cookies — **Verify**
+## B. Session check / logout — **Exists** (keep)
 
-Frontend origin must allow credentials. Cookie name is `sessionId` (middleware updated to match). Confirm:
+### `GET /auth/auth`
 
-- `cors` with `credentials: true` and explicit frontend origin(s)
-- Production: `secure: true`, appropriate `sameSite`
+**Accept:** cookie only → `req.session.userId`.
+
+**Respond:** `{ isAuth: true }` or `401`.
+
+No change required once OTP verify sets `userId`.
+
+### `GET /auth/logout`
+
+**Accept:** cookie + `isAuthorized` (current).
+
+**Behavior:** destroy session (clear `userId` and `siwe`).
+
+Frontend now calls this instead of `/auth/siwe/logout` for app logout.
 
 ---
 
-## 6. Implementation checklist
+## C. Wallet connect — **Needs change**
+
+### `POST /user/wallet/connect`
+
+**Today accepts:**
+
+```ts
+req.session.userId          // via isAuthorized
+req.body.provider?: string
+req.body.address: string    // required
+// message/signature ignored
+```
+
+**Must accept (new contract):**
+
+```ts
+req.session.userId                 // required
+req.body.provider: string          // required
+req.body.address: string           // required, 0x…
+req.body.message: string           // required — full SIWE text
+req.body.signature: string         // required — 0x…
+```
+
+**Algorithm:**
+
+```
+1. isAuthorized (userId)
+2. if missing address|message|signature → 400
+3. parse SiweMessage(message)
+4. ensure session.siweNonce === message.nonce (consume nonce)
+5. await message.verify({ signature })
+6. addr = message.address.toLowerCase()
+7. if addr !== body.address.toLowerCase() → 400
+8. if another User has wallet.address === addr → 409
+9. load User by session.userId
+10. user.wallet = { provider, address: addr, connectedAt: new Date() }
+11. save user
+12. optional: req.session.siwe = { address: addr, chainId: message.chainId, issuedAt }
+   // DO NOT change req.session.userId
+13. return user.wallet
+```
+
+**Respond `200`:** existing `successRes` with wallet object.
+
+**Breaking note:** After deploy, reject unsigned connect (`message`/`signature` missing). Frontend already sends both.
+
+---
+
+### `POST /user/wallet/disconnect` — **Exists** (minor)
+
+**Accept:** cookie + `userId` only.
+
+**Optional change:** also `delete req.session.siwe`.
+
+---
+
+## D. SIWE login — **Needs change** (safety)
+
+### `POST /auth/siwe/login`
+
+**Accept today:**
+
+```ts
+req.body.message: string
+req.body.signature: string
+req.session.siweNonce
+```
+
+**Change when `req.session.userId` is already set (email user):**
+
+| Option | Behavior |
+|--------|----------|
+| **A (recommended)** | Return `409` `{ code: "USE_WALLET_CONNECT", message: "Use POST /user/wallet/connect to link" }` |
+| **B** | Same verification as wallet connect: link to current user, do not create/switch user |
+
+**When no `userId`:** keep current find-or-create-by-wallet behavior (legacy wallet-only accounts), or deprecate entirely.
+
+Never do: email session present → overwrite `userId` with a different wallet user.
+
+---
+
+### `GET /auth/siwe/nonce` · `GET /auth/siwe/auth` · `GET /auth/siwe/logout`
+
+**Exists** — keep for nonce issuance and optional SIWE session checks.  
+Primary app gate stays `/auth/auth`.
+
+---
+
+## E. Dating / profile / rewards HTTP APIs — **No auth-shape change**
+
+Examples: `/dating/*`, `/user/getUserProfileInfo`, `/user/editProfile`, photos, likes, matches, messages, AI match, off-chain rewards.
+
+**Accept (unchanged):**
+
+```ts
+// Middleware
+isAuthorized → !!req.session.userId
+
+// Headers
+Cookie: sessionId=…
+Content-Type: application/json   // when JSON body
+
+// Body
+// feature-specific fields only — NO auth token fields
+```
+
+Email OTP users authenticate identically to old password/SIWE users **as long as** `userId` is on the session.
+
+---
+
+## F. Optional Web3 recording APIs — **Needs implement** (only if you persist on-chain actions)
+
+Example shapes the frontend would send later (cookie auth, not Bearer):
+
+### Example: record stake
+
+```http
+POST /dating/stake/record
+Cookie: sessionId=…
+Content-Type: application/json
+```
+
+```json
+{
+  "matchId": "…",
+  "txHash": "0x…",
+  "chainId": 84532,
+  "amount": "10",
+  "token": "USDC"
+}
+```
+
+**Backend accept:**
+
+1. `isAuthorized`
+2. Prefer also: user has `wallet.address` (new middleware `isWalletLinked`)
+3. Validate body fields; optionally verify tx on-chain
+4. Store against `userId` + `matchId`
+
+### Example: activate premium after payment
+
+```http
+POST /user/premium/activate
+Cookie: sessionId=…
+Content-Type: application/json
+```
+
+```json
+{
+  "tier": "gold",
+  "txHash": "0x…",
+  "chainId": 84532,
+  "token": "USDC",
+  "amount": "15"
+}
+```
+
+Same acceptance rules as stake.
+
+**Middleware sketch:**
+
+```ts
+function isWalletLinked(req, res, next) {
+  // after isAuthorized
+  // load user; if !user.wallet?.address → 403 "Link a wallet first"
+  // optional: require req.session.siwe.address === user.wallet.address
+}
+```
+
+Apply **only** to stake/premium/NFT record routes — **not** dating swipe/chat.
+
+---
+
+## G. Field reference — request bodies backend should parse
+
+| Endpoint | Status | Body fields to read |
+|----------|--------|---------------------|
+| `POST /auth/otp/request` | **Implement** | `email` |
+| `POST /auth/otp/verify` | **Implement** | `email`, `code` |
+| `GET /auth/auth` | Exists | — (cookie) |
+| `GET /auth/logout` | Exists | — (cookie) |
+| `GET /auth/siwe/nonce` | Exists | — (cookie) |
+| `POST /auth/siwe/login` | **Change** | `message`, `signature` (+ respect existing `userId`) |
+| `GET /auth/siwe/auth` | Exists | — (cookie → `session.siwe`) |
+| `GET /auth/siwe/logout` | Exists | — (cookie) |
+| `POST /user/wallet/connect` | **Change** | `provider`, `address`, `message`, `signature` |
+| `POST /user/wallet/disconnect` | Exists | — (cookie) |
+| Dating / profile / photos / rewards | Exists | feature fields; auth via cookie only |
+
+---
+
+## H. Session fields backend should maintain
+
+| Field | Set by | Used for |
+|-------|--------|----------|
+| `session.userId` | OTP verify (and legacy logins) | All app APIs (`isAuthorized`) |
+| `session.siweNonce` | `GET /auth/siwe/nonce` | SIWE verify / wallet connect |
+| `session.siwe` | Successful SIWE verify or wallet connect | Optional Web3 gate |
+| `user.email` | OTP verify | Account identity |
+| `user.wallet` | wallet connect | Linked address for on-chain features |
+
+---
+
+## I. Implementation checklist
 
 | # | Work | Priority |
 |---|------|----------|
-| 1 | Implement `POST /auth/otp/request` | P0 |
-| 2 | Implement `POST /auth/otp/verify` (sets `userId`, session regenerate) | P0 |
-| 3 | Email delivery + OTP hash store + rate limits | P0 |
-| 4 | Verify SIWE on `POST /user/wallet/connect` (or new `/siwe/link`) | P0 |
-| 5 | Prevent SIWE login from swapping email `userId` | P0 |
-| 6 | Unique index / conflict handling on `wallet.address` | P1 |
-| 7 | Optional `isWalletLinked` middleware for on-chain feature APIs | P2 |
-| 8 | Deprecate unsigned wallet connect once proof is required | P2 |
+| 1 | `POST /auth/otp/request` + email send + hashed OTP store + rate limit | P0 |
+| 2 | `POST /auth/otp/verify` → set `userId`, regenerate session | P0 |
+| 3 | `POST /user/wallet/connect` require + verify `message`/`signature` | P0 |
+| 4 | `POST /auth/siwe/login` do not swap `userId` if already logged in | P0 |
+| 5 | Unique constraint / conflict on `wallet.address` | P1 |
+| 6 | Optional `isWalletLinked` for stake/premium record APIs | P2 |
+| 7 | Align CSRF with frontend if `csurf` is enforced | P2 |
 
 ---
 
-## 7. What frontend already does (no backend change for these)
+## J. Smoke test sequence (backend)
 
-- Main auth UI: `/login` (email OTP)
-- Redirect `/` and `/siwe` → `/login`
-- `AuthGuard` → `GET /auth/auth`
-- Logout → `GET /auth/logout`
-- Web3 surfaces wrapped in `WalletRequiredGate` (connect + sign + `/user/wallet/connect`)
-- Docs for per-API handling: [AUTH_API_HANDLING.md](./AUTH_API_HANDLING.md)
-
-Until OTP routes ship, `/login` will show send/verify errors from failed `fetch` — expected.
+1. `POST /auth/otp/request` `{ "email": "a@b.com" }` → 200, no code in body.
+2. `POST /auth/otp/verify` `{ "email": "a@b.com", "code": "……" }` → 200 + `Set-Cookie` + `userId`.
+3. `GET /auth/auth` with cookie → `{ isAuth: true }`.
+4. `GET /dating/matches` with cookie → 200 (not 401).
+5. `GET /auth/siwe/nonce` with cookie → nonce.
+6. Client signs SIWE → `POST /user/wallet/connect` with `provider`, `address`, `message`, `signature` → wallet saved on **same** user.
+7. Confirm `session.userId` unchanged; `user.wallet.address` set.
+8. `GET /auth/logout` → `GET /auth/auth` fails.
