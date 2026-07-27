@@ -1,18 +1,12 @@
 import { SiweMessage } from "siwe";
 import { authApi, userApi } from "./api";
 
-/**
- * SIWE helpers for optional wallet linking / Web3 ownership proof.
- * Primary app login is email OTP (`lib/auth.ts`) — do not use SIWE as the main gate.
- *
- * IMPORTANT: Prefer `linkWalletToSession` when the user already has an email session.
- * Calling `siweAuthenticate` (SIWE login) can replace `session.userId` with a
- * wallet-keyed user until the backend supports authenticated wallet linking.
- */
+type SiwePurpose = "login" | "link";
 
 export async function buildSiweMessage(
   address: string,
-  chainId: number
+  chainId: number,
+  purpose: SiwePurpose = "login"
 ): Promise<{ messageString: string; nonce: string }> {
   const { nonce } = await authApi.getNonce();
   const domain = window.location.host.replace("localhost", "127.0.0.1");
@@ -21,7 +15,10 @@ export async function buildSiweMessage(
   const siweMessage = new SiweMessage({
     domain,
     address,
-    statement: "Link this wallet to your TrueD8 account",
+    statement:
+      purpose === "login"
+        ? "Sign in with Ethereum to TrueD8"
+        : "Link this wallet to your TrueD8 account",
     uri: origin,
     version: "1",
     chainId,
@@ -33,13 +30,7 @@ export async function buildSiweMessage(
   return { messageString: siweMessage.prepareMessage(), nonce };
 }
 
-/**
- * Prove wallet ownership and attach it to the current email session.
- * Does NOT call /auth/siwe/login (avoids swapping the logged-in user).
- *
- * Sends message+signature to /user/wallet/connect for when backend adds verification
- * (see docs/BACKEND_AUTH_CHANGES.md). Today the backend may ignore the proof fields.
- */
+/** Prove ownership and attach a wallet to the authenticated user. */
 export async function linkWalletToSession(
   address: string,
   chainId: number,
@@ -47,7 +38,11 @@ export async function linkWalletToSession(
   provider = "walletconnect"
 ): Promise<{ address: string }> {
   const normalized = address.toLowerCase();
-  const { messageString } = await buildSiweMessage(normalized, chainId);
+  const { messageString } = await buildSiweMessage(
+    address,
+    chainId,
+    "link"
+  );
   const signature = await signMessage(messageString);
 
   await userApi.connectWallet(provider, normalized, {
@@ -59,16 +54,13 @@ export async function linkWalletToSession(
   return { address: normalized };
 }
 
-/**
- * Legacy full SIWE login (creates/finds user by wallet).
- * Avoid for email-primary users — use linkWalletToSession instead.
- */
+/** Authenticate with SIWE and establish the server-side app session. */
 export async function siweAuthenticate(
   address: string,
   chainId: number,
   signMessage: (message: string) => Promise<string>
 ) {
-  const { messageString } = await buildSiweMessage(address, chainId);
+  const { messageString } = await buildSiweMessage(address, chainId, "login");
   const signature = await signMessage(messageString);
   const authData = await authApi.login(messageString, signature);
 
@@ -90,34 +82,4 @@ export async function verifySiweMessageLocally(
   } catch {
     return false;
   }
-}
-
-export function clearAuthData(): void {
-  localStorage.removeItem("user_id");
-  localStorage.removeItem("wallet_address");
-  localStorage.removeItem("auth_method");
-}
-
-/** @deprecated Use isAuthenticated from @/lib/auth (session /auth/auth). */
-export async function isAuthenticated(): Promise<boolean> {
-  try {
-    const result = await authApi.checkSessionAuth();
-    return result.isAuth;
-  } catch {
-    return false;
-  }
-}
-
-export function hasLocalAuthData(): boolean {
-  return !!localStorage.getItem("user_id") || !!localStorage.getItem("wallet_address");
-}
-
-/** @deprecated Use logout from @/lib/auth. */
-export async function logout(): Promise<void> {
-  try {
-    await authApi.logoutSession();
-  } catch (error) {
-    console.error("Logout error:", error);
-  }
-  clearAuthData();
 }

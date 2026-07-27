@@ -56,56 +56,65 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(cors({ credentials: true, origin: ["https://true-d8-theta.vercel.app"
-  ,"*", "https://trued8.com", "https://www.trued8.com","http://www.trued8.com","http://trued8.com","https://trued8.com.ng","https://www.trued8.com.ng","http://www.trued8.com.ng","http://trued8.com"] }))
+const configuredOrigins = (process.env.CORS_ORIGINS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
+const allowedOrigins = new Set([
+  'https://true-d8-theta.vercel.app',
+  'https://trued8.com',
+  'https://www.trued8.com',
+  'http://www.trued8.com',
+  'http://trued8.com',
+  'https://trued8.com.ng',
+  'https://www.trued8.com.ng',
+  'http://www.trued8.com.ng',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  ...configuredOrigins
+])
+app.use(cors({
+  credentials: true,
+  origin: (origin, callback) => {
+    // Requests without Origin are server-to-server, same-origin, or test calls.
+    if (!origin || allowedOrigins.has(origin)) {
+      return callback(null, true)
+    }
+    return callback(new Error('Origin is not allowed by CORS'))
+  }
+}))
 app.use(useragent.express())
 app.use(helmet())
 app.set('trust proxy', true)
-var sess = {
-  secret: 'no body is perfect, i am nobody',
-  resave: false,
-  proxy: true,
-  saveUninitialized: true,
-  rolling: true,
- SameSite: true,
-  name: 'sessionId',
-  cookie: {
-  sameSite:"none",
-    secure: true,
-    httpOnly: true,
-    // domain:,
-   
-    maxAge: 1000 * 60 * 60 * 24,
-  },
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_DATABASE, dbName: process.env.MONGO_DATABASE_NAME }),
+const isProduction = app.get('env') === 'production'
+const sessionSecret = process.env.SESSION_SECRET || process.env.SESSION_SECRET2
+if (isProduction && !sessionSecret) {
+  throw new Error('SESSION_SECRET or SESSION_SECRET2 is required in production')
 }
-var sess2 = {
-  secret: process.env.SESSION_SECRET2,
+const sess: session.SessionOptions = {
+  secret: sessionSecret || 'development-only-session-secret',
   resave: false,
   proxy: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   rolling: true,
-  //  SameSite: true,
   name: 'sessionId',
   cookie: {
-    // secure: true,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
     httpOnly: true,
-    // domain:,
     path: '/',
     maxAge: 1000 * 60 * 60 * 24,
   },
   store: MongoStore.create({ mongoUrl: process.env.MONGO_DATABASE, dbName: process.env.MONGO_DATABASE_NAME }),
-};
+}
 
-if (app.get('env') === 'production') {
+if (isProduction) {
   app.set('trust proxy', 1) // trust first proxy
-  //sess.cookie.secure = true // serve secure cookies
 }
 import { createServer } from 'http';
 const server = createServer(app);
 import { startIo } from './api/socket'
 
-var sharedsession = require('express-socket.io-session');
 var sessionMiddleware = session(sess);
 
 app.use(sessionMiddleware);

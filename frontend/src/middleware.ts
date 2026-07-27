@@ -5,13 +5,9 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {
-    // Express session cookie name is `sessionId` (see backend session config).
-    const hasAuthCookie = request.cookies.get("sessionId");
-
-    if (hasAuthCookie) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-
+    // The API owns an HttpOnly cookie on its own host, so middleware running
+    // on the frontend cannot reliably inspect it. Login performs the session
+    // check client-side and forwards authenticated users to the dashboard.
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

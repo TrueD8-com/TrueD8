@@ -10,8 +10,7 @@ interface AuthGuardProps {
 }
 
 /**
- * Gates dashboard on session cookie (`/auth/auth` → userId), not SIWE.
- * Unauthenticated users go to email OTP login.
+ * Gates the dashboard on the server session established by SIWE.
  */
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();

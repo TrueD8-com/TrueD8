@@ -9,6 +9,7 @@ import { User } from '../db/user'
 import { logger } from '../api/logger'
 import myError from '../api/myError'
 import { uploadTemp } from '../middlewares/upload'
+import { SiweProofError, verifySiweProof } from '../api/siweProof'
 
 export const userRoutes = express.Router()
 
@@ -74,7 +75,8 @@ userRoutes.get('/getUserProfileInfo',
             premium: user.premium,
             verification: user.verification,
             onboardingCompleted: user.onboardingCompleted,
-            metrics: user.metrics
+            metrics: user.metrics,
+            wallet: user.wallet
           }
           successRes(res, '', body)
         } else {
@@ -396,23 +398,104 @@ userRoutes.post('/photos/remove',
 // Wallet connect/disconnect
 userRoutes.post('/wallet/connect',
   isAuthorized,
-  tryCatch((req, res, next) => {
+  tryCatch(async (req, res, next) => {
     const userId = req.session.userId
-    const { provider, address } = req.body || {}
-    if (!address) {
+    const { provider, address, message, signature } = req.body || {}
+    if (
+      typeof provider !== 'string' ||
+      !provider.trim() ||
+      typeof address !== 'string' ||
+      !address.trim() ||
+      typeof message !== 'string' ||
+      !message.trim() ||
+      typeof signature !== 'string' ||
+      !signature.trim()
+    ) {
       const error = new myError('Invalid wallet', 400, 1, 'کیف پول نامعتبر است', 'خطا رخ داد')
       return next(error)
     }
-    return User.findOne({ _id: userId })
-      .then((user: any) => {
-        if (!user) {
-          const error = new myError('The user does not exist!', 400, 1, 'کاربر یافت نشد', 'خطا رخ داد')
-          return next(error)
-        }
-        user.wallet = { provider, address, connectedAt: new Date() }
-        return user.save().then(() => successRes(res, 'wallet connected', user.wallet))
+
+    const expectedNonce = req.session.siweNonce
+    // A proof is single-use, including failed verification attempts.
+    delete req.session.siweNonce
+
+    try {
+      const proof = await verifySiweProof(
+        message,
+        signature,
+        expectedNonce,
+        req.get('origin')
+      )
+      if (proof.address !== address.toLowerCase()) {
+        return next(new myError(
+          'Wallet address does not match SIWE proof',
+          400,
+          2,
+          'آدرس کیف پول با امضای ارائه‌شده مطابقت ندارد.',
+          'خطا رخ داد'
+        ))
+      }
+
+      const owner = await User.findOne({
+        'wallet.address': { $regex: `^${proof.address}$`, $options: 'i' },
+        _id: { $ne: userId }
       })
-      .catch((err) => next(err))
+      if (owner) {
+        return next(new myError(
+          'Wallet is already linked to another account',
+          409,
+          3,
+          'این کیف پول قبلاً به حساب دیگری متصل شده است.',
+          'خطا رخ داد'
+        ))
+      }
+
+      const user: any = await User.findById(userId)
+      if (!user) {
+        return next(new myError(
+          'The user does not exist!',
+          404,
+          1,
+          'کاربر یافت نشد',
+          'خطا رخ داد'
+        ))
+      }
+
+      user.wallet = {
+        provider: provider.trim().slice(0, 80),
+        address: proof.address,
+        connectedAt: new Date()
+      }
+      await user.save()
+
+      req.session.siwe = {
+        address: proof.address,
+        chainId: proof.chainId,
+        issuedAt: proof.issuedAt
+      }
+
+      return successRes(res, 'wallet connected', user.wallet)
+    } catch (error) {
+      if (error instanceof SiweProofError) {
+        return next(new myError(
+          error.message,
+          401,
+          2,
+          'امضای کیف پول نامعتبر یا منقضی شده است.',
+          'خطا رخ داد'
+        ))
+      }
+      if ((error as any)?.code === 11000) {
+        return next(new myError(
+          'Wallet is already linked to another account',
+          409,
+          3,
+          'این کیف پول قبلاً به حساب دیگری متصل شده است.',
+          'خطا رخ داد'
+        ))
+      }
+      throw error
+    }
   })
 )
 
@@ -427,10 +510,11 @@ userRoutes.post('/wallet/disconnect',
           return next(error)
         }
         user.wallet = undefined
-        return user.save().then(() => successRes(res, 'wallet disconnected'))
+        return user.save().then(() => {
+          delete req.session.siwe
+          successRes(res, 'wallet disconnected')
+        })
       })
       .catch((err) => next(err))
   })
 )
-
-

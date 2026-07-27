@@ -1,123 +1,69 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount, useSignMessage } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
-import { Heart, Mail, Shield, Loader2, AlertCircle, Check, ArrowLeft } from "lucide-react";
+import { Heart, Shield, Check, Loader2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  isAuthenticated,
-  isValidEmail,
-  isValidOtpCode,
-  normalizeEmail,
-  requestEmailOtp,
-  sanitizeOtpCode,
-  verifyEmailOtp,
-} from "@/lib/auth";
-
-const RESEND_COOLDOWN_SECONDS = 60;
-const GENERIC_ERROR =
-  "Something went wrong. Please try again in a moment.";
-
-type Step = "email" | "otp" | "success";
+import { isAuthenticated } from "@/lib/auth";
+import { siweAuthenticate } from "@/lib/siwe";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [step, setStep] = useState<Step>("email");
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [emailHint, setEmailHint] = useState("");
+  const { address, isConnected, chainId } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cooldown, setCooldown] = useState(0);
-  const abortRef = useRef<AbortController | null>(null);
+  const [authSuccess, setAuthSuccess] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    isAuthenticated().then((authenticated) => {
+
+    void isAuthenticated().then((authenticated) => {
       if (!cancelled && authenticated) {
         router.replace("/dashboard");
       }
     });
+
     return () => {
       cancelled = true;
-      abortRef.current?.abort();
     };
   }, [router]);
 
-  useEffect(() => {
-    if (cooldown <= 0) return;
-    const id = window.setInterval(() => {
-      setCooldown((s) => Math.max(0, s - 1));
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [cooldown]);
-
-  const startCooldown = useCallback(() => {
-    setCooldown(RESEND_COOLDOWN_SECONDS);
-  }, []);
-
-  const handleRequestOtp = async (e?: FormEvent) => {
-    e?.preventDefault();
-    if (isLoading) return;
-
-    const normalized = normalizeEmail(email);
-    if (!isValidEmail(normalized)) {
-      setError("Enter a valid email address");
+  const handleSignIn = async () => {
+    if (!address || !chainId || isLoading) {
+      if (!address || !chainId) {
+        setError("Connect a wallet before signing in.");
+      }
       return;
     }
 
     try {
       setIsLoading(true);
       setError(null);
-      const { emailHint: hint } = await requestEmailOtp(normalized);
-      setEmail(normalized);
-      setEmailHint(hint);
-      setOtp("");
-      setStep("otp");
-      startCooldown();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : GENERIC_ERROR);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const handleVerifyOtp = async (e?: FormEvent) => {
-    e?.preventDefault();
-    if (isLoading) return;
+      await siweAuthenticate(address, chainId, (message) =>
+        signMessageAsync({ message, account: address })
+      );
 
-    const code = sanitizeOtpCode(otp);
-    if (!isValidOtpCode(code)) {
-      setError("Enter the 6-digit code from your email");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-      await verifyEmailOtp(email, code);
-      setOtp(""); // clear sensitive code from UI state ASAP
-      setStep("success");
+      setAuthSuccess(true);
       window.setTimeout(() => {
         router.replace("/dashboard");
       }, 1200);
     } catch (err) {
-      setError(err instanceof Error ? err.message : GENERIC_ERROR);
-      setOtp("");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Wallet sign-in failed. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleResend = async () => {
-    if (cooldown > 0 || isLoading) return;
-    await handleRequestOtp();
   };
 
   return (
@@ -151,167 +97,128 @@ export default function LoginPage() {
           <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-8">
             <div className="text-center mb-8">
               <Badge className="bg-white/10 backdrop-blur-sm text-purple-300 border-purple-500/30 mb-4">
-                Secure sign-in
+                Secure authentication
               </Badge>
               <h1 className="text-3xl font-bold text-white mb-2">
-                {step === "success"
-                  ? "You're in"
-                  : step === "otp"
-                    ? "Enter your code"
-                    : "Sign in with email"}
+                Sign in with Ethereum
               </h1>
               <p className="text-gray-400">
-                {step === "email" &&
-                  "We'll send a one-time code. No wallet required to start."}
-                {step === "otp" &&
-                  `Code sent to ${emailHint || "your email"}. Wallet can be linked later for Web3 features.`}
-                {step === "success" && "Redirecting to your dashboard…"}
+                Connect your wallet and sign a message to create your session
               </p>
             </div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30 mb-6"
-                role="alert"
-              >
-                <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-red-300">{error}</p>
-              </motion.div>
-            )}
+            {!isConnected ? (
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                    <Shield className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">
+                        Wallet verified
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        Your signed message proves wallet ownership
+                      </p>
+                    </div>
+                  </div>
 
-            {step === "email" && (
-              <form onSubmit={handleRequestOtp} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-300">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    spellCheck={false}
-                    autoCapitalize="none"
-                    required
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setError(null);
-                    }}
-                    placeholder="you@example.com"
-                    className="bg-white/5 border-white/10 text-white h-11"
-                    disabled={isLoading}
-                  />
+                  <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                    <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">
+                        No passwords
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        Signing is free and does not submit a transaction
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <Shield className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                  <p className="text-xs text-gray-400">
-                    Codes expire quickly. Never share your code. Wallet connect
-                    stays optional for staking, NFTs, and payments.
-                  </p>
+                <div className="flex justify-center pt-4">
+                  <ConnectButton />
                 </div>
+
+                <p className="text-xs text-gray-500 text-center">
+                  By connecting, you agree to our Terms of Service and Privacy
+                  Policy
+                </p>
+              </div>
+            ) : !authSuccess ? (
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white">
+                      Wallet connected
+                    </p>
+                    <p className="text-xs text-gray-400 truncate">{address}</p>
+                  </div>
+                </div>
+
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30"
+                    role="alert"
+                  >
+                    <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-red-300">
+                        Authentication error
+                      </p>
+                      <p className="text-xs text-red-400 mt-1">{error}</p>
+                    </div>
+                  </motion.div>
+                )}
 
                 <Button
-                  type="submit"
-                  disabled={isLoading || !email.trim()}
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0"
+                  onClick={handleSignIn}
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg"
                   size="lg"
                 >
                   {isLoading ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Sending code…
+                      Authenticating…
                     </>
                   ) : (
                     <>
-                      <Mail className="w-5 h-5 mr-2" />
-                      Continue with email
+                      <Shield className="w-5 h-5 mr-2" />
+                      Sign message to continue
                     </>
                   )}
                 </Button>
-              </form>
-            )}
 
-            {step === "otp" && (
-              <form onSubmit={handleVerifyOtp} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="otp" className="text-gray-300">
-                    One-time code
-                  </Label>
-                  <Input
-                    id="otp"
-                    name="otp"
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    autoComplete="one-time-code"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    autoFocus
-                    maxLength={6}
-                    required
-                    value={otp}
-                    onChange={(e) => {
-                      setOtp(sanitizeOtpCode(e.target.value));
-                      setError(null);
-                    }}
-                    placeholder="••••••"
-                    className="bg-white/5 border-white/10 text-white h-12 text-center text-2xl tracking-[0.4em] font-mono"
-                    disabled={isLoading}
-                    aria-describedby="otp-help"
-                  />
-                  <p id="otp-help" className="text-xs text-gray-500">
-                    Enter the 6-digit code. It will not be stored in this browser.
+                <div className="text-center">
+                  <ConnectButton />
+                </div>
+
+                <div className="pt-4 border-t border-white/10">
+                  <p className="text-xs text-gray-400 text-center mb-3">
+                    What happens when you sign:
                   </p>
+                  <ol className="text-xs text-gray-500 space-y-1.5">
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400 font-mono">1.</span>
+                      <span>We request a one-time nonce from the server</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400 font-mono">2.</span>
+                      <span>Your wallet signs a human-readable SIWE message</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400 font-mono">3.</span>
+                      <span>The server verifies it and creates your session</span>
+                    </li>
+                  </ol>
                 </div>
-
-                <Button
-                  type="submit"
-                  disabled={isLoading || !isValidOtpCode(sanitizeOtpCode(otp))}
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0"
-                  size="lg"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Verifying…
-                    </>
-                  ) : (
-                    "Verify and continue"
-                  )}
-                </Button>
-
-                <div className="flex items-center justify-between gap-2 text-sm">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setStep("email");
-                      setOtp("");
-                      setError(null);
-                    }}
-                    className="text-gray-400 hover:text-white inline-flex items-center gap-1"
-                    disabled={isLoading}
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    Change email
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleResend}
-                    disabled={isLoading || cooldown > 0}
-                    className="text-purple-300 hover:text-purple-200 disabled:text-gray-600 disabled:cursor-not-allowed"
-                  >
-                    {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
-                  </button>
-                </div>
-              </form>
-            )}
-
-            {step === "success" && (
+              </div>
+            ) : (
               <div className="space-y-6 text-center">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -321,9 +228,21 @@ export default function LoginPage() {
                 >
                   <Check className="w-10 h-10 text-white" />
                 </motion.div>
-                <div className="flex items-center justify-center gap-2 text-gray-400">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm">Loading dashboard</span>
+
+                <div>
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    Successfully authenticated
+                  </h2>
+                  <p className="text-gray-400">
+                    Redirecting to your dashboard…
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 text-purple-400 animate-spin" />
+                  <span className="text-sm text-gray-400">
+                    Loading dashboard
+                  </span>
                 </div>
               </div>
             )}

@@ -17,12 +17,17 @@ interface WalletRequiredGateProps {
   className?: string;
 }
 
-type GateState = "checking" | "needs_connect" | "needs_link" | "ready" | "error";
+type GateState =
+  | "checking"
+  | "needs_connect"
+  | "needs_link"
+  | "wrong_wallet"
+  | "ready"
+  | "error";
 
 /**
  * Soft-gate for Web3-only UI (staking, premium payments, Nexus, NFTs).
- * App login remains email/session — this only connects + proves ownership,
- * then links the wallet to the existing session via /user/wallet/connect.
+ * It verifies that the actively connected wallet belongs to the signed-in user.
  */
 export function WalletRequiredGate({
   children,
@@ -45,10 +50,12 @@ export function WalletRequiredGate({
 
     try {
       const profile = await authApi.getMe();
-      const linked =
-        profile.wallet?.address?.toLowerCase() === address.toLowerCase();
-      if (linked) {
+      const linkedAddress = profile.wallet?.address?.toLowerCase();
+      if (linkedAddress === address.toLowerCase()) {
         setState("ready");
+      } else if (linkedAddress) {
+        setError("Switch to the wallet you used to sign in.");
+        setState("wrong_wallet");
       } else {
         setState("needs_link");
       }
@@ -73,20 +80,7 @@ export function WalletRequiredGate({
       await linkWalletToSession(
         address,
         chainId,
-        async (message: string) => {
-          if (typeof window !== "undefined" && window.ethereum) {
-            try {
-              const signature = await window.ethereum.request({
-                method: "personal_sign",
-                params: [message, address],
-              });
-              return signature as string;
-            } catch {
-              throw new Error("Signature rejected in wallet");
-            }
-          }
-          return signMessageAsync({ message, account: address });
-        },
+        (message) => signMessageAsync({ message, account: address }),
         connector?.name || "wallet"
       );
 
@@ -131,12 +125,12 @@ export function WalletRequiredGate({
         <div className="flex items-start gap-2 text-left w-full p-3 rounded-lg bg-white/5 border border-white/10">
           <Shield className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-gray-400">
-            You stay signed in with email. Connecting only proves wallet ownership
-            for on-chain actions — it does not replace your account.
+            Sign once to prove that this connected wallet belongs to your
+            account. This does not submit a transaction.
           </p>
         </div>
 
-        {(state === "error" || error) && (
+        {(state === "error" || state === "wrong_wallet" || error) && (
           <div
             className="flex items-start gap-2 w-full p-3 rounded-lg bg-red-500/10 border border-red-500/30"
             role="alert"
@@ -178,6 +172,12 @@ export function WalletRequiredGate({
             <div className="flex justify-center">
               <ConnectButton />
             </div>
+          </div>
+        )}
+
+        {state === "wrong_wallet" && isConnected && (
+          <div className="flex justify-center pt-2">
+            <ConnectButton />
           </div>
         )}
       </div>

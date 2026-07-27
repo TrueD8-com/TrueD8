@@ -1,10 +1,18 @@
 import { expect } from 'chai'
 import { startServer, stopServer, agent } from './helpers/server'
 import fs from 'fs'
+import { mockSiweModule } from './helpers/siwe-mock'
 
 describe('User Profile: edit, address, photos, wallet', () => {
-  before(async () => { await startServer() })
-  after(async () => { await stopServer() })
+  let restoreSiwe: any
+  before(async () => {
+    restoreSiwe = mockSiweModule()
+    await startServer()
+  })
+  after(async () => {
+    restoreSiwe && restoreSiwe()
+    await stopServer()
+  })
 
   it('edit profile & address & wallet connect/disconnect', async () => {
     const req = agent()
@@ -23,8 +31,24 @@ describe('User Profile: edit, address, photos, wallet', () => {
     })
     expect(addr.status).to.equal(200)
 
-    const walletConn = await req.post('/api/user/wallet/connect').send({ provider: 'metamask', address: '0xabc' })
+    const nonceRes = await req.get('/api/auth/siwe/nonce')
+    const walletAddress = '0x0000000000000000000000000000000000000abc'
+    const walletConn = await req.post('/api/user/wallet/connect').send({
+      provider: 'metamask',
+      address: walletAddress,
+      message: JSON.stringify({
+        address: walletAddress,
+        nonce: nonceRes.body?.data?.nonce,
+        chainId: 1,
+        domain: 'localhost:3000'
+      }),
+      signature: '0xsig'
+    })
     expect(walletConn.status).to.equal(200)
+
+    const profile = await req.get('/api/user/getUserProfileInfo')
+    expect(profile.body?.data?.wallet?.address).to.equal(walletAddress)
+
     const walletDisc = await req.post('/api/user/wallet/disconnect')
     expect(walletDisc.status).to.equal(200)
   })
@@ -49,4 +73,3 @@ describe('User Profile: edit, address, photos, wallet', () => {
     expect(rem.status).to.equal(200)
   })
 })
-
