@@ -113,7 +113,7 @@ export function EventsHotspotsSection() {
                     ))}
                   </div>
 
-                  <Link href="/siwe">
+                  <Link href="/login">
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 shadow-lg">
                         View All Events
@@ -197,7 +197,7 @@ export function EventsHotspotsSection() {
                     ))}
                   </div>
 
-                  <Link href="/siwe">
+                  <Link href="/login">
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white border-0 shadow-lg">
                         Explore Hotspots

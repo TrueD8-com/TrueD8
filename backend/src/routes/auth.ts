@@ -24,7 +24,8 @@ import * as fetch from "node-fetch";
 
 import { Types } from "mongoose";
 import { ObjectId } from "mongodb";
-import { generateNonce, SiweMessage } from "siwe";
+import { generateNonce } from "siwe";
+import { SiweProofError, verifySiweProof } from "../api/siweProof";
 
 import {
   preventBruteForce,
@@ -36,13 +37,7 @@ import {
 /// ///////////////////// GET ENDPOINTS   /////////////////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
-// SIWE (Sign-In With Ethereum) Wallet login routes
-
-// NOTE: Intentionally NOT adding `import { SiweMessage } from 'siwe'` because import statements shouldn't be inserted here based on instructions.
-
-// We will use nonces to prevent replay attacks. We'll generate and store nonce in session before each SIWE login flow.
-
-// already imported above
+// SIWE (Sign-In With Ethereum) wallet login routes.
 
 /**
  * Route to get SIWE nonce
@@ -54,7 +49,6 @@ authRoutes.get(
   rateLimiterMiddleware,
   tryCatch((req, res, next) => {
     const nonce = generateNonce();
-    console.log("Generated nonce:", nonce);
     req.session.siweNonce = nonce;
     successRes(res, "", { nonce });
   })
@@ -72,10 +66,6 @@ authRoutes.post(
   tryCatch(async (req, res, next) => {
     const { message, signature } = req.body;
 
-    console.log("Received message:", message); // ADD LOG
-    console.log("Received signature:", signature); // ADD LOG
-    console.log("Session nonce:", req.session.siweNonce); // ADD LOG
-
     if (!message || !signature) {
       return next(
         new myError(
@@ -88,107 +78,92 @@ authRoutes.post(
       );
     }
 
-    // Parse SIWE message
-    let siweMessageObj;
-    try {
-      siweMessageObj = new SiweMessage(message);
-      console.log("Parsed SIWE message:", siweMessageObj); // ADD LOG
-    } catch (err) {
-      console.error("SIWE parsing error:", err); // ADD LOG
+    // Never let wallet login silently replace an already authenticated user.
+    // Authenticated clients must use /user/wallet/connect to link ownership.
+    if (req.session.userId) {
       return next(
         new myError(
-          "SIWE message parsing failed",
-          400,
-          2,
-          "پیام SIWE معتبر نیست.",
+          "Use POST /user/wallet/connect to link a wallet",
+          409,
+          4,
+          "برای اتصال کیف پول از مسیر اتصال کیف پول استفاده کنید.",
           "خطا رخ داد"
         )
       );
     }
 
-    // Check nonce
-    console.log("Message nonce:", siweMessageObj.nonce); // ADD LOG
-    console.log("Session nonce:", req.session.siweNonce); // ADD LOG
-
-    if (
-      !req.session.siweNonce ||
-      req.session.siweNonce !== siweMessageObj.nonce
-    ) {
-      return next(
-        new myError(
-          "SIWE nonce mismatch or missing",
-          400,
-          2,
-          "اعتبار nonce غیر مجاز است!",
-          "درخواست معتبر نیست"
-        )
-      );
-    }
+    const expectedNonce = req.session.siweNonce;
+    // Consume the nonce for every verification attempt, successful or not.
+    delete req.session.siweNonce;
 
     try {
-      // Verify signature
-      console.log("Validating signature..."); // ADD LOG
-      await siweMessageObj.verify({ signature });
-      console.log("Signature validation successful!"); // ADD LOG
-
-      // Get address from message
-      const walletAddress = String(siweMessageObj.address).toLowerCase();
-
-      req.session.siwe = {
-        address: walletAddress,
-        chainId: siweMessageObj.chainId,
-        issuedAt: siweMessageObj.issuedAt,
-      };
+      const proof = await verifySiweProof(
+        message,
+        signature,
+        expectedNonce,
+        req.get("origin")
+      );
 
       // Find or create user
-      let user = await User.findOne({ "wallet.address": walletAddress });
+      let user = await User.findOne({
+        "wallet.address": { $regex: `^${proof.address}$`, $options: "i" }
+      });
       if (!user) {
         const rnd = require("crypto").randomBytes(32).toString("hex");
-        user = await User.create({
-          name: undefined,
-          lastName: undefined,
-          password: rnd,
-          isActive: true,
-          label: [],
-          hasTicketAccount: false,
-          wallet: {
-            provider: "siwe",
-            address: walletAddress,
-            connectedAt: new Date(),
-          },
-        });
-      } else {
-        if (!user.wallet || !user.wallet.address) {
-          user.wallet = {
-            provider: "siwe",
-            address: walletAddress,
-            connectedAt: new Date(),
-          };
-          await user.save();
+        try {
+          user = await User.create({
+            name: undefined,
+            lastName: undefined,
+            password: rnd,
+            isActive: true,
+            label: [],
+            hasTicketAccount: false,
+            wallet: {
+              provider: "siwe",
+              address: proof.address,
+              connectedAt: new Date(),
+            },
+          });
+        } catch (error) {
+          // Concurrent first logins for one wallet may race on the unique
+          // index. In that case, authenticate the user created by the winner.
+          if ((error as any)?.code === 11000) {
+            user = await User.findOne({ "wallet.address": proof.address });
+          }
+          if (!user) throw error;
         }
       }
 
+      await new Promise<void>((resolve, reject) => {
+        req.session.regenerate((error) => error ? reject(error) : resolve());
+      });
+
       req.session.userId = String(user._id);
-      delete req.session.siweNonce;
+      req.session.siwe = {
+        address: proof.address,
+        chainId: proof.chainId,
+        issuedAt: proof.issuedAt,
+      };
 
-      logger.info(`SIWE login success: ${walletAddress}`);
-
+      logger.info(`SIWE login success: ${proof.address}`);
       successRes(res, "SIWE ورود موفقیت آمیز بود", {
-        address: walletAddress,
+        address: proof.address,
         userId: String(user._id),
       });
     } catch (err) {
-      console.error("SIWE validation failed:", err); // ADD LOG
-      logger.error("SIWE validation failed", err);
-      return next(
-        new myError(
-          "SIWE validation failed",
-          401,
-          3,
-          "اعتبارسنجی SIWE با شکست مواجه شد.",
-          "خطا رخ داد"
-        )
-      );
+      if (err instanceof SiweProofError) {
+        return next(
+          new myError(
+            err.message,
+            401,
+            3,
+            "اعتبارسنجی SIWE با شکست مواجه شد.",
+            "خطا رخ داد"
+          )
+        );
+      }
+      logger.error("SIWE login failed", err);
+      throw err;
     }
   })
 );

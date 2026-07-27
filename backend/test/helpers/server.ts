@@ -3,14 +3,12 @@ import { startMemoryMongo, stopMemoryMongo } from './mongo'
 import supertest from 'supertest'
 
 let server: any
-let requestAgent: supertest.SuperAgentTest
 
 export async function startServer() {
   await startMemoryMongo()
   const appServer = (await import('../../src/index')).default
   server = appServer
-  requestAgent = supertest.agent(`http://localhost:${process.env.PORT || '9101'}`)
-  return { request: requestAgent }
+  return { request: agent() }
 }
 
 export async function stopServer() {
@@ -19,6 +17,5 @@ export async function stopServer() {
 }
 
 export function agent() {
-  return requestAgent
+  return supertest.agent(`http://localhost:${process.env.PORT || '9101'}`)
 }
-

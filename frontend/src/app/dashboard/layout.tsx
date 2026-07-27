@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, User, Calendar, Trophy, LogOut, Home, Sparkles, ThumbsUp, Bot, Loader2, MessageCircle, Crown } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { logout } from "@/lib/siwe";
+import { logout } from "@/lib/auth";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -39,7 +39,7 @@ export default function DashboardLayout({
       setIsLoggingOut(true);
       await logout();
       toast.success("Logged out successfully");
-      router.push("/");
+      router.push("/login");
     } catch (error) {
       console.error("Logout failed:", error);
       toast.error("Failed to logout");

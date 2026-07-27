@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import { useAccount, useChainId } from "wagmi";
 import { useTransactionPopup } from "@blockscout/app-sdk";
 import { History, ExternalLink } from "lucide-react";
+import { WalletRequiredGate } from "@/components/wallet";
 
 export default function RewardsPage() {
   const { address } = useAccount();
@@ -228,6 +229,10 @@ export default function RewardsPage() {
 
         {/* Blockchain Tab */}
         <TabsContent value="blockchain" className="space-y-6">
+          <WalletRequiredGate
+            title="Wallet required for blockchain tools"
+            reason="Balances, Nexus actions, and explorers need a connected wallet linked to your account."
+          >
           <TokenBalance useRealBalance={true} showDetails={true} />
 
           {/* Blockchain Dating Academy - Gamification */}
@@ -272,6 +277,7 @@ export default function RewardsPage() {
           </Card>
 
           <CustomTransactionHistory />
+          </WalletRequiredGate>
         </TabsContent>
 
         {/* Points & Achievements Tab */}

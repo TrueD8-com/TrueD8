@@ -253,7 +253,7 @@ export function SuccessStoriesSection() {
                 </div>
 
                 <div className="text-center mt-8">
-                  <Link href="/siwe">
+                  <Link href="/login">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

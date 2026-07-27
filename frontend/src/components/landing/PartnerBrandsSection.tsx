@@ -56,7 +56,7 @@ export function PartnerBrandsSection() {
         {/* CTA for Business Partners */}
         <AnimatedSection className="text-center">
           <div className="inline-flex flex-col sm:flex-row gap-4">
-            <Link href="/siwe">
+            <Link href="/login">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"

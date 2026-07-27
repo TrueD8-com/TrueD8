@@ -1,27 +1,23 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only apply middleware to the root path
-  if (pathname === '/') {
-    // Check if user has authentication data (wallet_address in cookie or header)
-    const cookies = request.cookies;
-    const hasAuthCookie = cookies.get('connect.sid'); // Session cookie from express-session
+  if (pathname === "/") {
+    // The API owns an HttpOnly cookie on its own host, so middleware running
+    // on the frontend cannot reliably inspect it. Login performs the session
+    // check client-side and forwards authenticated users to the dashboard.
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 
-    // If user is authenticated, redirect to dashboard
-    if (hasAuthCookie) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
-
-    // If not authenticated, redirect to siwe
-    return NextResponse.redirect(new URL('/siwe', request.url));
+  if (pathname === "/siwe") {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/',
+  matcher: ["/", "/siwe"],
 };

@@ -40,7 +40,7 @@ export function CTASection() {
                   AI-powered matchmaking and Web3 security
                 </p>
 
-                <Link href="/siwe">
+                <Link href="/login">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

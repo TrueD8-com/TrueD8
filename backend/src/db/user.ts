@@ -192,7 +192,7 @@ const userSchema = new mongoose.Schema({
   },
   wallet: {
     provider: { type: String },
-    address: { type: String },
+    address: { type: String, trim: true, lowercase: true },
     connectedAt: { type: Date }
   },
   notificationSettings: {
@@ -278,6 +278,16 @@ const userSchema = new mongoose.Schema({
     default: 1
   }
 })
+
+// A wallet is an account identity and must never belong to two users. The
+// partial index leaves email/phone-only users without a wallet unaffected.
+userSchema.index(
+  { 'wallet.address': 1 },
+  {
+    unique: true,
+    partialFilterExpression: { 'wallet.address': { $type: 'string' } }
+  }
+)
 
 // This functions will execute if the password field is modified.
 userSchema.pre('save', function (next) {

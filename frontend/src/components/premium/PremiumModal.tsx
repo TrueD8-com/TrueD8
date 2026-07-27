@@ -39,6 +39,15 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { WalletRequiredGate } from "@/components/wallet";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 interface PremiumTier {
   id: string;
@@ -127,7 +136,7 @@ export function PremiumModal({
 
   const handleSubscribe = async () => {
     if (!selectedTier || !address) {
-      toast.error("Please select a tier");
+      toast.error("Connect and link your wallet to subscribe");
       return;
     }
 
@@ -200,6 +209,10 @@ export function PremiumModal({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          <WalletRequiredGate
+            title="Wallet required for premium"
+            reason="Premium is paid on-chain via Nexus. Connect and link a wallet to your email account to subscribe."
+          >
           {/* Current Tier Badge */}
           {currentTier && (
             <div className="rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 p-3">
@@ -549,18 +562,9 @@ export function PremiumModal({
               </div>
             </div>
           )}
+          </WalletRequiredGate>
         </div>
       </DialogContent>
     </Dialog>
   );
 }
-
-// Add missing imports for Card components
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
